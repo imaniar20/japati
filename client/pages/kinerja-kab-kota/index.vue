@@ -1,0 +1,256 @@
+<script>
+import axios from 'axios'
+import { destroy as doDestroy } from '~/plugins/swal'
+import ValidasiSkp from '~/components/ValidasiSkp.vue'
+import { mapGetters } from 'vuex'
+
+export default {
+  middleware: ['auth'],
+
+  components: {
+    ValidasiSkp,
+  },
+
+  async asyncData() {
+    const { data } = await axios.get('kinerja-sub-kegiatan-kab-kota')
+
+    return {
+      data,
+    }
+  },
+
+  data() {
+    return {
+      table: {
+        fields: [
+          { key: 'no', label: 'No' },
+          { key: 'kegiatan', label: 'Kegiatan' },
+          { key: 'sasaran', label: 'Sasaran Sub Kegiatan' },
+          { key: 'sub_kegiatan', label: 'Sub Kegiatan' },
+          { key: 'indikator', label: 'Indikator Sub Kegiatan' },
+          { key: 'satuan', label: 'Satuan' },
+          { key: 'target', label: 'Target Kinerja' },
+          { key: 'realisasi', label: 'Realisasi Kinerja' },
+          { key: 'pengampu', label: 'Pengampu' },
+          { key: 'action', label: 'Aksi' },
+          { key: 'keterangan', label: 'Seharusnya' },
+        ]
+      },
+      filter: {
+        satuan_kerja_id: null,
+        sasaran: null,
+        indikator: null,
+        status_validasi: null,
+        pengampu: null,
+        tim_kerja_id: null,
+        v_struktur_organisasi_id: null,
+        is_external: null,
+      },
+      isBusy: {
+        doFilter: false,
+        exportExcel: false,
+      },
+      options: {
+        jenisKinerja: [
+          { value: null, text: 'Semua' },
+          { value: 0, text: 'Internal' },
+          { value: 1, text: 'Eksternal' },
+        ]
+      }
+    }
+  },
+
+  computed: {
+    ...mapGetters({
+      user: 'auth/user',
+      canEditValidasiPerencanaan: 'validasi-perencanaan/canEdit'
+    }),
+  },
+
+  watch: {
+    filter: {
+      handler: function () {
+        this.doFilter()
+      },
+      deep: true,
+    }
+  },
+
+  created() {
+    /** prepend field Satuan Kerja jika akun super atau setda */
+    if (this.$role.isSuper() || this.$role.isSetda() || this.$role.isViewAll()) {
+      this.table.fields.splice(1, 0, { key: 'satuan_kerja', label: 'Satuan Kerja' })
+    } else {
+      this.filter.satuan_kerja_id = this.user.satuan_kerja_id
+    }
+  },
+
+  methods: {
+    destroy(index, id) {
+      doDestroy({
+        preConfirm: async () => {
+          return axios.delete(`/kinerja-sub-kegiatan-kab-kota/${id}`)
+            .then(() => {
+              this.data.data.splice(index, 1)
+
+              return true
+            })
+        }
+      })
+    },
+    async doFilter(page = 1) {
+      this.isBusy.doFilter = true
+
+      const { data } = await axios.get('kinerja-sub-kegiatan-kab-kota', {
+        params: {
+          filter: this.filter,
+          page,
+        }
+      })
+
+      this.data = data
+      this.isBusy.doFilter = false
+    },
+    async exportExcel() {
+      this.isBusy.exportExcel = true
+
+      try {
+        const { data } = await axios.get('/kinerja-sub-kegiatan-kab-kota/export', {
+          params: {
+            filter: this.filter,
+          },
+          responseType: 'blob'
+        })
+
+        const url = window.URL.createObjectURL(new Blob([data]))
+        const link = document.createElement('a')
+
+        link.href = url
+        link.setAttribute('download', 'Kinerja Sub Kegiatan.xlsx')
+        document.body.appendChild(link)
+        link.click()
+      } catch (error) {
+        throw error
+      } finally {
+        this.isBusy.exportExcel = false
+      }
+    }
+  },
+}
+</script>
+
+<template>
+  <b-card>
+    <div class="text-right">
+      <!-- <b-button variant="success" @click="exportExcel" :disabled="isBusy.exportExcel">
+        <b-spinner small v-if="isBusy.exportExcel"></b-spinner>
+        <i v-else class="ti-download" aria-hidden="true"></i>
+        Export
+      </b-button> -->
+      <template v-if="$role.isSuper() || $role.isPerangkatDaerah()" >
+        <nuxt-link to="/kinerja-kab-kota/create" class="btn btn-primary">
+          <i class="ti-plus" aria-hidden="true"></i> Tambah
+        </nuxt-link>
+      </template>
+    </div>
+
+    <div class="mt-3">
+      <b-row>
+        <b-col sm="6" md="3">
+          <FilterSatuanKerja v-if="$role.isSuper() || $role.isSetda() || $role.isViewAll()" v-model="filter.satuan_kerja_id" :is-setda="$role.isSetda()" />
+          <FilterSasaranKinerja v-model="filter.sasaran" model="kinerja-sub-kegiatan-kab-kota" />
+        </b-col>
+        <b-col sm="6" md="3">
+          <FilterIndikatorKinerja v-model="filter.indikator" model="kinerja-sub-kegiatan-kab-kota" />
+          <FilterStatusValidasi v-if="$role.isSuper()" v-model="filter.status_validasi" />
+        </b-col>
+        <b-col sm="6" md="3">
+          <FilterPengampu v-model="filter.pengampu" />
+          <FilterPengampuTimKerja v-if="filter.pengampu == 'tim-kerja' && filter.satuan_kerja_id" v-model="filter.tim_kerja_id" :satuan-kerja-id="filter.satuan_kerja_id" />
+          <FilterPengampuUnitKerja v-if="filter.pengampu == 'unit-kerja' && filter.satuan_kerja_id" v-model="filter.v_struktur_organisasi_id" :satuan-kerja-id="filter.satuan_kerja_id" type="kinerja-sub-kegiatan-kab-kota" />
+        </b-col>
+        <b-col sm="6" md="3">
+          <b-form-group label-class="font-weight-bold" label="Jenis Kinerja">
+            <v-select
+              v-model="filter.is_external"
+              :options="options.jenisKinerja"
+              label="text"
+              :reduce="(opt) => opt.value"
+            >
+            </v-select>
+          </b-form-group>
+        </b-col>
+      </b-row>
+    </div>
+
+    <b-table responsive hover striped sticky-header="calc(100vh - 300px)" :fields="table.fields" :items="data.data" :busy="isBusy.doFilter" show-empty class="table-bordered mt-2" head-variant="info">
+      <template #cell(no)="row">
+        <div class="text-center">
+          <b>{{ data.from + row.index }}</b> <br>
+          <i v-if="row.item.kinerja_tidak_tercapai_count" class="fa-stack" v-b-tooltip.hover title="Penilaian PD" style="cursor:help">
+            <i class="fa fa-circle fa-stack-2x text-white"></i>
+            <i class="fa fa-times text-danger fa-stack-1x"></i>
+          </i> <br>
+          <i v-if="!row.item.capaian || row.item.capaian < 100" class="fa-stack" v-b-tooltip.hover title="Tidak tercapai" style="cursor:help">
+            <i class="fa fa-circle fa-stack-2x text-white"></i>
+            <i class="fa fa-times text-warning fa-stack-1x"></i>
+          </i>
+        </div>
+      </template>
+      <template v-if="$role.isSuper() || $role.isSetda() || $role.isViewAll()" #cell(satuan_kerja)="row">
+        {{ row.value.satuan_kerja_nama }}
+      </template>
+      <template #cell(kegiatan)="row">
+        {{ row.value.nama || '-' }}
+      </template>
+      <template #cell(sub_kegiatan)="row">
+        {{ row.value.nama || '-' }}
+      </template>
+      <template #cell(pengampu)="row">
+        {{ row.item.kinerja_kab_kota.kabupaten_kota }}
+        <span v-if="row.value == 'unit-kerja'">{{ row.item?.struktur_organisasi?.jabatan_nama }}</span>
+        <span v-else-if="row.value == 'tim-kerja'">{{ row.item?.tim_kerja?.nama }} - {{ row.item?.tim_kerja?.ketua?.peg_nama }}</span>
+      </template>
+      <template #cell(action)="row">
+        <div class="text-nowrap">
+          <!-- <nuxt-link :to="`/kinerja-sub-kegiatan-kab-kota/${row.item.id}`" class="btn btn-outline-success btn-sm m-1 rounded-circle" title="Detail">
+            <i class="fa fa-eye" aria-hidden="true"></i>
+          </nuxt-link>
+          <nuxt-link v-if="($role.isSuper() || $role.isPerangkatDaerah()) && canEditValidasiPerencanaan" :to="`/kinerja-sub-kegiatan-kab-kota/${row.item.id}/edit`" class="btn btn-outline-warning btn-sm m-1 rounded-circle" title="Edit">
+            <i class="fa fa-pencil" aria-hidden="true"></i>
+          </nuxt-link> -->
+          <b-button v-if="($role.isSuper() || $role.isPerangkatDaerah()) && canEditValidasiPerencanaan" @click="destroy(row.index, row.item.id)" variant="outline-danger" size="sm" class="m-1 rounded-circle" title="Hapus">
+            <i class="fa fa-trash" aria-hidden="true"></i>
+          </b-button>
+          <template v-if="$role.isSuper()">
+            <b-button @click="$refs.validasiSkp.validate('kinerja-sub-kegiatan-kab-kota', row.item.id, row.item.skp_exists)" :variant="row.item.skp_exists ? 'success' : 'outline-primary'" size="sm" class="m-1 rounded-circle"  :title="row.item.skp_exists ? 'Validasi Ulang' : 'Validasi'">
+              <i class="fa fa-check" aria-hidden="true"></i>
+            </b-button>
+            <b-button v-if="!row.item.skp_exists" @click="$refs.validasiSkp.reject('kinerja-sub-kegiatan-kab-kota', row.item.id)" variant="danger" size="sm" class="m-1 rounded-circle"  title="Data tidak sesuai">
+              <i class="fa fa-times" aria-hidden="true"></i>
+            </b-button>
+          </template>
+        </div>
+      </template>
+      <template #cell(keterangan)="row">
+        <div v-if="!row.item.skp_exists" style="white-space: break-spaces;">{{ row.item.riwayat_skp_rejected_latest?.keterangan || '' }}</div>
+      </template>
+    </b-table>
+
+    <div>
+      <b-pagination
+        v-model="data.current_page"
+        :total-rows="data.total"
+        :per-page="data.per_page"
+        @change="doFilter($event)"
+      >
+        <template #page="{ page, active }">
+          <i class="fa fa-spinner fa-pulse fa-fw" v-if="isBusy.doFilter && active"></i>
+          <template v-else>{{ page }}</template>
+        </template>
+      </b-pagination>
+    </div>
+    
+    <ValidasiSkp ref="validasiSkp" @success="doFilter(data.current_page)" />
+  </b-card>
+</template>

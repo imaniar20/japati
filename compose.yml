@@ -1,0 +1,68 @@
+services:
+  redis:
+    image: 'redis:alpine'
+    restart: always
+    healthcheck:
+      test: [ "CMD", "redis-cli", "ping" ]
+      retries: 3
+      timeout: 5s
+
+  app:
+    build:
+      context: ./docker
+      args:
+        - UID=${UID}
+        - GID=${GID}
+    image: 'sakip/app'
+    depends_on: [ 'redis' ]
+    restart: unless-stopped
+    tty: true
+    environment:
+      PHP_FPM_POOL_NAME: app
+    volumes:
+      - ./:/var/www/html
+
+  scheduler:
+    image: 'sakip/app'
+    depends_on: [ 'app' ]
+    restart: unless-stopped
+    tty: true
+    environment:
+      PHP_FPM_POOL_NAME: scheduler
+    volumes:
+      - ./:/var/www/html
+    command: [ "php", "/var/www/html/artisan", "schedule:work" ]
+
+  queue:
+    image: 'sakip/app'
+    depends_on: [ 'app' ]
+    restart: unless-stopped
+    tty: true
+    environment:
+      PHP_FPM_POOL_NAME: queue
+    volumes:
+      - ./:/var/www/html
+    command: [ "php", "/var/www/html/artisan", "queue:work" ]
+
+  nginx:
+    image: nginx:alpine
+    depends_on: [ 'app' ]
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "${DOCKER_NGINX_PORT:-9024}:80"
+    volumes:
+      - ./:/var/www/html
+      - ./docker/nginx/conf.d/:/etc/nginx/conf.d/
+
+  nuxt:
+    image: node:14.15
+    user: node
+    restart: unless-stopped
+    ports:
+      - "${DOCKER_NUXT_PORT:-9023}:3000"
+    working_dir: /src
+    volumes:
+      - .:/src
+    command:
+      "/bin/sh -c 'yarn start'"

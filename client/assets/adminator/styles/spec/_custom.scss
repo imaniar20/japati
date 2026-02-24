@@ -1,0 +1,20 @@
+.sidebar-link.router-link-exact-active.router-link-active, .sidebar-link.router-link-exact-active.router-link-active:hover {
+    background: #000000 !important;
+    color: white !important;
+}
+// .sidebar-link.router-link-exact-active.router-link-active  i{
+//     color: white !important;
+// }
+
+.sidebar-link:not(.router-link-active):hover{
+  background: #000000 !important;
+  color: white !important;
+}
+.page-item.active .page-link {
+  background-color: #ffffff;
+  border-color: #1E88E5;
+  color: #007bff;
+}
+.bg-lightyellow{
+  background: rgb(254,251,241) !important;
+}

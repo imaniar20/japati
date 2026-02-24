@@ -1,0 +1,110 @@
+<template>
+  <b-card>
+    <b-form-group v-if="$role.isSuper()" label-cols="12" label-cols-md="2" label="Satuan Kerja" label-class="font-weight-bold" label-for="satker">
+      <b-form-input :value="data.satuan_kerja.satuan_kerja_nama" readonly></b-form-input>
+    </b-form-group>
+    <b-form-group label-cols="12" label-cols-md="2" label="Sasaran Strategis PD" label-class="font-weight-bold" label-for="sasaran-strategis-pd">
+      <b-form-input :value="data.sasaran_strategis_pd.sasaran_strategis_satker" readonly></b-form-input>
+    </b-form-group>
+    <b-form-group label-cols="12" label-cols-md="2" label="IKU PD" label-class="font-weight-bold" label-for="satker-iku">
+      <b-form-input :value="data.satker_iku.iku" readonly></b-form-input>
+    </b-form-group>
+    <b-form-group label-cols="12" label-cols-md="2" label="Program" label-class="font-weight-bold" label-for="program">
+      <b-form-input :value="data.program?.nama || '-'" readonly></b-form-input>
+    </b-form-group>
+    <b-form-group label-cols="12" label-cols-md="2" label="Sasaran Program" label-class="font-weight-bold" label-for="sasaran">
+      <b-form-input :value="data.sasaran" readonly></b-form-input>
+    </b-form-group>
+    <b-form-group label-cols="12" label-cols-md="2" label="Indikator Program" label-class="font-weight-bold" label-for="indikator">
+      <b-form-input :value="data.indikator" readonly></b-form-input>
+    </b-form-group>
+    <b-form-group label-cols="12" label-cols-md="2" label="Satuan" label-class="font-weight-bold" label-for="satuan">
+      <b-form-input :value="data.satuan" readonly></b-form-input>
+    </b-form-group>
+    <b-form-group label-cols="12" label-cols-md="2" label="Target Kinerja" label-class="font-weight-bold" label-for="target">
+      <b-form-input :value="data.target" readonly></b-form-input>
+    </b-form-group>
+    <b-form-group label-cols="12" label-cols-md="2" label="Realisasi Kinerja" label-class="font-weight-bold" label-for="realisasi">
+      <b-form-input :value="data.realisasi" readonly></b-form-input>
+    </b-form-group>
+    <b-form-group label-cols="12" label-cols-md="2" label="Capaian Kinerja (%)" label-class="font-weight-bold" label-for="capaian">
+      <b-form-input :value="data.capaian" readonly></b-form-input>
+    </b-form-group>
+    <b-form-group label-cols="12" label-cols-md="2" label="Pagu Anggaran" label-class="font-weight-bold" label-for="anggaran">
+      <money class="form-control" :value="data.anggaran" v-bind="money" readonly></money>
+    </b-form-group>
+    <b-form-group label-cols="12" label-cols-md="2" label="Realisasi Anggaran" label-class="font-weight-bold" label-for="realisasi_anggaran">
+      <money class="form-control" :value="data.realisasi_anggaran" v-bind="money" readonly></money>
+    </b-form-group>
+    <b-form-group label-cols="12" label-cols-md="2" label="Capaian Anggaran (%)" label-class="font-weight-bold" label-for="capaian_anggaran">
+      <b-form-input :value="data.capaian_anggaran" readonly></b-form-input>
+    </b-form-group>
+
+    <b-row class="mt-5">
+      <b-col xs md="6" v-for="(arrMonth, index) of arrayChunk2($const.months, 6)" :key="index">
+        <b-row v-for="(month, monthIndex) of arrMonth" :key="monthIndex">
+          <b-col xs sm="6">
+            <b-form-group :label="`Target Kinerja ${month[1]}`"  label-class="font-weight-bold" :label-for="`target-${month[0]}`">
+              <b-form-input :value="data.target_bulanan[month[0]]" readonly></b-form-input>
+            </b-form-group>
+          </b-col>
+          <b-col xs sm="6">
+            <b-form-group :label="`Realisasi Kinerja ${month[1]}`"  label-class="font-weight-bold" :label-for="`realisasi-${month[0]}`">
+              <b-form-input :value="data.realisasi_bulanan[month[0]] || '-'" readonly></b-form-input>
+            </b-form-group>
+          </b-col>
+        </b-row>
+      </b-col>
+    </b-row>
+
+    <b-row class="mt-5">
+      <b-col xs md="6" v-for="(arrMonth, index) of arrayChunk2($const.months, 6)" :key="index">
+        <b-row v-for="(month, monthIndex) of arrMonth" :key="monthIndex">
+          <b-col xs sm="6">
+            <b-form-group :label="`Pagu Anggaran ${month[1]}`" label-class="font-weight-bold" :label-for="`anggaran-${month[0]}`">
+              <money class="form-control" :value="data.anggaran_bulanan[month[0]]" v-bind="money" readonly></money>
+            </b-form-group>
+          </b-col>
+          <b-col xs sm="6">
+            <b-form-group :label="`Realisasi Anggaran ${month[1]}`" label-class="font-weight-bold" :label-for="`realisasi-anggaran-${month[0]}`">
+              <money class="form-control" :value="data.realisasi_anggaran_bulanan[month[0]]" v-bind="money" readonly></money>
+            </b-form-group>
+          </b-col>
+        </b-row>
+      </b-col>
+    </b-row>
+  </b-card>
+</template>
+
+<script>
+import axios from 'axios'
+import { VMoney, Money } from 'v-money'
+import { arrayChunk2 } from '~/plugins/utils'
+import { moneyFormat } from '~/utils/formater'
+
+export default {
+  components: {
+    Money,
+  },
+  middleware: ['auth'],
+  directives: {
+    money: VMoney
+  },
+  async asyncData({ params }) {
+    const id = params.id
+    const { data } = await axios.get(`kinerja-program/${id}`)
+
+    return {
+      data,
+    }
+  },
+  data() {
+    return {
+      money: moneyFormat,
+    }
+  },
+  methods: {
+    arrayChunk2,
+  }
+}
+</script>

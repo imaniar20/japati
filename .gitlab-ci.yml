@@ -1,0 +1,25 @@
+image: lorisleiva/laravel-docker:8.3
+
+cache:
+  key:
+    files:
+      - composer.lock
+  paths:
+    - vendor/
+    - .env
+    - .composer.cache.lock
+
+setup - style checks:
+  script:
+    - |
+      if [ -f .composer.cache.lock ] && cmp -s composer.lock .composer.cache.lock; then
+        echo "No changes in composer.lock, skipping composer install";
+      else
+        echo "Changes detected in composer.lock, running composer install";
+        composer install --prefer-dist --no-ansi --no-interaction --no-progress --no-scripts;
+        cp composer.lock .composer.cache.lock;
+        cp .env.example .env;
+        php artisan key:generate;
+      fi
+    - php artisan key:generate
+    - ./vendor/bin/pint --test
