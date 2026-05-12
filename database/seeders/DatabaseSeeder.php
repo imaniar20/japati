@@ -16,9 +16,22 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call([
+            RoleSeeder::class,
+
             MasterData2022Seeder::class,
             MasterData2023Seeder::class,
             MasterData2024Seeder::class,
+
+            DuplicateDataKinerja::class,
+            DuplicateLKEKomponenSeeder::class,
+            LKESeeder::class,
+            Master2024::class,
+            SubKegiatanDinasPendidikanSeeder::class,
+            UpdateNomorLKESeeder::class,
+            
+            ValidatorLKESeeder::class,
+            ValidatorPerencanaanSeeder::class,
+            ViewRaporKinerjaUserSeeder::class,
         ]);
     }
 }

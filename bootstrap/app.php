@@ -18,6 +18,9 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->append(SetTahunKinerja::class);
+        $middleware->append(
+            \Illuminate\Http\Middleware\HandleCors::class
+        );
 
         $middleware->alias([
             'tahun-kinerja-public' => SetTahunKinerjaPublic::class,
@@ -29,18 +32,5 @@ return Application::configure(basePath: dirname(__DIR__))
     })
     ->withSchedule(function (Schedule $schedule) {
         $schedule->command('sync:parent-skp', ['--tahun' => 2025])->everyFifteenMinutes();
-        // $schedule->command('jumlah-output 2023 akhir')->everyTenMinutes();
-
-        // bypass validasi perencanaan BPKAD dan BKD yang sudah divalidasi Bappeda
-        // $schedule->call(function () {
-        //     ValidasiPerencanaan::tahunKinerja(2024)
-        //         ->where('tahap', 2)
-        //         ->whereNull('status')
-        //         ->update([
-        //             'tahap' => 3,
-        //             'status' => true,
-        //         ]);
-        // })
-        //     ->everyMinute();
     })
     ->create();
