@@ -14,10 +14,10 @@
                 <td colspan="2" class="title-2">{{ $pegawai->jabatan_nama}}</td>
             </tr>
             <tr>
-                <td colspan="2" class="title-2">PROVINSI JAWA BARAT</td>
+                <td colspan="2" class="title-2">KABUPATEN KUNINGAN</td>
             </tr>
             <tr>
-                <td colspan="2" class="title-2">PEMERINTAH DAERAH PROVINSI JAWA BARAT</td>
+                <td colspan="2" class="title-2">PEMERINTAH DAERAH KABUPATEN KUNINGAN</td>
             </tr>
         </tbody>
     </table>

@@ -76,8 +76,8 @@ export default {
 </script>
 <template>
   <section class="space-y-1">
-    <h4 class="text-md font-medium text-white">Laporan Kinerja Tahun 2024</h4>
-    <EmblaCarousel :slides-per-view="4" :spacing="24" :slides="data">
+    <h4 class="text-md font-medium text-white">Laporan Kinerja Tahun 2025</h4>
+    <!-- <EmblaCarousel :slides-per-view="4" :spacing="24" :slides="data">
       <template #default="{ data: slideData }">
         <div
           class="bg-white rounded-lg p-12"
@@ -87,7 +87,7 @@ export default {
           <img :src="slideData.gambar_url" class="w-full h-full" alt="" />
         </div>
       </template>
-    </EmblaCarousel>
+    </EmblaCarousel> -->
      <b-modal id="bv-modal-infografis" size="xl" hide-header hide-footer>
       <div v-if="selectedType === 'image'">
         <img :src="selected" class="w-full h-full" alt="" />

@@ -353,9 +353,9 @@ class PerjanjianKinerjaController extends Controller
 
         if (! $pegawai->unit_kerja_id && $pegawai->jabatan_jenis == 2) {
             $atasan = new VPegawaiData;
-            $atasan->peg_nama = 'BEY TRIADI MACHMUDIN';
+            $atasan->peg_nama = 'Dr. H. Dian Rachmat Yanuar, M.Si.';
             $atasan->peg_nip = '197004151996031001';
-            $atasan->jabatan_nama = 'PJ GUBERNUR JAWA BARAT';
+            $atasan->jabatan_nama = 'BUPATI KUNINGAN';
             $atasan->nm_pkt_akhir = 'PEMBINA UTAMA';
             $atasan->nm_gol_akhir = 'IV/e';
             $program = \DB::table('program')

@@ -451,28 +451,28 @@
                     <nuxt-link
                       class="sidebar-link ml-2"
                       to="/display-makro/rpjmd"
-                      >RPJMD Provinsi Jawa Barat</nuxt-link
+                      >RPJMD Kabupaten Kuningan</nuxt-link
                     >
                   </li>
                   <li>
                     <nuxt-link
                       class="sidebar-link ml-2"
                       to="/display-makro/rkpd"
-                      >RKPD Provinsi Jawa Barat</nuxt-link
+                      >RKPD Kabupaten Kuningan</nuxt-link
                     >
                   </li>
                   <li>
                     <nuxt-link
                       class="sidebar-link ml-2"
                       to="/display-makro/perjanjian-kinerja"
-                      >Perjanjian Kinerja Gubernur Jawa Barat</nuxt-link
+                      >Perjanjian Kinerja Bupati Kabupaten Kuningan</nuxt-link
                     >
                   </li>
                   <li>
                     <nuxt-link
                       class="sidebar-link ml-2"
                       to="/display-makro/rencana-aksi"
-                      >Rencana Aksi Gubernur Jawa Barat</nuxt-link
+                      >Rencana Aksi Bupati Kabupaten Kuningan</nuxt-link
                     >
                   </li>
                   <li>

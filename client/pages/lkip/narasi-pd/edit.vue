@@ -83,7 +83,7 @@ export default {
       </v-select>
     </b-form-group>
     <b-form-group
-      label="INDIKATOR KINERJA GUBERNUR"
+      label="INDIKATOR KInerja Bupati"
       label-for="indikator-sasaran-strategis"
     >
       <v-select id="indikator-sasaran-strategis"

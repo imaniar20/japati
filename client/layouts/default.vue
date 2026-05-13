@@ -14,7 +14,7 @@
       </main>
 
       <footer class="bdT ta-c py-4 fsz-sm c-grey-600">
-        <span>Copyright © {{ new Date().getFullYear() }} Pemerintah Provinsi Jawa Barat</span>
+        <span>Copyright © {{ new Date().getFullYear() }} Pemerintah Kabupaten Kuningan</span>
       </footer>
     </div>
   </div>

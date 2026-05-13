@@ -35,7 +35,7 @@ export default {
     <h3 class="text-center">BAB II</h3>
     <div class="text-center">
       <h5>TABEL 2.1</h5>
-      Tujuan, Sasaran, dan Indikator Kinerja Pemerintah Daerah Provinsi Jawa Barat Tahun {{ $helper.getTahunKinerja() }}
+      Tujuan, Sasaran, dan Indikator Kinerja Pemerintah Daerah Kabupaten Kuningan Tahun {{ $helper.getTahunKinerja() }}
     </div>
     <Tabel21 :satuan-kerja-id="filter.satuan_kerja_id" />
 

@@ -37,7 +37,7 @@ export default {
       <b-form-input v-model="form.sasaran_strategis.sasaran" readonly></b-form-input>
     </b-form-group>
     <b-form-group
-      label="INDIKATOR KINERJA GUBERNUR"
+      label="INDIKATOR KInerja Bupati"
       label-for="indikator-sasaran-strategis"
     >
       <b-form-input v-model="form.indikator_sasaran_strategis.indikator" readonly></b-form-input>

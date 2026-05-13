@@ -19,8 +19,8 @@ export default {
     <section class="bg-hero">
       <div class="w-full h-full flex flex-col justify-center lg:px-0 mx-auto">
         <div class="flex flex-col items-center text-center">
-          <h2 class="text-white text-[87px] font-black leading-normal">JAPATI</h2>
-          <div class="text-white text-sm">Jawa Barat Manajemen Kinerja Instansi Pemerintahan Terintegrasi</div>
+          <h2 class="text-white text-sm font-black mt-5">JAPATI</h2>
+          <h3 class="text-white">Kabupaten Kuningan Manajemen Kinerja Instansi Pemerintahan Terintegrasi</h3>
           <WelcomeInfografis  style="width: 100%; max-width: 1200px;" />
         </div>
       </div>
@@ -52,6 +52,8 @@ export default {
   padding-bottom: 5rem;
   /* py-20 */
   //background-size: cover;
+  background-image: url('/img/pemda-kic.png');
+  overflow: hidden;
   /* bg-cover */
   background-repeat: no-repeat;
   /* bg-no-repeat */
@@ -64,9 +66,9 @@ export default {
   .bg-hero {
     background-color: #2488e1;
     /* lg:bg-white */
-    background-image: url('/img/japati-background-home.png');
+    // background-image: url('/img/japati-background-home.png');
     /* lg:bg-[url('/images/background-hero.png')] */
-    // height: 737px;
+    height: 470px;
     /* lg:h-[737px] */
     // margin-top: 5rem; /* lg:mt-20 */
     padding-top: 5rem;

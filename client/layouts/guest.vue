@@ -19,16 +19,16 @@
           {{ tahun.display }}
         </b-dropdown-item>
       </b-nav-item-dropdown>
-          <b-nav-item-dropdown class="kinerja-gubernur" text="Kinerja Gubernur">
+          <b-nav-item-dropdown class="kinerja-gubernur" text="KInerja Bupati">
             <b-dropdown-item to="/public-display/display-makro/dashboard">Dashboard</b-dropdown-item>
             <b-dropdown-divider></b-dropdown-divider>
-            <b-dropdown-item to="/public-display/display-makro/rpjmd">RPJMD Provinsi Jawa Barat</b-dropdown-item>
+            <b-dropdown-item to="/public-display/display-makro/rpjmd">RPJMD Kabupaten Kuningan</b-dropdown-item>
             <b-dropdown-divider></b-dropdown-divider>
-            <b-dropdown-item to="/public-display/display-makro/rkpd">RKPD Provinsi Jawa Barat</b-dropdown-item>
+            <b-dropdown-item to="/public-display/display-makro/rkpd">RKPD Kabupaten Kuningan</b-dropdown-item>
             <b-dropdown-divider></b-dropdown-divider>
-            <b-dropdown-item to="/public-display/display-makro/perjanjian-kinerja">Perjanjian Kinerja Gubernur Jawa Barat</b-dropdown-item>
+            <b-dropdown-item to="/public-display/display-makro/perjanjian-kinerja">Perjanjian Kinerja Bupati Kabupaten Kuningan</b-dropdown-item>
             <b-dropdown-divider></b-dropdown-divider>
-            <b-dropdown-item to="/public-display/display-makro/rencana-aksi">Rencana Aksi Gubernur Jawa Barat</b-dropdown-item>
+            <b-dropdown-item to="/public-display/display-makro/rencana-aksi">Rencana Aksi Bupati Kabupaten Kuningan</b-dropdown-item>
             <!-- <b-dropdown-divider></b-dropdown-divider>
             <b-dropdown-item to="/public-display/display-makro/capaian-kinerja-pemda">Capaian Kinerja Pemda</b-dropdown-item>
             <b-dropdown-divider></b-dropdown-divider>

@@ -13,7 +13,7 @@ class ValidatorPerencanaanSeeder extends Seeder
      */
     public function run(): void
     {
-        $pass = bcrypt('validatorperencanaan');
+        $pass = bcrypt('admin');
 
         $tahap1 = [
             [
