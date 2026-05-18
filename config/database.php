@@ -15,15 +15,15 @@ for ($tahun = 2021; $tahun <= TAHUN_KINERJA; $tahun++) {
             'host' => env("DB_READ_HOST_EKINERJA_{$tahun}", env("DB_HOST_EKINERJA_{$tahun}", 'localhost')),
             'port' => env("DB_READ_PORT_EKINERJA_{$tahun}", env("DB_PORT_EKINERJA_{$tahun}", '5432')),
             'database' => env("DB_READ_DATABASE_EKINERJA_{$tahun}", env("DB_DATABASE_EKINERJA_{$tahun}", "erk_ekinerja_{$tahun}")),
-            'username' => env("DB_READ_USERNAME_EKINERJA_{$tahun}", env("DB_USERNAME_EKINERJA_{$tahun}", 'forge')),
-            'password' => env("DB_READ_PASSWORD_EKINERJA_{$tahun}", env("DB_PASSWORD_EKINERJA_{$tahun}", 'forge')),
+            'username' => env("DB_READ_USERNAME_EKINERJA_{$tahun}", env("DB_USERNAME_EKINERJA_{$tahun}", 'postgres')),
+            'password' => env("DB_READ_PASSWORD_EKINERJA_{$tahun}", env("DB_PASSWORD_EKINERJA_{$tahun}", 'postgres')),
         ],
         'write' => [
             'host' => env("DB_WRITE_HOST_EKINERJA_{$tahun}", env("DB_HOST_EKINERJA_{$tahun}", 'localhost')),
             'port' => env("DB_WRITE_PORT_EKINERJA_{$tahun}", env("DB_PORT_EKINERJA_{$tahun}", '5432')),
             'database' => env("DB_WRITE_DATABASE_EKINERJA_{$tahun}", env("DB_DATABASE_EKINERJA_{$tahun}", "erk_ekinerja_{$tahun}")),
-            'username' => env("DB_WRITE_USERNAME_EKINERJA_{$tahun}", env("DB_USERNAME_EKINERJA_{$tahun}", 'forge')),
-            'password' => env("DB_WRITE_PASSWORD_EKINERJA_{$tahun}", env("DB_PASSWORD_EKINERJA_{$tahun}", 'forge')),
+            'username' => env("DB_WRITE_USERNAME_EKINERJA_{$tahun}", env("DB_USERNAME_EKINERJA_{$tahun}", 'postgres')),
+            'password' => env("DB_WRITE_PASSWORD_EKINERJA_{$tahun}", env("DB_PASSWORD_EKINERJA_{$tahun}", 'postgres')),
         ],
         'charset' => 'utf8',
         'prefix' => '',
@@ -33,32 +33,7 @@ for ($tahun = 2021; $tahun <= TAHUN_KINERJA; $tahun++) {
 }
 
 return [
-
-    /*
-    |--------------------------------------------------------------------------
-    | Default Database Connection Name
-    |--------------------------------------------------------------------------
-    |
-    | Here you may specify which of the database connections below you wish
-    | to use as your default connection for database operations. This is
-    | the connection which will be utilized unless another connection
-    | is explicitly specified when you execute a query / statement.
-    |
-    */
-
     'default' => env('DB_CONNECTION', 'sqlite'),
-
-    /*
-    |--------------------------------------------------------------------------
-    | Database Connections
-    |--------------------------------------------------------------------------
-    |
-    | Below are all of the database connections defined for your application.
-    | An example configuration is provided for each database system which
-    | is supported by Laravel. You're free to add / remove connections.
-    |
-    */
-
     'connections' => array_merge($ekinerjaTahun, [
 
         'sqlite' => [
@@ -227,32 +202,10 @@ return [
 
     ]),
 
-    /*
-    |--------------------------------------------------------------------------
-    | Migration Repository Table
-    |--------------------------------------------------------------------------
-    |
-    | This table keeps track of all the migrations that have already run for
-    | your application. Using this information, we can determine which of
-    | the migrations on disk haven't actually been run on the database.
-    |
-    */
-
     'migrations' => [
         'table' => 'migrations',
         'update_date_on_publish' => true,
     ],
-
-    /*
-    |--------------------------------------------------------------------------
-    | Redis Databases
-    |--------------------------------------------------------------------------
-    |
-    | Redis is an open source, fast, and advanced key-value store that also
-    | provides a richer body of commands than a typical key-value system
-    | such as Memcached. You may define your connection settings here.
-    |
-    */
 
     'redis' => [
 
