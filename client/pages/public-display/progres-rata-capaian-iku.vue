@@ -270,7 +270,7 @@ export default {
         <b-col md="4">
           <div class="d-flex flex-column">
             <h5 class="subtitle text-black text-center">
-              Efisiensi Anggaran untuk capaian IKU Gubernur
+              Efisiensi Anggaran untuk capaian IKU Bupati
             </h5>
             <b-card style="padding: 24px 0">
               <apexchart

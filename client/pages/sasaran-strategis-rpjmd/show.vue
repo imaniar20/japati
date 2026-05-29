@@ -6,7 +6,7 @@
     <b-form-group label-cols="12" label-cols-md="2" label="Sasaran Strategis RPJMD" label-class="font-weight-bold">
       <b-form-input :value="data.sasaran_strategis.sasaran" readonly></b-form-input>
     </b-form-group>
-    <b-form-group label-cols="12" label-cols-md="2" label="Indikator Sasaran Strategis RPJMD/IKU Gubernur" label-class="font-weight-bold">
+    <b-form-group label-cols="12" label-cols-md="2" label="Indikator Sasaran Strategis RPJMD/IKU Bupati" label-class="font-weight-bold">
       <b-form-input :value="data.indikator_sasaran_strategis.indikator" readonly></b-form-input>
     </b-form-group>
     <b-form-group label-cols="12" label-cols-md="2" label="Satuan" label-class="font-weight-bold">

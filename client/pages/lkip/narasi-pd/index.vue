@@ -85,8 +85,8 @@ export default {
       <b-thead class="text-center align-middle" head-variant="info">
         <b-th>No</b-th>
         <b-th v-if="$role.isSuper()">Satuan Kerja</b-th>
-        <b-th>Sasaran Strategis Gubernur</b-th>
-        <b-th>IKU Gubernur</b-th>
+        <b-th>Sasaran Strategis Bupati</b-th>
+        <b-th>IKU Bupati</b-th>
         <b-th>Sasaran PD</b-th>
         <b-th>IKU PD</b-th>
         <b-th>Narasi</b-th>

@@ -31,7 +31,7 @@ export default {
         fields: [
           { key: 'no', label: 'No' },
           { key: 'sasaran_strategis', label: 'Sasaran Strategis RPJMD' },
-          { key: 'indikator_sasaran_strategis', label: 'IKU Gubernur' },
+          { key: 'indikator_sasaran_strategis', label: 'IKU Bupati' },
           { key: 'sasaran_strategis_satker', label: 'Sasaran Strategis PD' },
           { key: 'iku', label: 'IKU PD' },
           { key: 'satuan', label: 'Satuan' },

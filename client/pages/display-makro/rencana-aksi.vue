@@ -64,7 +64,7 @@ export default {
           <b-th class="align-middle" rowspan="2">No</b-th>
           <b-th v-if="$role.isSuper() || $role.isSetda()" rowspan="2" class="align-middle">Satuan Kerja</b-th>
           <b-th class="align-middle" rowspan="2">Sasaran Strategis RJMD</b-th>
-          <b-th class="align-middle" rowspan="2">IKU Gubernur</b-th>
+          <b-th class="align-middle" rowspan="2">IKU Bupati</b-th>
           <b-th class="align-middle" rowspan="2">Target</b-th>
           <b-th class="align-middle" rowspan="2">Sasaran Strategis PD</b-th>
           <b-th class="align-middle" rowspan="2">Indikator Kinerja</b-th>

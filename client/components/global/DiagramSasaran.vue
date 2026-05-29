@@ -154,7 +154,7 @@
                     <i class="fa fa-user mr-2"></i>
                     <div>
                       <small>Pengampu:  </small>
-                      <h6 class="m-0 mb-1 sasaran-title" style="word-wrap: anywhere;"> Gubernur</h6>
+                      <h6 class="m-0 mb-1 sasaran-title" style="word-wrap: anywhere;"> Bupati</h6>
                     </div>
                   </div>
                 </span>

@@ -57,7 +57,7 @@ export default {
         <b-tr>
           <b-th class="align-middle">No</b-th>
           <b-th class="align-middle">Sasaran</b-th>
-          <b-th class="align-middle">IKU Gubernur</b-th>
+          <b-th class="align-middle">IKU Bupati</b-th>
           <b-th class="align-middle">Target</b-th>
           <b-th class="align-middle">Program</b-th>
           <b-th class="align-middle">Kegiatan</b-th>

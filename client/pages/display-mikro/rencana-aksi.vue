@@ -98,7 +98,7 @@ export default {
           <b-th class="align-middle" rowspan="2">No</b-th>
           <b-th class="align-middle" rowspan="2" v-if="$role.isSuper() || $role.isSetda()">Satuan Kerja</b-th>
           <b-th class="align-middle" rowspan="2">Sasaran Strategis RPJMD</b-th>
-          <b-th class="align-middle" rowspan="2">IKU Gubernur</b-th>
+          <b-th class="align-middle" rowspan="2">IKU Bupati</b-th>
           <b-th class="align-middle" rowspan="2">Target</b-th>
           <b-th class="align-middle" rowspan="2">Sasaran Strategis PD</b-th>
           <b-th class="align-middle" rowspan="2">Indikator Kinerja</b-th>

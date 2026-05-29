@@ -25,7 +25,7 @@
             <template #option="opt">
               <div class="border-bottom py-2 my-1">
                 <div>Sasaran strategis: <b>{{ opt.sasaran_strategis.sasaran }}</b></div>
-                <div>IKU Gubernur: <b>{{ opt.indikator_sasaran_strategis.indikator }}</b></div>
+                <div>IKU Bupati: <b>{{ opt.indikator_sasaran_strategis.indikator }}</b></div>
                 <div>Capaian {{ $helper.getTahunKinerja() }}: <b>{{ opt[$helper.getKeyTahun('capaian')] ? opt[$helper.getKeyTahun('capaian')] + ' %' : '-' }}</b></div>
                 <div>Target {{ $helper.getTahunKinerja() }}: <b>{{ opt[$helper.getKeyTahun('target')] }}</b></div>
               </div>

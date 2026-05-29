@@ -378,7 +378,7 @@
               <li>
                 <nuxt-link class="sidebar-link" to="/sasaran-strategis-rpjmd"
                   >Sasaran Strategis RPJMD & <br />
-                  IKU Gubernur</nuxt-link
+                  IKU Bupati</nuxt-link
                 >
               </li>
               <li>

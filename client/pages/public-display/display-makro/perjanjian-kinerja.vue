@@ -11,7 +11,7 @@ export default {
         fields: [
           { key: 'no', label: 'No' },
           { key: 'sasaran_strategis', label: 'Sasaran' },
-          { key: 'indikator_sasaran_strategis', label: 'IKU Gubernur' },
+          { key: 'indikator_sasaran_strategis', label: 'IKU Bupati' },
           { key: 'target', label: 'Target' },
         ]
       },
@@ -70,7 +70,7 @@ export default {
         <b-tr>
           <b-th class="align-middle">No</b-th>
           <b-th class="align-middle">Sasaran</b-th>
-          <b-th class="align-middle">IKU Gubernur</b-th>
+          <b-th class="align-middle">IKU Bupati</b-th>
           <b-th class="align-middle">Target</b-th>
         </b-tr>
       </b-thead>

@@ -18,7 +18,7 @@ export default {
         fields: [
           { key: 'no', label: 'No' },
           { key: 'sasaran', label: 'Sasaran' },
-          { key: 'iku', label: 'IKU Gubernur' },
+          { key: 'iku', label: 'IKU Bupati' },
           { key: 'target', label: 'Target' },
           { key: 'program', label: 'Program' },
           { key: 'kegiatan', label: 'Kegiatan' },

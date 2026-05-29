@@ -73,7 +73,7 @@ export default {
           <b-th rowspan="2" class="align-middle">Indikator</b-th>
           <b-th rowspan="2" class="align-middle">Target</b-th>
           <b-th rowspan="2" class="align-middle">Sasaran</b-th>
-          <b-th rowspan="2" class="align-middle">IKU Gubernur</b-th>
+          <b-th rowspan="2" class="align-middle">IKU Bupati</b-th>
           <b-th colspan="5">Target Tahun ke-</b-th>
           <b-th rowspan="2" class="align-middle">Strategi</b-th>
         </b-tr>

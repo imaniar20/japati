@@ -57,7 +57,7 @@ export default {
         <b-tr>
           <b-th class="align-middle" rowspan="2">No</b-th>
           <b-th class="align-middle" rowspan="2">Sasaran Strategis RJMD</b-th>
-          <b-th class="align-middle" rowspan="2">IKU Gubernur</b-th>
+          <b-th class="align-middle" rowspan="2">IKU Bupati</b-th>
           <b-th class="align-middle" rowspan="2">Target</b-th>
           <b-th class="align-middle" rowspan="2">Sasaran Strategis PD</b-th>
           <b-th class="align-middle" rowspan="2">Indikator Kinerja</b-th>

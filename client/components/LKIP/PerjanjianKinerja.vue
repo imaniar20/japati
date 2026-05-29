@@ -43,7 +43,7 @@ export default {
         <b-tr>
           <b-th>NO.</b-th>
           <b-th>SASARAN</b-th>
-          <b-th>INDIKATOR (IKU GUBERNUR)</b-th>
+          <b-th>INDIKATOR (IKU BUPATI)</b-th>
           <b-th>TARGET</b-th>
         </b-tr>
       </b-thead>

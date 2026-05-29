@@ -29,7 +29,7 @@ export default {
           { key: 'tujuan', label: 'Tujuan' },
           { key: 'indikator_tujuan', label: 'Indikator Tujuan' },
           { key: 'sasaran_strategis', label: 'Sasaran Strategis RPJMD' },
-          { key: 'indikator_sasaran_strategis', label: 'Indikator Sasaran Strategis RPJMD/IKU Gubernur' },
+          { key: 'indikator_sasaran_strategis', label: 'Indikator Sasaran Strategis RPJMD/IKU Bupati' },
           { key: 'target', label: 'Target Kinerja' },
           { key: 'realisasi', label: 'Realisasi Kinerja' },
           { key: 'action', label: 'Aksi' },

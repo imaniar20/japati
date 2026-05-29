@@ -99,7 +99,7 @@
             <b-form-radio :value="false">Bukan</b-form-radio>
           </b-form-radio-group>
         </b-form-group>
-        <b-form-group label-cols="12" label-cols-md="2" label="Apakah Rencana Aksi IKU Gubernur?" label-class="font-weight-bold" label-for="is_rencana_aksi_gubernur">
+        <b-form-group label-cols="12" label-cols-md="2" label="Apakah Rencana Aksi IKU Bupati?" label-class="font-weight-bold" label-for="is_rencana_aksi_gubernur">
           <b-form-radio-group
             id="is_rencana_aksi_gubernur"
             v-model="form.is_rencana_aksi_gubernur"
