@@ -4,7 +4,7 @@
       <OptionSatuanKerja v-if="$role.isSuper()" v-model="form.satuan_kerja_id" />
 
       <div v-if="form.satuan_kerja_id">
-        <b-form-group label-cols="12" label-cols-md="2" label="Relasi Sasaran Strategis RPJMD & IKU Gubernur" label-class="font-weight-bold" label-for="sasaran_strategis_rpjmd">
+        <b-form-group label-cols="12" label-cols-md="2" label="Relasi Sasaran Strategis RPJMD & IKU Bupati" label-class="font-weight-bold" label-for="sasaran_strategis_rpjmd">
           <v-select id="sasaran_strategis_rpjmd" 
             v-model="form.sasaran_strategis_rpjmd_id" 
             :options="sasaranStrategisRpjmd" 

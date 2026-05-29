@@ -109,7 +109,7 @@ export default {
         const link = document.createElement('a')
 
         link.href = url
-        link.setAttribute('download', 'Sasaran Strategis RPJMD & IKU Gubernur.xlsx')
+        link.setAttribute('download', 'Sasaran Strategis RPJMD & IKU Bupati.xlsx')
         document.body.appendChild(link)
         link.click()
       } catch (error) {

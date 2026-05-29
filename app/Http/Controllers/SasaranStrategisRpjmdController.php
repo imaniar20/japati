@@ -238,6 +238,6 @@ class SasaranStrategisRpjmdController extends Controller
     {
         $data = $this->index($request, true);
 
-        return Excel::download(new SasaranStrategisRpjmdExport($data), 'Sasaran Strategis RPJMD & IKU Gubernur.xlsx');
+        return Excel::download(new SasaranStrategisRpjmdExport($data), 'Sasaran Strategis RPJMD & IKU Bupati.xlsx');
     }
 }

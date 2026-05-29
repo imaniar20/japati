@@ -17,7 +17,7 @@ const routes = [
   { path: '/visi-misi-rpjmd/:id/edit', name: 'visi-misi-rpjmd.edit', component: page('visi-misi-rpjmd/edit'), meta: { label: 'Edit Data', breadCrumbParent: {name: 'visi-misi-rpjmd.index'} } },
   { path: '/visi-misi-rpjmd/:id', name: 'visi-misi-rpjmd.show', component: page('visi-misi-rpjmd/show'), meta: { label: 'Detail Data', breadCrumbParent: {name: 'visi-misi-rpjmd.index'} } },
   
-  { path: '/sasaran-strategis-rpjmd', name: 'sasaran-strategis-rpjmd.index', component: page('sasaran-strategis-rpjmd/index'), meta: { label: 'Sasaran Strategis RPJMD & IKU Gubernur' } },
+  { path: '/sasaran-strategis-rpjmd', name: 'sasaran-strategis-rpjmd.index', component: page('sasaran-strategis-rpjmd/index'), meta: { label: 'Sasaran Strategis RPJMD & IKU Bupati' } },
   { path: '/sasaran-strategis-rpjmd/create', name: 'sasaran-strategis-rpjmd.create', component: page('sasaran-strategis-rpjmd/create'), meta: { label: 'Tambah Data', breadCrumbParent: {name: 'sasaran-strategis-rpjmd.index'} } },
   { path: '/sasaran-strategis-rpjmd/:id/edit', name: 'sasaran-strategis-rpjmd.edit', component: page('sasaran-strategis-rpjmd/edit'), meta: { label: 'Edit Data', breadCrumbParent: {name: 'sasaran-strategis-rpjmd.index'} } },
   { path: '/sasaran-strategis-rpjmd/:id', name: 'sasaran-strategis-rpjmd.show', component: page('sasaran-strategis-rpjmd/show'), meta: { label: 'Detail Data', breadCrumbParent: {name: 'sasaran-strategis-rpjmd.index'} } },

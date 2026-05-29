@@ -501,7 +501,7 @@ class DiagramSasaran
                             ->values();
 
                         // Replace the kinerjaProgram with the processed version
-                        $sasaranPd->kinerjaProgram = $sasaranProgram;
+                        // $sasaranPd->kinerjaProgram = $sasaranProgram;
                     }
 
                     return $sasaranPd;

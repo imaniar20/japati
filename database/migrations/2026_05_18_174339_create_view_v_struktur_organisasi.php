@@ -22,6 +22,8 @@ return new class extends Migration
 
                 satuan_kerja_id as lv2_unit_kerja_id,
 
+                satuan_kerja_nama as lv2_unit_kerja_nama,
+
                 satuan_kerja_nama_alias as jabatan_nama,
 
                 1 as level,

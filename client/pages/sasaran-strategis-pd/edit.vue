@@ -12,7 +12,7 @@
         <b-form-group v-if="$role.isSuper()" label-class="font-weight-bold pt-0" label-cols="12" label-cols-md="2" label="Satuan Kerja" label-for="satuan-kerja">
           <b-form-input :value="form.satuan_kerja.satuan_kerja_nama" plaintext></b-form-input>
         </b-form-group>
-        <b-form-group label-cols="12" label-cols-md="2" label="Relasi Sasaran Strategis RPJMD & IKU Gubernur" label-class="font-weight-bold" label-for="sasaran_strategis_rpjmd">
+        <b-form-group label-cols="12" label-cols-md="2" label="Relasi Sasaran Strategis RPJMD & IKU Bupati" label-class="font-weight-bold" label-for="sasaran_strategis_rpjmd">
           <v-select id="sasaran_strategis_rpjmd" 
             v-model="form.sasaran_strategis_rpjmd_id" 
             :options="sasaranStrategisRpjmd" 

@@ -70,6 +70,11 @@ Route::group(['middleware' => ['guest:api']], function () {
     Route::post('login', [LoginController::class, 'login']);
 });
 
+Route::prefix('tim-kerja')->group(function () {
+        Route::post('/', [TimKerjaController::class, 'store']);
+        Route::get('pegawai', [TimKerjaController::class, 'searchPegawai']);
+    });
+
 Route::get('/infografis', [InfografisController::class, 'index']);
 Route::group(['middleware' => ['auth:api']], function () {
     Route::prefix('kinerja-kabkota')->group(function () {
@@ -257,10 +262,7 @@ Route::group(['middleware' => ['auth:api']], function () {
         Route::resource('narasi-pd', LKIPNarasiPDController::class);
     });
 
-    Route::prefix('tim-kerja')->group(function () {
-        Route::post('/', [TimKerjaController::class, 'store']);
-        Route::get('pegawai', [TimKerjaController::class, 'searchPegawai']);
-    });
+    
 
     Route::prefix('rapor-kinerja/{triwulan}')->where(['triwulan' => '[1-4]'])->group(function () {
         Route::prefix('data')->group(function () {
