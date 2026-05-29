@@ -839,6 +839,14 @@
 
         <template v-if="$role.isSuper()">
           <li class="nav-item mT-30 actived">
+            <nuxt-link class="sidebar-link" to="/admin/users">
+              <span class="icon-holder">
+                <i class="text-info ti-user"></i>
+              </span>
+              <span class="title">Daftar Pengguna</span>
+            </nuxt-link>
+          </li>
+          <li class="nav-item mT-30 actived">
             <nuxt-link class="sidebar-link" to="/anggaran-capaian-iku">
               <span class="icon-holder">
                 <i class="text-info ti-pie-chart"></i>

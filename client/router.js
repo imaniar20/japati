@@ -196,6 +196,8 @@ const routes = [
   { path: '/nilai-jenjang-kinerja/rekap', name: 'nilai-jenjang-kinerja.rekap', component: page('nilai-jenjang-kinerja/rekap'), meta: { label: 'Rekap Nilai Jenjang Kinerja' } },
 
   { path: '/admin/users', name: 'admin.users', component: page('admin/users/index'), meta: { label: 'Daftar Pengguna' } },
+  { path: '/admin/users/create', name: 'admin.users.create', component: page('admin/users/create'), meta: { label: 'Tambah Pengguna', breadCrumbParent: {name: 'admin.users'} } },
+  { path: '/admin/users/:id/edit', name: 'admin.users.edit', component: page('admin/users/edit'), meta: { label: 'Edit Pengguna', breadCrumbParent: {name: 'admin.users'} } },
   
   { path: '/validasi-perencanaan', name: 'validasi-perencanaan', component: page('validasi-perencanaan/opd'), meta: { label: 'Validasi Perencanaan' } },
   { path: '/validasi-perencanaan/:satkerId', name: 'validasi-perencanaan.data', component: page('validasi-perencanaan/data'), meta: { label: 'Data Validasi Perencanaan', breadCrumbParent: {name: 'validasi-perencanaan'} } },

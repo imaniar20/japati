@@ -374,6 +374,11 @@ Route::group(['middleware' => ['auth:api']], function () {
     Route::prefix('admin')->middleware(RoleMiddleware(Role::SUPER))->group(function () {
         Route::prefix('users')->group(function () {
             Route::get('/', [UserController::class, 'index']);
+            Route::post('/', [UserController::class, 'store']);
+            Route::get('roles', [UserController::class, 'roles']);
+            Route::get('{user}', [UserController::class, 'detail']);
+            Route::patch('{user}', [UserController::class, 'update']);
+            Route::delete('{user}', [UserController::class, 'destroy']);
             Route::post('{user}/enable', [UserController::class, 'enable']);
             Route::post('{user}/disable', [UserController::class, 'disable']);
         });

@@ -17,9 +17,12 @@ class User extends Authenticatable implements JWTSubject
      * @var list<string>
      */
     protected $fillable = [
-        'name',
-        'email',
+        'nama',
+        'username',
         'password',
+        'satuan_kerja_id',
+        'role_id',
+        'is_active',
     ];
 
     /**
@@ -64,5 +67,10 @@ class User extends Authenticatable implements JWTSubject
     public function satuanKerja()
     {
         return $this->belongsTo(SatuanKerja::class, 'satuan_kerja_id');
+    }
+
+    public function role()
+    {
+        return $this->belongsTo(Role::class);
     }
 }
