@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 
 return new class extends Migration
 {
-    // public $connection = 'ekinerja';
+    public $connection = 'ekinerja';
 
     public function up(): void
     {
