@@ -855,6 +855,14 @@
             </nuxt-link>
           </li>
           <li class="nav-item mT-30 actived">
+            <nuxt-link class="sidebar-link" to="/admin/satuan-kerja">
+              <span class="icon-holder">
+                <i class="text-info ti-home"></i>
+              </span>
+              <span class="title">Master Satuan Kerja / OPD</span>
+            </nuxt-link>
+          </li>
+          <li class="nav-item mT-30 actived">
             <nuxt-link class="sidebar-link" to="/anggaran-capaian-iku">
               <span class="icon-holder">
                 <i class="text-info ti-pie-chart"></i>

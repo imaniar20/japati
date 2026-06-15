@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AnggaranCapaianIkuController;
+use App\Http\Controllers\AdminSatuanKerjaController;
 use App\Http\Controllers\AdminVisiMisiController;
 use App\Http\Controllers\BerbagiPeranController;
 use App\Http\Controllers\DiagramIkuController;
@@ -398,6 +399,14 @@ Route::group(['middleware' => ['auth:api']], function () {
             Route::post('indikator-tujuan', [AdminVisiMisiController::class, 'storeIndikatorTujuan']);
             Route::patch('indikator-tujuan/{indikatorTujuan}', [AdminVisiMisiController::class, 'updateIndikatorTujuan']);
             Route::delete('indikator-tujuan/{indikatorTujuan}', [AdminVisiMisiController::class, 'destroyIndikatorTujuan']);
+        });
+
+        Route::prefix('satuan-kerja')->group(function () {
+            Route::get('/', [AdminSatuanKerjaController::class, 'index']);
+            Route::post('/', [AdminSatuanKerjaController::class, 'store']);
+            Route::get('{satuanKerja}', [AdminSatuanKerjaController::class, 'show']);
+            Route::patch('{satuanKerja}', [AdminSatuanKerjaController::class, 'update']);
+            Route::delete('{satuanKerja}', [AdminSatuanKerjaController::class, 'destroy']);
         });
     });
 
