@@ -198,6 +198,7 @@ const routes = [
   { path: '/admin/users', name: 'admin.users', component: page('admin/users/index'), meta: { label: 'Daftar Pengguna' } },
   { path: '/admin/users/create', name: 'admin.users.create', component: page('admin/users/create'), meta: { label: 'Tambah Pengguna', breadCrumbParent: {name: 'admin.users'} } },
   { path: '/admin/users/:id/edit', name: 'admin.users.edit', component: page('admin/users/edit'), meta: { label: 'Edit Pengguna', breadCrumbParent: {name: 'admin.users'} } },
+  { path: '/admin/visi-misi', name: 'admin.visi-misi', component: page('admin/visi-misi/index'), meta: { label: 'Master Perencanaan RPJMD' } },
   
   { path: '/validasi-perencanaan', name: 'validasi-perencanaan', component: page('validasi-perencanaan/opd'), meta: { label: 'Validasi Perencanaan' } },
   { path: '/validasi-perencanaan/:satkerId', name: 'validasi-perencanaan.data', component: page('validasi-perencanaan/data'), meta: { label: 'Data Validasi Perencanaan', breadCrumbParent: {name: 'validasi-perencanaan'} } },

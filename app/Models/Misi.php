@@ -12,4 +12,9 @@ class Misi extends Model
     protected $table = 'misi';
 
     protected $guarded = [];
+
+    public function visi()
+    {
+        return $this->belongsTo(Visi::class, 'visi_id');
+    }
 }

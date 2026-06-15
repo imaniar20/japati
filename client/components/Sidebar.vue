@@ -847,6 +847,14 @@
             </nuxt-link>
           </li>
           <li class="nav-item mT-30 actived">
+            <nuxt-link class="sidebar-link" to="/admin/visi-misi">
+              <span class="icon-holder">
+                <i class="text-info ti-bookmark-alt"></i>
+              </span>
+              <span class="title">Master Perencanaan RPJMD</span>
+            </nuxt-link>
+          </li>
+          <li class="nav-item mT-30 actived">
             <nuxt-link class="sidebar-link" to="/anggaran-capaian-iku">
               <span class="icon-holder">
                 <i class="text-info ti-pie-chart"></i>

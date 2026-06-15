@@ -9,8 +9,8 @@
  * sinkron dengan client\plugins\constants.js
  * jangan diubah!
  */
-const BASE_TAHUN_MULAI = 2019;
-const BASE_TAHUN_MULAI_2 = 2025;
+const BASE_TAHUN_MULAI = 2020;
+const BASE_TAHUN_MULAI_2 = 20252;
 
 /**
  * default tahun_kinerja

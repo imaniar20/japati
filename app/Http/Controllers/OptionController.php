@@ -16,6 +16,7 @@ use App\Models\SasaranStrategis;
 use App\Models\SatuanKerja;
 use App\Models\SubKegiatan;
 use App\Models\Tujuan;
+use App\Models\Visi;
 use App\Models\VStrukturOrganisasi;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
@@ -25,6 +26,23 @@ use Illuminate\Validation\Rule;
 
 class OptionController extends Controller
 {
+    public function visi(Request $request)
+    {
+        $validated = $request->validate([
+            'ids' => ['nullable', 'array'],
+            'ids.*' => ['integer'],
+        ]);
+
+        $ids = $validated['ids'] ?? null;
+
+        $visi = Visi::tahunMulai()
+            ->orderBy('id')
+            ->when($ids, fn ($query) => $query->whereIn('id', $ids))
+            ->get();
+
+        return response()->json($visi);
+    }
+
     public function misi(Request $request)
     {
         $cacheKey = md5(json_encode([
@@ -35,12 +53,15 @@ class OptionController extends Controller
         $validated = $request->validate([
             'ids' => ['nullable', 'array'],
             'ids.*' => ['integer'],
+            'visi_id' => ['nullable', 'integer'],
         ]);
 
         $ids = $validated['ids'] ?? null;
+        $visiId = $validated['visi_id'] ?? null;
 
         $misi = Misi::tahunMulai()
             ->orderBy('nomor')
+            ->when($visiId, fn ($query) => $query->where('visi_id', $visiId))
             ->when($ids, fn ($query) => $query->whereIn('id', $ids))
             ->get();
 
@@ -57,12 +78,15 @@ class OptionController extends Controller
         $validated = $request->validate([
             'ids' => ['nullable', 'array'],
             'ids.*' => ['integer'],
+            'misi_id' => ['nullable', 'integer'],
         ]);
 
         $ids = $validated['ids'] ?? null;
+        $misiId = $validated['misi_id'] ?? null;
 
         $tujuan = Tujuan::tahunMulai()
             ->orderBy('nomor')
+            ->when($misiId, fn ($query) => $query->where('misi_id', $misiId))
             ->when($ids, fn ($query) => $query->whereIn('id', $ids))
             ->get();
 
@@ -79,12 +103,15 @@ class OptionController extends Controller
         $validated = $request->validate([
             'ids' => ['nullable', 'array'],
             'ids.*' => ['integer'],
+            'tujuan_id' => ['nullable', 'integer'],
         ]);
 
         $ids = $validated['ids'] ?? null;
+        $tujuanId = $validated['tujuan_id'] ?? null;
 
         $indikator = IndikatorTujuan::tahunMulai()
             ->orderBy('nomor')
+            ->when($tujuanId, fn ($query) => $query->where('tujuan_id', $tujuanId))
             ->when($ids, fn ($query) => $query->whereIn('id', $ids))
             ->get();
 

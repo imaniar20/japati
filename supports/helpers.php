@@ -71,35 +71,22 @@ function getTahunKinerja(): int
  */
 function getTahunMulai(): int
 {
-    if (strlen(session('tahun_kinerja', TAHUN_KINERJA)) == 4) {
-        $tahunMulai = BASE_TAHUN_MULAI;
-        $tahunKinerja = getTahunKinerja();
+    $tahunKinerja = getTahunKinerja();
+    $baseTahunMulaiBaru = (int) substr((string) BASE_TAHUN_MULAI_2, 0, 4);
 
-        while ($tahunMulai < $tahunKinerja) {
-            $tahunMulai += 5; // per 5 tahun
-        }
+    $tahunMulai = $tahunKinerja >= $baseTahunMulaiBaru
+        ? $baseTahunMulaiBaru
+        : BASE_TAHUN_MULAI;
 
-        if (($tahunMulai - $tahunKinerja) % 5 === 0) {
-            return $tahunMulai;
-        }
-
-        return $tahunMulai - 5;
-    } else {
-        $versiRpjmd = substr(BASE_TAHUN_MULAI_2, 4, 1);
-        $tahunMulai = (int) substr(BASE_TAHUN_MULAI_2, 4);
-        $tahunKinerja = getTahunKinerja();
-
-        while ($tahunMulai < $tahunKinerja) {
-            $tahunMulai += 5; // per 5 tahun
-        }
-
-        if (($tahunMulai - $tahunKinerja) % 5 === 0) {
-            return $tahunMulai;
-        }
-
-        return $tahunMulai - 5;
+    while ($tahunMulai < $tahunKinerja) {
+        $tahunMulai += 5; // per 5 tahun
     }
 
+    if (($tahunMulai - $tahunKinerja) % 5 === 0) {
+        return $tahunMulai;
+    }
+
+    return $tahunMulai - 5;
 }
 
 function getKeyTahun(string $key, int $offset = 0): string

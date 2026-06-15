@@ -2,11 +2,11 @@
 import axios from 'axios'
 
 export default {
-  name: 'OptionIndikatorTujuan',
+  name: 'OptionVisi',
   props: {
     id: {
       type: String,
-      default: 'option-indikator-tujuan',
+      default: 'option-visi',
     },
     reduce: {
       type: Function,
@@ -14,15 +14,15 @@ export default {
     },
     labelTitle: {
       type: String,
-      default: 'Indikator Tujuan',
+      default: 'Visi',
     },
     label: {
       type: String,
-      default: 'indikator',
+      default: 'visi',
     },
     placeholder: {
       type: String,
-      default: 'Pilih indikator tujuan',
+      default: 'Pilih visi',
     },
     placeholderBusy: {
       type: String,
@@ -51,13 +51,6 @@ export default {
       type: Array,
       default: () => []
     },
-    tujuanId: {
-      default: null,
-    },
-    dependsOnTujuan: {
-      type: Boolean,
-      default: false,
-    },
   },
   data() {
     return {
@@ -73,27 +66,13 @@ export default {
   mounted() {
     this.getData()
   },
-  watch: {
-    tujuanId(newValue, oldValue) {
-      if (newValue !== oldValue) {
-        this.$emit('input', null)
-        this.getData()
-      }
-    },
-  },
   methods: {
     async getData() {
-      if (this.dependsOnTujuan && !this.tujuanId) {
-        this.options = []
-        return
-      }
-
       this.isBusy = true
 
-      const { data } = await axios.get('option/indikator-tujuan', {
+      const { data } = await axios.get('option/visi', {
         params: {
           ids: this.ids,
-          tujuan_id: this.tujuanId,
         }
       })
 
@@ -114,14 +93,13 @@ export default {
       :label="label"
       :placeholder="isBusy ? placeholderBusy : placeholder"
       v-bind="selectProps"
-      :disabled="dependsOnTujuan && !tujuanId"
       :clearable="!required"
     >
       <template #option="opt">
-        {{ opt.nomor }}. {{ opt.indikator }}
+        {{ opt.visi }}
       </template>
       <template #selected-option="opt">
-        {{ opt.nomor }}. {{ opt.indikator }}
+        {{ opt.visi }}
       </template>
       <template #search="{attributes, events}">
         <input

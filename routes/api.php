@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AnggaranCapaianIkuController;
+use App\Http\Controllers\AdminVisiMisiController;
 use App\Http\Controllers\BerbagiPeranController;
 use App\Http\Controllers\DiagramIkuController;
 use App\Http\Controllers\DisplayMakroController;
@@ -382,6 +383,22 @@ Route::group(['middleware' => ['auth:api']], function () {
             Route::post('{user}/enable', [UserController::class, 'enable']);
             Route::post('{user}/disable', [UserController::class, 'disable']);
         });
+
+        Route::prefix('visi-misi')->group(function () {
+            Route::get('/', [AdminVisiMisiController::class, 'index']);
+            Route::post('visi', [AdminVisiMisiController::class, 'storeVisi']);
+            Route::patch('visi/{visi}', [AdminVisiMisiController::class, 'updateVisi']);
+            Route::delete('visi/{visi}', [AdminVisiMisiController::class, 'destroyVisi']);
+            Route::post('misi', [AdminVisiMisiController::class, 'storeMisi']);
+            Route::patch('misi/{misi}', [AdminVisiMisiController::class, 'updateMisi']);
+            Route::delete('misi/{misi}', [AdminVisiMisiController::class, 'destroyMisi']);
+            Route::post('tujuan', [AdminVisiMisiController::class, 'storeTujuan']);
+            Route::patch('tujuan/{tujuan}', [AdminVisiMisiController::class, 'updateTujuan']);
+            Route::delete('tujuan/{tujuan}', [AdminVisiMisiController::class, 'destroyTujuan']);
+            Route::post('indikator-tujuan', [AdminVisiMisiController::class, 'storeIndikatorTujuan']);
+            Route::patch('indikator-tujuan/{indikatorTujuan}', [AdminVisiMisiController::class, 'updateIndikatorTujuan']);
+            Route::delete('indikator-tujuan/{indikatorTujuan}', [AdminVisiMisiController::class, 'destroyIndikatorTujuan']);
+        });
     });
 
     Route::prefix('validasi-perencanaan')->group(function () {
@@ -490,6 +507,7 @@ Route::prefix('public-display')->middleware('tahun-kinerja-public')->group(funct
 });
 
 Route::prefix('option')->group(function () {
+    Route::get('visi', [OptionController::class, 'visi']);
     Route::get('misi', [OptionController::class, 'misi']);
     Route::get('tujuan', [OptionController::class, 'tujuan']);
     Route::get('indikator-tujuan', [OptionController::class, 'indikatorTujuan']);

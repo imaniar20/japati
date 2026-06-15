@@ -12,4 +12,9 @@ class IndikatorTujuan extends Model
     protected $table = 'indikator_tujuan';
 
     protected $guarded = [];
+
+    public function tujuan()
+    {
+        return $this->belongsTo(Tujuan::class, 'tujuan_id');
+    }
 }

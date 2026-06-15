@@ -12,4 +12,9 @@ class Tujuan extends Model
     protected $table = 'tujuan';
 
     protected $guarded = [];
+
+    public function misi()
+    {
+        return $this->belongsTo(Misi::class, 'misi_id');
+    }
 }

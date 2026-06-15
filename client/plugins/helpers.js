@@ -10,29 +10,23 @@ export default ({ app, $const }, inject) => {
   }
 
   const getTahunMulaiByTahunKinerja = (tahunKinerja) => {
-    if (String(tahunKinerja).length === 4) {
-        let tahunMulai = $const.base_tahun_mulai;
-        while (tahunMulai < tahunKinerja) {
-            tahunMulai += 5; // per 5 tahun
-        }
-        if ((tahunMulai - tahunKinerja) % 5 === 0) {
-            return tahunMulai;
-        }
-        // console.log(tahunMulai)
-        return tahunMulai - 5;
-    } else {
-        let tahunMulai = parseInt(String($const.base_tahun_mulai_2).substring(0,4));
-        let tahunKinerjaValue = parseInt(String(getTahunKinerja()).substring(0,4));
-        while (tahunMulai < tahunKinerjaValue) {
-            tahunMulai += 5; // per 5 tahun
-        }
+    const tahunKinerjaValue = parseInt(String(tahunKinerja).substring(0, 4))
+    const baseTahunMulaiBaru = parseInt(String($const.base_tahun_mulai_2).substring(0, 4))
 
-        if ((tahunMulai - tahunKinerjaValue) % 5 === 0) {
-            return tahunMulai;
-        }
-        return tahunMulai - 5;
+    let tahunMulai = tahunKinerjaValue >= baseTahunMulaiBaru
+      ? baseTahunMulaiBaru
+      : $const.base_tahun_mulai
+
+    while (tahunMulai < tahunKinerjaValue) {
+      tahunMulai += 5 // per 5 tahun
     }
-}
+
+    if ((tahunMulai - tahunKinerjaValue) % 5 === 0) {
+      return tahunMulai
+    }
+
+    return tahunMulai - 5
+  }
 
 
   const getTahunMulai = () => {

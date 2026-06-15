@@ -3,6 +3,7 @@
 namespace App\Http\Requests\VisiMisiRpjmd;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateVisiMisiRpjmd extends FormRequest
 {
@@ -25,9 +26,22 @@ class UpdateVisiMisiRpjmd extends FormRequest
     {
         return [
             'satuan_kerja_id' => ['required'],
-            'misi_id' => ['required'],
-            'tujuan_id' => ['required'],
-            'indikator_tujuan_id' => ['required'],
+            'visi_id' => ['required', 'integer', 'exists:visi,id'],
+            'misi_id' => [
+                'required',
+                'integer',
+                Rule::exists('misi', 'id')->where(fn ($query) => $query->where('visi_id', $this->input('visi_id'))),
+            ],
+            'tujuan_id' => [
+                'required',
+                'integer',
+                Rule::exists('tujuan', 'id')->where(fn ($query) => $query->where('misi_id', $this->input('misi_id'))),
+            ],
+            'indikator_tujuan_id' => [
+                'required',
+                'integer',
+                Rule::exists('indikator_tujuan', 'id')->where(fn ($query) => $query->where('tujuan_id', $this->input('tujuan_id'))),
+            ],
             'satuan' => ['required'],
             'tahun_mulai' => ['required'],
             'target_baseline' => ['required'],

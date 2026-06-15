@@ -51,6 +51,13 @@ export default {
       type: Array,
       default: () => []
     },
+    visiId: {
+      default: null,
+    },
+    dependsOnVisi: {
+      type: Boolean,
+      default: false,
+    },
   },
   data() {
     return {
@@ -66,13 +73,27 @@ export default {
   mounted() {
     this.getData()
   },
+  watch: {
+    visiId(newValue, oldValue) {
+      if (newValue !== oldValue) {
+        this.$emit('input', null)
+        this.getData()
+      }
+    },
+  },
   methods: {
     async getData() {
+      if (this.dependsOnVisi && !this.visiId) {
+        this.options = []
+        return
+      }
+
       this.isBusy = true
 
       const { data } = await axios.get('option/misi', {
         params: {
           ids: this.ids,
+          visi_id: this.visiId,
         }
       })
 
@@ -93,6 +114,7 @@ export default {
       :label="label"
       :placeholder="isBusy ? placeholderBusy : placeholder"
       v-bind="selectProps"
+      :disabled="dependsOnVisi && !visiId"
       :clearable="!required"
     >
       <template #option="opt">

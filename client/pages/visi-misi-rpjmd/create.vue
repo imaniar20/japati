@@ -2,12 +2,10 @@
   <b-card>
     <form @submit.prevent="store()">
       <OptionSatuanKerja v-if="$role.isSuper()" v-model="form.satuan_kerja_id" />
-      <b-form-group label-class="font-weight-bold pt-0" label-cols="12" label-cols-md="2" label="Visi" label-for="visi">
-        <b-form-input :value="visi.visi" plaintext></b-form-input>
-      </b-form-group>
-      <OptionMisi v-model="form.misi_id" />
-      <OptionTujuan v-model="form.tujuan_id" />
-      <OptionIndikatorTujuan v-model="form.indikator_tujuan_id" />
+      <OptionVisi v-model="form.visi_id" />
+      <OptionMisi v-model="form.misi_id" :visi-id="form.visi_id" depends-on-visi />
+      <OptionTujuan v-model="form.tujuan_id" :misi-id="form.misi_id" depends-on-misi />
+      <OptionIndikatorTujuan v-model="form.indikator_tujuan_id" :tujuan-id="form.tujuan_id" depends-on-tujuan />
       <b-form-group label-class="font-weight-bold pt-0" label-cols="12" label-cols-md="2" label="Satuan" label-for="satuan">
         <b-form-input id="satuan" v-model="form.satuan" required></b-form-input>
       </b-form-group>
@@ -71,15 +69,6 @@ export default {
 
     $role.hasRoles(`auth && ${restrictBiro} && (super_admin || pemerintah_daerah || setda)`)
   },
-  async asyncData() {
-    const { data: {
-      visi,
-    }} = await axios.get('visi-misi-rpjmd/create')
-
-    return {
-      visi,
-    }
-  },
   data() {
     let kinerjaTahunList = []
 
@@ -124,9 +113,6 @@ export default {
     }
   },
   created() {
-    /** set default visi */
-    this.form.visi_id = this.visi.id
-
     /** set default satuan kerja */
     this.form.satuan_kerja_id = this.user.satuan_kerja_id
   },

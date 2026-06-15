@@ -8,7 +8,7 @@ export default ({ app }, inject) => {
    * sinkron dengan supports\constants.php
    * jangan diubah!
    */
-  const base_tahun_mulai = 2019;
+  const base_tahun_mulai = 2020;
   const base_tahun_mulai_2 = 20252;
 
   /**
@@ -22,10 +22,11 @@ export default ({ app }, inject) => {
 
   inject('const', {
     tahun_mulai_list: [ // per 5 tahun
-      2019,
-      2024,
+      2020,
+      2025,
     ],
      tahun_kinerja_list: [
+      { key: 2020, display: '2020' },
       { key: 2021, display: '2021' },
       { key: 2022, display: '2022' },
       { key: 2023, display: '2023' },
