@@ -1,0 +1,27 @@
+export function createSatuanKerjaForm(tahunKinerja) {
+  return {
+    satuan_kerja_id: null,
+    tahun_id: parseInt(String(tahunKinerja || new Date().getFullYear()).substring(0, 4)),
+    satuan_kerja_nama: '',
+    kode: '',
+    satuan_kerja_alamat: '',
+    satuan_kerja_kel_ds: '',
+    kecamatan_id: null,
+    satuan_kerja_khusus: '',
+    status: null,
+    kode_skpd: '',
+    create_username: '',
+    update_username: '',
+    latitude: null,
+    longitude: null,
+    kota: '',
+    kecamatan: '',
+    kelurahan: '',
+    satuan_kerja_nama_alias: '',
+    sapk_id: '',
+    bobot: null,
+    m_kabkot_id: null,
+    rumpun_id: null,
+    lampiran_no: null,
+  }
+}

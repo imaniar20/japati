@@ -74,7 +74,7 @@ class AdminSatuanKerjaController extends Controller
             'satuan_kerja_kel_ds' => ['nullable', 'string', 'max:255'],
             'kecamatan_id' => ['nullable', 'integer'],
             'satuan_kerja_khusus' => ['nullable', 'string', 'max:255'],
-            'status' => ['nullable', 'integer'],
+            'status' => ['nullable', 'integer', Rule::in([0, 1])],
             'kode_skpd' => ['nullable', 'string', 'max:255'],
             'create_username' => ['nullable', 'string', 'max:255'],
             'update_username' => ['nullable', 'string', 'max:255'],

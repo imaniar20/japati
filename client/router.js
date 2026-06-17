@@ -200,6 +200,8 @@ const routes = [
   { path: '/admin/users/:id/edit', name: 'admin.users.edit', component: page('admin/users/edit'), meta: { label: 'Edit Pengguna', breadCrumbParent: {name: 'admin.users'} } },
   { path: '/admin/visi-misi', name: 'admin.visi-misi', component: page('admin/visi-misi/index'), meta: { label: 'Master Perencanaan RPJMD' } },
   { path: '/admin/satuan-kerja', name: 'admin.satuan-kerja', component: page('admin/satuan-kerja/index'), meta: { label: 'Master Satuan Kerja / OPD' } },
+  { path: '/admin/satuan-kerja/create', name: 'admin.satuan-kerja.create', component: page('admin/satuan-kerja/create'), meta: { label: 'Tambah Satuan Kerja / OPD', breadCrumbParent: {name: 'admin.satuan-kerja'} } },
+  { path: '/admin/satuan-kerja/:id/edit', name: 'admin.satuan-kerja.edit', component: page('admin/satuan-kerja/edit'), meta: { label: 'Edit Satuan Kerja / OPD', breadCrumbParent: {name: 'admin.satuan-kerja'} } },
   { path: '/admin/struktur-organisasi', name: 'admin.struktur-organisasi', component: page('admin/struktur-organisasi/index'), meta: { label: 'Master Unit Kerja / Struktur Organisasi' } },
   { path: '/admin/banner', name: 'admin.banner', component: page('admin/banner/index'), meta: { label: 'Master Banner' } },
   
