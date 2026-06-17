@@ -863,6 +863,14 @@
             </nuxt-link>
           </li>
           <li class="nav-item mT-30 actived">
+            <nuxt-link class="sidebar-link" to="/admin/struktur-organisasi">
+              <span class="icon-holder">
+                <i class="text-info ti-layout-list-thumb"></i>
+              </span>
+              <span class="title">Master Unit Kerja / Struktur Organisasi</span>
+            </nuxt-link>
+          </li>
+          <li class="nav-item mT-30 actived">
             <nuxt-link class="sidebar-link" to="/anggaran-capaian-iku">
               <span class="icon-holder">
                 <i class="text-info ti-pie-chart"></i>

@@ -19,8 +19,8 @@ export default {
     <section class="bg-hero">
       <div class="w-full h-full flex flex-col justify-center lg:px-0 mx-auto">
         <div class="flex flex-col items-center text-center">
-          <h2 class="text-white text-sm font-black mt-5">JAPATI</h2>
-          <h3 class="text-white">Kabupaten Kuningan Manajemen Kinerja Instansi Pemerintahan Terintegrasi</h3>
+          <h2 class="text-white text-sm font-black mt-5">SAKTI</h2>
+          <h3 class="text-white">Sistem Akutanbilitas Kinerja Terintegrasi Kabupaten Kuningan</h3>
           <WelcomeInfografis  style="width: 100%; max-width: 1200px;" />
         </div>
       </div>

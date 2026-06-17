@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AnggaranCapaianIkuController;
 use App\Http\Controllers\AdminSatuanKerjaController;
+use App\Http\Controllers\AdminStrukturOrganisasiController;
 use App\Http\Controllers\AdminVisiMisiController;
 use App\Http\Controllers\BerbagiPeranController;
 use App\Http\Controllers\DiagramIkuController;
@@ -407,6 +408,10 @@ Route::group(['middleware' => ['auth:api']], function () {
             Route::get('{satuanKerja}', [AdminSatuanKerjaController::class, 'show']);
             Route::patch('{satuanKerja}', [AdminSatuanKerjaController::class, 'update']);
             Route::delete('{satuanKerja}', [AdminSatuanKerjaController::class, 'destroy']);
+        });
+
+        Route::prefix('struktur-organisasi')->group(function () {
+            Route::get('/', [AdminStrukturOrganisasiController::class, 'index']);
         });
     });
 
