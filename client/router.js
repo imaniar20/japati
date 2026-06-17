@@ -201,6 +201,7 @@ const routes = [
   { path: '/admin/visi-misi', name: 'admin.visi-misi', component: page('admin/visi-misi/index'), meta: { label: 'Master Perencanaan RPJMD' } },
   { path: '/admin/satuan-kerja', name: 'admin.satuan-kerja', component: page('admin/satuan-kerja/index'), meta: { label: 'Master Satuan Kerja / OPD' } },
   { path: '/admin/struktur-organisasi', name: 'admin.struktur-organisasi', component: page('admin/struktur-organisasi/index'), meta: { label: 'Master Unit Kerja / Struktur Organisasi' } },
+  { path: '/admin/banner', name: 'admin.banner', component: page('admin/banner/index'), meta: { label: 'Master Banner' } },
   
   { path: '/validasi-perencanaan', name: 'validasi-perencanaan', component: page('validasi-perencanaan/opd'), meta: { label: 'Validasi Perencanaan' } },
   { path: '/validasi-perencanaan/:satkerId', name: 'validasi-perencanaan.data', component: page('validasi-perencanaan/data'), meta: { label: 'Data Validasi Perencanaan', breadCrumbParent: {name: 'validasi-perencanaan'} } },

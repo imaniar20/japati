@@ -12,13 +12,19 @@
       </div>
     </div>
 
-    <div v-if="showDots" class="embla__controls">
+    <div v-if="showDots && dotCount > 1" class="embla__controls">
       <!-- <button class="embla__button embla__button--prev" @click="scrollPrev">
         Prev
       </button> -->
       <div class="embla__dots">
-        <button v-for="(_, index) in dotCount" :key="index" class="embla__dot"
-          :class="{ 'embla__dot--selected': selectedDot === index }" @click="onDotClick(index)" />
+        <button
+          v-for="index in dotCount"
+          :key="index"
+          type="button"
+          class="embla__dot"
+          :class="{ 'embla__dot--selected': selectedDot === index - 1 }"
+          @click="onDotClick(index - 1)"
+        ></button>
       </div>
       <!-- <button class="embla__button embla__button--next" @click="scrollNext">
         Next
@@ -85,12 +91,13 @@ export default {
       //   'Slide 8',
       // ],
       selectedDot: 0,
-      currentSlidesPerView: this.slidesPerView
+      currentSlidesPerView: this.slidesPerView,
+      scrollSnaps: []
     }
   },
   computed: {
     dotCount() {
-      return Math.ceil(this.slides.length / this.currentSlidesPerView)
+      return this.scrollSnaps.length || Math.ceil(this.slides.length / this.currentSlidesPerView)
     },
     slideStyle() {
       const percentage = 100 / this.currentSlidesPerView
@@ -102,40 +109,37 @@ export default {
   },
   methods: {
     handleResize() {
+      const previousSlidesPerView = this.currentSlidesPerView
+
       this.windowWidth = window.innerWidth
       this.calculateSlidesPerView()
+
+      if (previousSlidesPerView !== this.currentSlidesPerView) {
+        this.$nextTick(this.initEmbla)
+      }
     },
     calculateSlidesPerView() {
       this.currentSlidesPerView = this.windowWidth < 1024
         ? 2
         : this.slidesPerView
-
-      if (this.$refs.emblaViewport) {
-        // Destroy previous instance if exists
-        if (this.emblaApi) {
-          this.emblaApi.destroy()
-        }
-
-        this.emblaApi = EmblaCarousel(this.$refs.emblaViewport, {
-          slidesToScroll: this.currentSlidesPerView,
-          containScroll: 'trimSnaps'
-        })
-      }
     },
     initEmbla() {
       if (this.$refs.emblaViewport) {
         // Destroy previous instance if exists
         if (this.emblaApi) {
+          this.emblaApi.off('select', this.onSelect)
           this.emblaApi.destroy()
         }
 
         this.emblaApi = EmblaCarousel(this.$refs.emblaViewport, {
-          slidesToScroll: this.slidesPerView,
+          slidesToScroll: this.currentSlidesPerView,
           containScroll: 'trimSnaps',
-          loop: true,
+          loop: this.slides.length > this.currentSlidesPerView,
         })
 
         this.emblaApi.on('select', this.onSelect)
+        this.setScrollSnaps()
+        this.onSelect()
       }
     },
     scrollPrev() {
@@ -151,14 +155,16 @@ export default {
     },
     onSelect() {
       if (this.emblaApi) {
-        this.selectedDot = Math.floor(this.emblaApi.selectedScrollSnap())
+        this.selectedDot = this.emblaApi.selectedScrollSnap()
       }
+    },
+    setScrollSnaps() {
+      this.scrollSnaps = this.emblaApi ? this.emblaApi.scrollSnapList() : []
     }
   },
   watch: {
-    currentSlidesPerView() {
-      // this.initEmbla()
-      this.calculateSlidesPerView()
+    slides() {
+      this.$nextTick(this.initEmbla)
     }
   },
   mounted() {

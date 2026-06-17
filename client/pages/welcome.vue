@@ -15,17 +15,17 @@ export default {
 </script>
 
 <template>
-  <div style="background-color: #FAFAFA; max-width: 1700px;  margin: 0 auto;">
+  <div class="welcome-page">
     <section class="bg-hero">
       <div class="w-full h-full flex flex-col justify-center lg:px-0 mx-auto">
-        <div class="flex flex-col items-center text-center">
-          <h2 class="text-white text-sm font-black mt-5">SAKTI</h2>
-          <h3 class="text-white">Sistem Akutanbilitas Kinerja Terintegrasi Kabupaten Kuningan</h3>
+        <div class="hero-copy">
+          <h2 class="hero-title">SAKTI</h2>
+          <h3 class="hero-subtitle">Sistem Akuntabilitas Kinerja Terintegrasi Kabupaten Kuningan</h3>
           <WelcomeInfografis  style="width: 100%; max-width: 1200px;" />
         </div>
       </div>
     </section>
-    <div style="max-width: 1500px; margin: auto;">
+    <div class="welcome-card-section">
       <div class="flex justify-center">
         <WelcomeCard />
       </div>
@@ -36,6 +36,20 @@ export default {
 </template>
 
 <style scoped lang="scss">
+.welcome-page {
+  background-color: #FAFAFA;
+  max-width: 1700px;
+  margin: 0 auto;
+}
+
+.welcome-card-section {
+  max-width: 1500px;
+  margin: -64px auto 0;
+  padding: 0 1rem;
+  position: relative;
+  z-index: 2;
+}
+
 /* Section styles */
 .bg-hero {
   //background-color: #1E88E5;
@@ -47,12 +61,14 @@ export default {
   /* mx-auto */
   margin-right: auto;
   /* mx-auto */
-  padding-top: 5rem;
+  padding-top: 4.5rem;
   /* py-20 */
   padding-bottom: 5rem;
   /* py-20 */
+  min-height: 660px;
   //background-size: cover;
   background-image: url('/img/pemda-kic.png');
+  background-size: cover;
   overflow: hidden;
   /* bg-cover */
   background-repeat: no-repeat;
@@ -68,12 +84,13 @@ export default {
     /* lg:bg-white */
     // background-image: url('/img/japati-background-home.png');
     /* lg:bg-[url('/images/background-hero.png')] */
-    height: 470px;
+    height: auto;
+    min-height: 310px;
     /* lg:h-[737px] */
     // margin-top: 5rem; /* lg:mt-20 */
-    padding-top: 5rem;
+    padding-top: 2.5rem;
     /* lg:py-0 */
-    padding-bottom: 0;
+    padding-bottom: 4.5rem;
     /* lg:py-0 */
   }
 }
@@ -83,10 +100,12 @@ export default {
   width: 100%;
   /* w-full */
   height: 100%;
+  min-height: inherit;
   /* h-full */
   display: flex;
   /* flex */
   flex-direction: column;
+  justify-content: flex-start;
   /* flex-col */
   gap: 0.5rem;
   /* gap-2 */
@@ -113,6 +132,19 @@ export default {
   }
 }
 
+@media (max-width: 767px) {
+  .bg-hero {
+    min-height: 560px;
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+  }
+
+  .welcome-card-section {
+    margin-top: -32px;
+    padding-top: 0;
+  }
+}
+
 /* Second div styles */
 .bg-hero>div>div {
   display: flex;
@@ -123,6 +155,41 @@ export default {
   /* items-center */
   text-align: center;
   /* text-center */
+}
+
+.hero-copy {
+  color: #ffffff;
+  font-family: "Segoe UI", Arial, sans-serif;
+  gap: 0.35rem;
+  text-shadow: 0 2px 12px rgba(15, 64, 110, 0.28);
+}
+
+.hero-title {
+  margin: 0;
+  font-size: 2.35rem;
+  font-weight: 800;
+  line-height: 1.12;
+  letter-spacing: 0;
+}
+
+.hero-subtitle {
+  max-width: 760px;
+  margin: 0;
+  color: rgba(255, 255, 255, 0.94);
+  font-size: 1.45rem;
+  font-weight: 600;
+  line-height: 1.35;
+  letter-spacing: 0;
+}
+
+@media (max-width: 767px) {
+  .hero-title {
+    font-size: 1.9rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1.05rem;
+  }
 }
 
 /* h1 styles */

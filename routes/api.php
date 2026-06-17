@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AnggaranCapaianIkuController;
+use App\Http\Controllers\AdminBannerController;
 use App\Http\Controllers\AdminSatuanKerjaController;
 use App\Http\Controllers\AdminStrukturOrganisasiController;
 use App\Http\Controllers\AdminVisiMisiController;
@@ -78,7 +79,7 @@ Route::prefix('tim-kerja')->group(function () {
         Route::get('pegawai', [TimKerjaController::class, 'searchPegawai']);
     });
 
-Route::get('/infografis', [InfografisController::class, 'index']);
+Route::get('/infografis', [InfografisController::class, 'index'])->middleware('tahun-kinerja-public');
 Route::group(['middleware' => ['auth:api']], function () {
     Route::prefix('kinerja-kabkota')->group(function () {
         Route::get('/satuan-kerja/{satuanKerjaId}', [KinerjaKabKotaController::class, 'getKabKotaSatuanKerja']);
@@ -412,6 +413,15 @@ Route::group(['middleware' => ['auth:api']], function () {
 
         Route::prefix('struktur-organisasi')->group(function () {
             Route::get('/', [AdminStrukturOrganisasiController::class, 'index']);
+        });
+
+        Route::prefix('banner')->group(function () {
+            Route::get('/', [AdminBannerController::class, 'index']);
+            Route::post('/', [AdminBannerController::class, 'store']);
+            Route::get('{bannerId}', [AdminBannerController::class, 'show'])->whereNumber('bannerId');
+            Route::post('{bannerId}', [AdminBannerController::class, 'update'])->whereNumber('bannerId');
+            Route::patch('{bannerId}', [AdminBannerController::class, 'update'])->whereNumber('bannerId');
+            Route::delete('{bannerId}', [AdminBannerController::class, 'destroy'])->whereNumber('bannerId');
         });
     });
 

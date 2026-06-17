@@ -10,58 +10,36 @@ export default {
   data() {
     return {
       data: [],
-      // data: [
-      //   'https://kinerja.jabarprov.go.id/files15/sakip/infografis/2024/1. Rata-rata Lama Sekolah.png',
-      //   'https://kinerja.jabarprov.go.id/files15/sakip/infografis/2024/2. Harapan Lama Sekolah.png',
-      //   'https://kinerja.jabarprov.go.id/files15/sakip/infografis/2024/3. Angka Harapan Hidup.png',
-      //   'https://kinerja.jabarprov.go.id/files15/sakip/infografis/2024/4. Prevalensi Stunting.png',
-      //   'https://kinerja.jabarprov.go.id/files15/sakip/infografis/2024/5. Pengeluaran Perkapita.png',
-      //   'https://kinerja.jabarprov.go.id/files15/sakip/infografis/2024/6. Persentase Penduduk Miskin.png',
-      //   'https://kinerja.jabarprov.go.id/files15/sakip/infografis/2024/7. Indeks Pemberdayaan Gender (IDG).png',
-      //   'https://kinerja.jabarprov.go.id/files15/sakip/infografis/2024/8. Indeks Perlindungan Anak (IPA).png',
-      //   'https://kinerja.jabarprov.go.id/files15/sakip/infografis/2024/9. Indeks Pembangunan Pemuda.png',
-      //   'https://kinerja.jabarprov.go.id/files15/sakip/infografis/2024/10. Laju Pertumbuhan Penduduk.png',
-      //   'https://kinerja.jabarprov.go.id/files15/sakip/infografis/2024/11. Laju Pertumbuhan Sektor Industri.png',
-      //   'https://kinerja.jabarprov.go.id/files15/sakip/infografis/2024/12. Laju Pertumbuhan Sektor Perdagangan.png',
-      //   'https://kinerja.jabarprov.go.id/files15/sakip/infografis/2024/13. Laju Pertumbuhan Sektor Pertanian, Kehutanan, dan Perikanan.png',
-      //   'https://kinerja.jabarprov.go.id/files15/sakip/infografis/2024/14. Nilai Tukar Petani (NTP).png',
-      //   'https://kinerja.jabarprov.go.id/files15/sakip/infografis/2024/15. Skor Pola Pangan Harapan (SPPH).png',
-      //   'https://kinerja.jabarprov.go.id/files15/sakip/infografis/2024/16. Laju Pertumbuhan Sektor Penyediaan Akomodasi Makan Minum.png',
-      //   'https://kinerja.jabarprov.go.id/files15/sakip/infografis/2024/17. Pembentukan Modal Tetap Bruto (PMTB) ADHB.png',
-      //   'https://kinerja.jabarprov.go.id/files15/sakip/infografis/2024/18. Proporsi Kredit UMKM Terhadap Total Kredit.png',
-      //   'https://kinerja.jabarprov.go.id/files15/sakip/infografis/2024/19. Tingkat Pengangguran Terbuka.png',
-      //   'https://kinerja.jabarprov.go.id/files15/sakip/infografis/2024/20. Tingkat Konektivitas Antar Wilayah.png',
-      //   'https://kinerja.jabarprov.go.id/files15/sakip/infografis/2024/21. Indeks Kualitas Infrastruktur.png',
-      //   'https://kinerja.jabarprov.go.id/files15/sakip/infografis/2024/22. Persentase Rumah Tangga Hunian Layak.png',
-      //   'https://kinerja.jabarprov.go.id/files15/sakip/infografis/2024/23. Indeks Kualitas Lingkungan Hidup (IKLH).png',
-      //   'https://kinerja.jabarprov.go.id/files15/sakip/infografis/2024/24. Tingkat Penurunan Emisi Gas Rumah Kaca.png',
-      //   'https://kinerja.jabarprov.go.id/files15/sakip/infografis/2024/25. Indeks Risiko Bencana.png',
-      //   'https://kinerja.jabarprov.go.id/files15/sakip/infografis/2024/26. Indeks Desa Membangun.png',
-      //   'https://kinerja.jabarprov.go.id/files15/sakip/infografis/2024/27. Indeks Demokrasi Indonesia (IDI) Jawa Barat.png',
-      //   'https://kinerja.jabarprov.go.id/files15/sakip/infografis/2024/28. Indeks Reformasi Birokrasi.png',
-      //   'https://kinerja.jabarprov.go.id/files15/sakip/infografis/2024/29. Indeks Inovasi Daerah.png',
-      // ],
       selected: null,
-      selectedType: 'image'
+      isBusy: false,
     };
+  },
+  computed: {
+    tahunKinerja() {
+      return this.$store.getters['auth/check']
+        ? this.$helper.getTahunKinerja()
+        : this.$helper.getTahunKinerjaPublic();
+    },
+    tahunKinerjaLabel() {
+      const option = this.$const.tahun_kinerja_list.find((tahun) => Number(tahun.key) === Number(this.tahunKinerja));
+
+      return option ? option.display : this.tahunKinerja;
+    },
   },
   methods: {
    showModal(item) {
-      if (item.pdf_url) {
-        this.selected = item.pdf_url;
-        this.selectedType = 'pdf';
-      } else {
-        this.selected = item.gambar_url;
-        this.selectedType = 'image';
-      }
+      this.selected = item.gambar_url;
       this.$bvModal.show("bv-modal-infografis");
     },
     async getData() {
       this.isBusy = true;
       try {
-        const response = await axios.get(`infografis`); // Added await and this.$axios
-        this.data = response.data; // Access the data property of the response
-        console.log(this.data); // This should now work
+        const response = await axios.get(`infografis`, {
+          params: {
+            tahun_kinerja: this.tahunKinerja,
+          },
+        });
+        this.data = response.data;
       } catch (error) {
         console.error("Error fetching data:", error);
       } finally {
@@ -76,28 +54,21 @@ export default {
 </script>
 <template>
   <section class="space-y-1">
-    <h4 class="text-md font-medium text-white">Laporan Kinerja Tahun 2025</h4>
-    <!-- <EmblaCarousel :slides-per-view="4" :spacing="24" :slides="data">
+    <h4 class="report-title">Laporan Kinerja Tahun {{ tahunKinerjaLabel }}</h4>
+    <EmblaCarousel v-if="data.length" :slides-per-view="4" :spacing="24" :slides="data">
       <template #default="{ data: slideData }">
         <div
-          class="bg-white rounded-lg p-12"
+          class="banner-slide"
           role="button"
           @click="showModal(slideData)"
         >
-          <img :src="slideData.gambar_url" class="w-full h-full" alt="" />
+          <img :src="slideData.gambar_url" :alt="slideData.judul || ''" />
         </div>
       </template>
-    </EmblaCarousel> -->
+    </EmblaCarousel>
      <b-modal id="bv-modal-infografis" size="xl" hide-header hide-footer>
-      <div v-if="selectedType === 'image'">
+      <div>
         <img :src="selected" class="w-full h-full" alt="" />
-      </div>
-      <div v-else-if="selectedType === 'pdf'" class="pdf-container">
-        <iframe 
-          :src="selected" 
-          class="w-full pdf-iframe"
-          frameborder="0">
-        </iframe>
       </div>
     </b-modal>
   </section>
@@ -110,6 +81,18 @@ section {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+}
+
+.report-title {
+  margin: 0 0 1rem;
+  color: rgba(255, 255, 255, 0.96);
+  font-family: "Segoe UI", Arial, sans-serif;
+  font-size: 1.45rem;
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: 0;
+  text-align: center;
+  text-shadow: 0 2px 10px rgba(15, 64, 110, 0.25);
 }
 
 /* Heading styles */
@@ -149,6 +132,16 @@ h2 {
   /* 8px */
 }
 
+.banner-slide {
+  width: 100%;
+  height: 400px;
+  padding: 0.5rem;
+  border-radius: 8px;
+  background: #ffffff;
+  box-shadow: 0 12px 24px rgba(20, 80, 120, 0.12);
+  cursor: pointer;
+}
+
 /* Image styles */
 img {
   /* w-full */
@@ -162,13 +155,27 @@ img {
   display: block;
 }
 
-.pdf-container {
-  width: 100%;
-  height: 80vh;
+.banner-slide img {
+  border-radius: 4px;
 }
 
-.pdf-iframe {
-  width: 100%;
-  height: 100%;
+@media (max-width: 1023px) {
+  .report-title {
+    font-size: 1.2rem;
+  }
+
+  .banner-slide {
+    height: 320px;
+  }
+}
+
+@media (max-width: 575px) {
+  .report-title {
+    font-size: 1rem;
+  }
+
+  .banner-slide {
+    height: 240px;
+  }
 }
 </style>
