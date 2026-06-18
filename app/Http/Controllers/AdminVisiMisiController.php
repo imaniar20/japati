@@ -49,7 +49,7 @@ class AdminVisiMisiController extends Controller
         $validated = $this->validateVisiPeriod($request);
 
         $visi = Visi::query()->create([
-            'visi' => $this->formatVisi($validated['tahun_mulai'], $validated['tahun_selesai']),
+            'visi' => $validated['visi'],
             'tahun_mulai' => $this->tahunMulai(),
         ]);
 
@@ -63,7 +63,7 @@ class AdminVisiMisiController extends Controller
         $validated = $this->validateVisiPeriod($request);
 
         $visi->update([
-            'visi' => $this->formatVisi($validated['tahun_mulai'], $validated['tahun_selesai']),
+            'visi' => $validated['visi'],
         ]);
 
         return response()->json($visi);
@@ -322,6 +322,7 @@ class AdminVisiMisiController extends Controller
         return $request->validate([
             'tahun_mulai' => ['required', 'integer', Rule::in([$this->tahunMulai()])],
             'tahun_selesai' => ['required', 'integer', Rule::in([$this->tahunSelesai()])],
+            'visi' => ['required', 'string', 'max:255'],
         ]);
     }
 
@@ -341,11 +342,6 @@ class AdminVisiMisiController extends Controller
     private function tahunSelesai(): int
     {
         return $this->tahunMulai() + 5;
-    }
-
-    private function formatVisi(int $tahunMulai, int $tahunSelesai): string
-    {
-        return "Visi {$tahunMulai}-{$tahunSelesai}";
     }
 
     private function nextMisiNomor(int $visiId): int

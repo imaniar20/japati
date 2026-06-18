@@ -56,9 +56,6 @@ export default {
   },
 
   computed: {
-    visiPreview() {
-      return `Visi ${this.visiForm.tahun_mulai || '-'}-${this.visiForm.tahun_selesai || '-'}`
-    },
     misiNomorPreview() {
       return this.getNextNomor(this.misi, 'visi_id', this.misiForm.visi_id, this.misiForm.id)
     },
@@ -81,6 +78,7 @@ export default {
         id: null,
         tahun_mulai: periode.tahun_mulai,
         tahun_selesai: periode.tahun_selesai,
+        visi: `Visi ${periode.tahun_mulai || '-'}-${periode.tahun_selesai || '-'}`,
       }
     },
     emptyMisiForm() {
@@ -151,6 +149,7 @@ export default {
         id: item.id,
         tahun_mulai: periode ? parseInt(periode[1]) : item.tahun_mulai,
         tahun_selesai: periode ? parseInt(periode[2]) : item.tahun_mulai + 5,
+        visi: item.visi,
       }
     },
     resetVisiForm() {
@@ -370,7 +369,7 @@ export default {
           </b-form-group>
 
           <b-form-group label-cols="12" label-cols-md="2" label="Hasil" label-class="font-weight-bold" label-for="visi">
-            <b-form-input id="visi" :value="visiPreview" readonly></b-form-input>
+            <b-form-input id="visi" v-model="visiForm.visi" required></b-form-input>
           </b-form-group>
 
           <div class="text-right">

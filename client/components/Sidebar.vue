@@ -356,6 +356,31 @@
             </ul>
           </li>
           
+          <li class="nav-item dropdown" v-if="$role.isPerangkatDaerah()">
+            <a class="dropdown" href="javascript:void(0);">
+              <span class="icon-holder">
+               <i class="ti-list" style="color:black"></i>
+              </span>
+              <span  style="font-size: smaller;" class="font-weight-bold title badge badge-dark" 
+                >Master Data</span
+              >
+              <span class="arrow">
+                <i class="ti-angle-right"></i>
+              </span>
+            </a>
+            <ul class="dropdown-menu">
+              <li>
+                <nuxt-link class="sidebar-link" to="/admin/pegawai">
+                  Master Pegawai
+                </nuxt-link>
+              </li>
+              <li>
+                <nuxt-link class="sidebar-link" to="/admin/tim-kerja">
+                  Master Tim Kerja / Pengampu Outcome
+                </nuxt-link>
+              </li>
+            </ul>
+          </li>
 
           <li class="nav-item dropdown">
             <a class="dropdown" href="javascript:void(0);">
@@ -838,61 +863,68 @@
         </template>
 
         <template v-if="$role.isSuper()">
-          <li class="nav-item mT-30 actived">
-            <nuxt-link class="sidebar-link" to="/admin/users">
+          <li class="nav-item dropdown mT-30 actived">
+            <a class="dropdown" href="javascript:void(0);">
               <span class="icon-holder">
-                <i class="text-info ti-user"></i>
+                <i class="text-info ti-folder"></i>
               </span>
-              <span class="title">Daftar Pengguna</span>
-            </nuxt-link>
-          </li>
-          <li class="nav-item mT-30 actived">
-            <nuxt-link class="sidebar-link" to="/admin/visi-misi">
-              <span class="icon-holder">
-                <i class="text-info ti-bookmark-alt"></i>
+              <span class="title">Master Data</span>
+              <span class="arrow">
+                <i class="ti-angle-right"></i>
               </span>
-              <span class="title">Master Perencanaan RPJMD</span>
-            </nuxt-link>
-          </li>
-          <li class="nav-item mT-30 actived">
-            <nuxt-link class="sidebar-link" to="/admin/satuan-kerja">
-              <span class="icon-holder">
-                <i class="text-info ti-home"></i>
-              </span>
-              <span class="title">Master Satuan Kerja / OPD</span>
-            </nuxt-link>
-          </li>
-          <li class="nav-item mT-30 actived">
-            <nuxt-link class="sidebar-link" to="/admin/struktur-organisasi">
-              <span class="icon-holder">
-                <i class="text-info ti-layout-list-thumb"></i>
-              </span>
-              <span class="title">Master Unit Kerja / Struktur Organisasi</span>
-            </nuxt-link>
-          </li>
-          <li class="nav-item mT-30 actived">
-            <nuxt-link class="sidebar-link" to="/admin/banner">
-              <span class="icon-holder">
-                <i class="text-info ti-image"></i>
-              </span>
-              <span class="title">Master Banner</span>
-            </nuxt-link>
-          </li>
-          <li class="nav-item mT-30 actived">
-            <nuxt-link class="sidebar-link" to="/anggaran-capaian-iku">
-              <span class="icon-holder">
-                <i class="text-info ti-pie-chart"></i>
-              </span>
-              <span class="title">Anggaran Capaian IKU</span>
-            </nuxt-link>
-          </li>
-          <li class="nav-item mT-30 actived">
-            <nuxt-link class="sidebar-link" to="/nilai-sakip-pemda">
-              <span class="icon-holder">
-                <i class="text-info ti-pie-chart"></i>
-              </span>
-              <span class="title">Nilai Sakip Pemda</span>
-            </nuxt-link>
+            </a>
+            <ul class="dropdown-menu">
+              <li>
+                <nuxt-link class="sidebar-link" to="/admin/users">
+                  Daftar Pengguna
+                </nuxt-link>
+              </li>
+              <li>
+                <nuxt-link class="sidebar-link" to="/admin/visi-misi">
+                  Master Perencanaan RPJMD
+                </nuxt-link>
+              </li>
+              <li>
+                <nuxt-link class="sidebar-link" to="/admin/sasaran-iku-rpjmd">
+                  Master Sasaran & IKU RPJMD
+                </nuxt-link>
+              </li>
+              <li>
+                <nuxt-link class="sidebar-link" to="/admin/satuan-kerja">
+                  Master Satuan Kerja / OPD
+                </nuxt-link>
+              </li>
+              <li>
+                <nuxt-link class="sidebar-link" to="/admin/pegawai">
+                  Master Pegawai
+                </nuxt-link>
+              </li>
+              <li>
+                <nuxt-link class="sidebar-link" to="/admin/tim-kerja">
+                  Master Tim Kerja / Pengampu Outcome
+                </nuxt-link>
+              </li>
+              <li>
+                <nuxt-link class="sidebar-link" to="/admin/struktur-organisasi">
+                  Master Unit Kerja / Struktur Organisasi
+                </nuxt-link>
+              </li>
+              <li>
+                <nuxt-link class="sidebar-link" to="/admin/banner">
+                  Master Banner
+                </nuxt-link>
+              </li>
+              <li>
+                <nuxt-link class="sidebar-link" to="/anggaran-capaian-iku">
+                  Anggaran Capaian IKU
+                </nuxt-link>
+              </li>
+              <li>
+                <nuxt-link class="sidebar-link" to="/nilai-sakip-pemda">
+                  Nilai Sakip Pemda
+                </nuxt-link>
+              </li>
+            </ul>
           </li>
         </template>
       </ul>

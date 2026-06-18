@@ -3,6 +3,7 @@
 use App\Http\Controllers\AnggaranCapaianIkuController;
 use App\Http\Controllers\AdminBannerController;
 use App\Http\Controllers\AdminSatuanKerjaController;
+use App\Http\Controllers\AdminSasaranIkuRpjmdController;
 use App\Http\Controllers\AdminStrukturOrganisasiController;
 use App\Http\Controllers\AdminVisiMisiController;
 use App\Http\Controllers\BerbagiPeranController;
@@ -40,6 +41,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\NilaiJenjangKinerjaController;
 use App\Http\Controllers\NilaiSakipPemdaController;
 use App\Http\Controllers\OptionController;
+use App\Http\Controllers\PegawaiDataController;
 use App\Http\Controllers\PenyebabKegagalanController;
 use App\Http\Controllers\PerjanjianKinerjaController;
 use App\Http\Controllers\PerubahanJumlahOutputV2Controller;
@@ -74,10 +76,22 @@ Route::group(['middleware' => ['guest:api']], function () {
     Route::post('login', [LoginController::class, 'login']);
 });
 
-Route::prefix('tim-kerja')->group(function () {
-        Route::post('/', [TimKerjaController::class, 'store']);
-        Route::get('pegawai', [TimKerjaController::class, 'searchPegawai']);
-    });
+Route::prefix('tim-kerja')->middleware('auth:api')->group(function () {
+    Route::get('/', [TimKerjaController::class, 'index']);
+    Route::post('/', [TimKerjaController::class, 'store']);
+    Route::get('pegawai', [TimKerjaController::class, 'searchPegawai']);
+    Route::get('{timKerja}', [TimKerjaController::class, 'show'])->whereNumber('timKerja');
+    Route::patch('{timKerja}', [TimKerjaController::class, 'update'])->whereNumber('timKerja');
+    Route::delete('{timKerja}', [TimKerjaController::class, 'destroy'])->whereNumber('timKerja');
+});
+
+Route::prefix('pegawai-data')->middleware('auth:api')->group(function () {
+    Route::get('/', [PegawaiDataController::class, 'index']);
+    Route::post('/', [PegawaiDataController::class, 'store']);
+    Route::get('{pegawaiData}', [PegawaiDataController::class, 'show'])->whereNumber('pegawaiData');
+    Route::patch('{pegawaiData}', [PegawaiDataController::class, 'update'])->whereNumber('pegawaiData');
+    Route::delete('{pegawaiData}', [PegawaiDataController::class, 'destroy'])->whereNumber('pegawaiData');
+});
 
 Route::get('/infografis', [InfografisController::class, 'index'])->middleware('tahun-kinerja-public');
 Route::group(['middleware' => ['auth:api']], function () {
@@ -401,6 +415,16 @@ Route::group(['middleware' => ['auth:api']], function () {
             Route::post('indikator-tujuan', [AdminVisiMisiController::class, 'storeIndikatorTujuan']);
             Route::patch('indikator-tujuan/{indikatorTujuan}', [AdminVisiMisiController::class, 'updateIndikatorTujuan']);
             Route::delete('indikator-tujuan/{indikatorTujuan}', [AdminVisiMisiController::class, 'destroyIndikatorTujuan']);
+        });
+
+        Route::prefix('sasaran-iku-rpjmd')->group(function () {
+            Route::get('/', [AdminSasaranIkuRpjmdController::class, 'index']);
+            Route::post('sasaran', [AdminSasaranIkuRpjmdController::class, 'storeSasaran']);
+            Route::patch('sasaran/{sasaranStrategis}', [AdminSasaranIkuRpjmdController::class, 'updateSasaran']);
+            Route::delete('sasaran/{sasaranStrategis}', [AdminSasaranIkuRpjmdController::class, 'destroySasaran']);
+            Route::post('indikator', [AdminSasaranIkuRpjmdController::class, 'storeIndikator']);
+            Route::patch('indikator/{indikatorSasaranStrategis}', [AdminSasaranIkuRpjmdController::class, 'updateIndikator']);
+            Route::delete('indikator/{indikatorSasaranStrategis}', [AdminSasaranIkuRpjmdController::class, 'destroyIndikator']);
         });
 
         Route::prefix('satuan-kerja')->group(function () {

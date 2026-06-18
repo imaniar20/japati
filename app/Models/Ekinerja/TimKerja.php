@@ -2,6 +2,8 @@
 
 namespace App\Models\Ekinerja;
 
+use App\Models\SatuanKerja;
+use App\Models\VStrukturOrganisasi;
 use App\Traits\ScopeRole;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -25,5 +27,15 @@ class TimKerja extends Model
     public function ketua()
     {
         return $this->belongsTo(VPegawaiData::class, 'nip_ketua', 'peg_nip');
+    }
+
+    public function satuanKerja()
+    {
+        return $this->belongsTo(SatuanKerja::class, 'satuan_kerja_id', 'satuan_kerja_id');
+    }
+
+    public function strukturOrganisasi()
+    {
+        return $this->belongsTo(VStrukturOrganisasi::class, 'v_struktur_organisasi_id')->withoutGlobalScope('active');
     }
 }

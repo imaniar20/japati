@@ -15,6 +15,6 @@ class VPegawaiData extends Model
 
     public function scopeAktif($query)
     {
-        return $query->where('peg_status', true);
+        return $query->whereRaw("LOWER(COALESCE(peg_status::text, '')) IN ('1', 'true', 't', 'aktif', 'active')");
     }
 }

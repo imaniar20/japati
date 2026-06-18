@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class VStrukturOrganisasi extends Model
 {
+    protected $connection = 'pgsql';
+
     protected $table = 'v_struktur_organisasi';
 
     protected $keyType = 'string';
