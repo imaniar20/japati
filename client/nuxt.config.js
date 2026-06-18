@@ -22,11 +22,15 @@ module.exports = {
       { name: 'google', content: 'notranslate' },
     ],
     script: [
-      { src: 'https://storage.googleapis.com/hotline-jabar-assets/hotline-adpem-widget.js'},
+      // Nonaktif sementara widget Hotline Layanan Administrasi Pemerintahan.
+      // Aktifkan lagi jika dibutuhkan:
+      // { src: 'https://storage.googleapis.com/hotline-jabar-assets/hotline-adpem-widget.js'},
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: `${process.env.BASE_ROUTE || '/'}favicon.ico` },
-      { rel: 'stylesheet', href: 'https://storage.googleapis.com/hotline-jabar-assets/hotline-adpem-widget.js' },
+      // Nonaktif sementara widget Hotline Layanan Administrasi Pemerintahan.
+      // Aktifkan lagi jika dibutuhkan:
+      // { rel: 'stylesheet', href: 'https://storage.googleapis.com/hotline-jabar-assets/hotline-adpem-widget.js' },
     ],
     bodyAttrs: {
       class: 'notranslate',
