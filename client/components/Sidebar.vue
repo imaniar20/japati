@@ -402,7 +402,7 @@
             <ul class="dropdown-menu">
               <li>
                 <nuxt-link class="sidebar-link" to="/visi-misi-rpjmd"
-                  >Visi, Misi & Tujuan RPJMD</nuxt-link
+                  >Visi, Misi & Tujuan RPJMD1</nuxt-link
                 >
               </li>
               <li>
