@@ -12,4 +12,9 @@ class IndikatorSubKegiatan extends Model
     protected $table = 'indikator_sub_kegiatan';
 
     protected $guarded = [];
+
+    public function subKegiatan()
+    {
+        return $this->belongsTo(SubKegiatan::class, 'sub_kegiatan_id');
+    }
 }

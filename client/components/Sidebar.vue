@@ -375,6 +375,16 @@
                 </nuxt-link>
               </li>
               <li>
+                <nuxt-link class="sidebar-link" to="/admin/kegiatan">
+                  Master Kegiatan
+                </nuxt-link>
+              </li>
+              <li>
+                <nuxt-link class="sidebar-link" to="/admin/sub-kegiatan">
+                  Master Sub Kegiatan
+                </nuxt-link>
+              </li>
+              <li>
                 <nuxt-link class="sidebar-link" to="/admin/pegawai">
                   Master Pegawai
                 </nuxt-link>
@@ -902,6 +912,16 @@
               <li>
                 <nuxt-link class="sidebar-link" to="/admin/program">
                   Master Program
+                </nuxt-link>
+              </li>
+              <li>
+                <nuxt-link class="sidebar-link" to="/admin/kegiatan">
+                  Master Kegiatan
+                </nuxt-link>
+              </li>
+              <li>
+                <nuxt-link class="sidebar-link" to="/admin/sub-kegiatan">
+                  Master Sub Kegiatan
                 </nuxt-link>
               </li>
               <li>

@@ -24,4 +24,19 @@ class Kegiatan extends Model
     {
         return $this->belongsTo(Program::class, 'program_id');
     }
+
+    public function satuanKerja()
+    {
+        return $this->belongsTo(SatuanKerja::class, 'satuan_kerja_id', 'satuan_kerja_id');
+    }
+
+    public function subKegiatan()
+    {
+        return $this->hasMany(SubKegiatan::class, 'kegiatan_id');
+    }
+
+    public function kinerjaKegiatan()
+    {
+        return $this->hasMany(KinerjaKegiatan::class, 'kegiatan_id');
+    }
 }

@@ -98,8 +98,8 @@ class KinerjaKegiatanController extends Controller
                 ])
                 ->get();
 
-            $program = Program::tahunKinerja()->whereIn('id', $kinerjaProgram->pluck('program_id'))->get();
-            $kegiatan = Kegiatan::tahunKinerja()->where('satuan_kerja_id', $satkerId)->get();
+            $program = Program::tahunKinerja()->whereIn('id', $kinerjaProgram->pluck('program_id'))->orderBy('kode')->get();
+            $kegiatan = Kegiatan::tahunKinerja()->where('satuan_kerja_id', $satkerId)->orderBy('kode')->get();
 
             // // jika biro maka pakai level 2
             // $level = isBiro($satkerId) ? 3 : 1;
@@ -195,8 +195,8 @@ class KinerjaKegiatanController extends Controller
             ])
             ->get();
 
-        $program = Program::tahunKinerja()->whereIn('id', $kinerjaProgram->pluck('program_id'))->get();
-        $kegiatan = Kegiatan::tahunKinerja()->where('satuan_kerja_id', $satkerId)->get();
+        $program = Program::tahunKinerja()->whereIn('id', $kinerjaProgram->pluck('program_id'))->orderBy('kode')->get();
+        $kegiatan = Kegiatan::tahunKinerja()->where('satuan_kerja_id', $satkerId)->orderBy('kode')->get();
 
         // // jika biro maka pakai level 2
         // $level = isBiro($satkerId) ? 3 : 1;

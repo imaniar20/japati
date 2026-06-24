@@ -92,7 +92,7 @@ class KinerjaSubKegiatanController extends Controller
                 ->where('satuan_kerja_id', $satkerId)
                 ->get();
 
-            $subKegiatan = SubKegiatan::tahunKinerja()->with('indikator')->where('satuan_kerja_id', $satkerId)->get();
+            $subKegiatan = SubKegiatan::tahunKinerja()->with('indikator')->where('satuan_kerja_id', $satkerId)->orderBy('kode')->get();
 
             // $level = isBiro($satkerId) ? 4 : 2;
 
@@ -194,9 +194,9 @@ class KinerjaSubKegiatanController extends Controller
             ->where('satuan_kerja_id', $satkerId)
             ->get();
 
-        $kegiatan = Kegiatan::tahunKinerja()->whereIn('id', $kinerjaKegiatan->pluck('kegiatan_id'))->get();
+        $kegiatan = Kegiatan::tahunKinerja()->whereIn('id', $kinerjaKegiatan->pluck('kegiatan_id'))->orderBy('kode')->get();
 
-        $subKegiatan = SubKegiatan::tahunKinerja()->with('indikator')->where('satuan_kerja_id', $satkerId)->get();
+        $subKegiatan = SubKegiatan::tahunKinerja()->with('indikator')->where('satuan_kerja_id', $satkerId)->orderBy('kode')->get();
 
         // $level = isBiro($satkerId) ? 4 : 2;
 

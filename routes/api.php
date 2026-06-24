@@ -28,6 +28,7 @@ use App\Http\Controllers\KinerjaSubKegiatanCrossController;
 use App\Http\Controllers\KinerjaSubKegiatanKabKotaController;
 use App\Http\Controllers\KinerjaTercapaiController;
 use App\Http\Controllers\KinerjaTidakTercapaiController;
+use App\Http\Controllers\KegiatanDataController;
 use App\Http\Controllers\LKE\CatatanRekomendasiController;
 use App\Http\Controllers\LKE\CetakLaporanControllerLke;
 use App\Http\Controllers\LKE\EvidenController;
@@ -60,6 +61,7 @@ use App\Http\Controllers\SasaranStrategisPdCrossController;
 use App\Http\Controllers\SasaranStrategisRpjmdController;
 use App\Http\Controllers\SKPController;
 use App\Http\Controllers\SolusiKinerjaController;
+use App\Http\Controllers\SubKegiatanDataController;
 use App\Http\Controllers\TimKerjaController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ValidasiKinerjaKegiatanController;
@@ -100,6 +102,22 @@ Route::prefix('program-data')->middleware('auth:api')->group(function () {
     Route::get('{program}', [ProgramDataController::class, 'show'])->whereNumber('program');
     Route::patch('{program}', [ProgramDataController::class, 'update'])->whereNumber('program');
     Route::delete('{program}', [ProgramDataController::class, 'destroy'])->whereNumber('program');
+});
+
+Route::prefix('kegiatan-data')->middleware('auth:api')->group(function () {
+    Route::get('/', [KegiatanDataController::class, 'index']);
+    Route::post('/', [KegiatanDataController::class, 'store']);
+    Route::get('{kegiatan}', [KegiatanDataController::class, 'show'])->whereNumber('kegiatan');
+    Route::patch('{kegiatan}', [KegiatanDataController::class, 'update'])->whereNumber('kegiatan');
+    Route::delete('{kegiatan}', [KegiatanDataController::class, 'destroy'])->whereNumber('kegiatan');
+});
+
+Route::prefix('sub-kegiatan-data')->middleware('auth:api')->group(function () {
+    Route::get('/', [SubKegiatanDataController::class, 'index']);
+    Route::post('/', [SubKegiatanDataController::class, 'store']);
+    Route::get('{subKegiatan}', [SubKegiatanDataController::class, 'show'])->whereNumber('subKegiatan');
+    Route::patch('{subKegiatan}', [SubKegiatanDataController::class, 'update'])->whereNumber('subKegiatan');
+    Route::delete('{subKegiatan}', [SubKegiatanDataController::class, 'destroy'])->whereNumber('subKegiatan');
 });
 
 Route::get('/infografis', [InfografisController::class, 'index'])->middleware('tahun-kinerja-public');
