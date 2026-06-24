@@ -370,6 +370,11 @@
             </a>
             <ul class="dropdown-menu">
               <li>
+                <nuxt-link class="sidebar-link" to="/admin/program">
+                  Master Program
+                </nuxt-link>
+              </li>
+              <li>
                 <nuxt-link class="sidebar-link" to="/admin/pegawai">
                   Master Pegawai
                 </nuxt-link>
@@ -892,6 +897,11 @@
               <li>
                 <nuxt-link class="sidebar-link" to="/admin/satuan-kerja">
                   Master Satuan Kerja / OPD
+                </nuxt-link>
+              </li>
+              <li>
+                <nuxt-link class="sidebar-link" to="/admin/program">
+                  Master Program
                 </nuxt-link>
               </li>
               <li>

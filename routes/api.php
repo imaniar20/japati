@@ -44,6 +44,7 @@ use App\Http\Controllers\OptionController;
 use App\Http\Controllers\PegawaiDataController;
 use App\Http\Controllers\PenyebabKegagalanController;
 use App\Http\Controllers\PerjanjianKinerjaController;
+use App\Http\Controllers\ProgramDataController;
 use App\Http\Controllers\PerubahanJumlahOutputV2Controller;
 use App\Http\Controllers\PohonKinerjaController;
 use App\Http\Controllers\PohonKinerjaInsertDataController;
@@ -91,6 +92,14 @@ Route::prefix('pegawai-data')->middleware('auth:api')->group(function () {
     Route::get('{pegawaiData}', [PegawaiDataController::class, 'show'])->whereNumber('pegawaiData');
     Route::patch('{pegawaiData}', [PegawaiDataController::class, 'update'])->whereNumber('pegawaiData');
     Route::delete('{pegawaiData}', [PegawaiDataController::class, 'destroy'])->whereNumber('pegawaiData');
+});
+
+Route::prefix('program-data')->middleware('auth:api')->group(function () {
+    Route::get('/', [ProgramDataController::class, 'index']);
+    Route::post('/', [ProgramDataController::class, 'store']);
+    Route::get('{program}', [ProgramDataController::class, 'show'])->whereNumber('program');
+    Route::patch('{program}', [ProgramDataController::class, 'update'])->whereNumber('program');
+    Route::delete('{program}', [ProgramDataController::class, 'destroy'])->whereNumber('program');
 });
 
 Route::get('/infografis', [InfografisController::class, 'index'])->middleware('tahun-kinerja-public');

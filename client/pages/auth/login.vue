@@ -11,15 +11,14 @@ export default {
     },
 
     data() {
-        const tahunKinerja = this.$helper.getTahunKinerja();
-
         return {
             form: {
                 username: null,
                 password: null,
             },
             remember: false,
-            tahunKinerja,
+            tahunKinerja: 2025,
+            tahunKinerjaList: [{ key: 2025, display: "2025" }],
             isBusy: false,
             error: null,
         };
@@ -134,7 +133,7 @@ export default {
                     <div class="col-md-7">
                         <b-form-select v-model="tahunKinerja">
                             <b-form-select-option
-                                v-for="tahun of $const.tahun_kinerja_list"
+                                v-for="tahun of tahunKinerjaList"
                                 :key="tahun.key"
                                 :value="tahun.key"
                             >

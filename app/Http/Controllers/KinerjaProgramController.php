@@ -80,7 +80,7 @@ class KinerjaProgramController extends Controller
                 ->where('satuan_kerja_id', parseSatuanKerjaId($satkerId))
                 ->get();
 
-            $program = Program::tahunKinerja()->where('satuan_kerja_id', $satkerId)->get();
+            $program = Program::tahunKinerja()->where('satuan_kerja_id', $satkerId)->orderBy('kode')->get();
 
             // // jika biro maka pakai level 2
             // $level = isBiro($satkerId) ? 2 : 1;
@@ -157,7 +157,7 @@ class KinerjaProgramController extends Controller
             ->where('satuan_kerja_id', parseSatuanKerjaId($satkerId))
             ->get();
 
-        $program = Program::tahunKinerja()->where('satuan_kerja_id', $satkerId)->get();
+        $program = Program::tahunKinerja()->where('satuan_kerja_id', $satkerId)->orderBy('kode')->get();
 
         // // jika biro maka pakai level 2
         // $level = isBiro($satkerId) ? 2 : 1;
