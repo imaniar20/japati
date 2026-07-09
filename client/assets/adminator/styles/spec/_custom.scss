@@ -1,14 +1,94 @@
-.sidebar-link.router-link-exact-active.router-link-active, .sidebar-link.router-link-exact-active.router-link-active:hover {
-    background: #000000 !important;
-    color: white !important;
-}
-// .sidebar-link.router-link-exact-active.router-link-active  i{
-//     color: white !important;
-// }
+// Core Light Theme Variables
+$sidebar-bg: #ffffff;        // Clean White
+$sidebar-border-color: #e2e8f0; // Soft Grey Border
+$sidebar-text: #475569;      // Slate Grey
+$sidebar-text-hover: #1e293b; // Dark Slate Text on Hover
+$sidebar-icon: #64748b;
+$sidebar-icon-hover: #1e293b;
+$sidebar-active-bg: rgba(30, 136, 229, 0.08); // Semi-transparent #1E88E5
+$sidebar-active-indicator: #1E88E5;          // Brand Blue Accent
+$sidebar-hover-bg: #f1f5f9;   // Light Slate Hover
 
-.sidebar-link:not(.router-link-active):hover{
-  background: #000000 !important;
-  color: white !important;
+// Sidebar Main Container Override
+.sidebar {
+  background-color: $sidebar-bg !important;
+  border-right: 1px solid $sidebar-border-color !important;
+
+  .sidebar-inner {
+    background-color: $sidebar-bg !important;
+
+    .sidebar-logo {
+      background-color: #1E88E5 !important;
+      border-bottom: 1px solid $sidebar-border-color !important;
+    }
+
+    .sidebar-menu {
+      background-color: $sidebar-bg !important;
+    }
+  }
+}
+
+// Sidebar Links Override
+.sidebar-link {
+  color: $sidebar-text !important;
+  transition: all 0.2s ease-in-out !important;
+  margin: 4px 8px !important;
+  border-radius: 8px !important;
+  padding: 10px 15px !important;
+  display: flex !important;
+  align-items: flex-start !important;
+
+  i {
+    color: $sidebar-icon !important;
+    transition: all 0.2s ease-in-out !important;
+    flex-shrink: 0 !important;
+    margin-top: 4px !important;
+    margin-right: 8px !important;
+  }
+}
+
+// Hover State
+.sidebar-link:not(.router-link-active):hover {
+  background-color: $sidebar-hover-bg !important;
+  color: $sidebar-text-hover !important;
+
+  i {
+    color: $sidebar-icon-hover !important;
+  }
+}
+
+// Active State
+.sidebar-link.router-link-active,
+.sidebar-link.router-link-exact-active {
+  background-color: $sidebar-active-bg !important;
+  color: $sidebar-active-indicator !important;
+  font-weight: 600 !important;
+  position: relative;
+
+  i {
+    color: $sidebar-active-indicator !important;
+  }
+
+  &::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 15%;
+    height: 70%;
+    width: 3px;
+    background-color: $sidebar-active-indicator;
+    border-radius: 0 4px 4px 0;
+  }
+}
+
+// Nested Dropdown Submenu
+.sidebar .sidebar-menu .dropdown-menu {
+  background-color: #f8fafc !important;
+  border: none !important;
+  
+  .sidebar-link {
+    padding-left: 25px !important;
+  }
 }
 .page-item.active .page-link {
   background-color: #ffffff;

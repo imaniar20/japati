@@ -16,16 +16,16 @@
             </b-dropdown-item>
           </b-nav-item-dropdown>
           <b-nav-item-dropdown class="kinerja-gubernur" text="KInerja Bupati">
-            <b-dropdown-item to="/public-display/display-makro/dashboard">Dashboard</b-dropdown-item>
+            <b-dropdown-item to="/public-display/display-makro/dashboard"><i class="ti-layout-grid2 mr-2"></i>Dashboard</b-dropdown-item>
             <b-dropdown-divider></b-dropdown-divider>
-            <b-dropdown-item to="/public-display/display-makro/rpjmd">RPJMD Kabupaten Kuningan</b-dropdown-item>
+            <b-dropdown-item to="/public-display/display-makro/rpjmd"><i class="ti-map mr-2"></i>RPJMD Kabupaten Kuningan</b-dropdown-item>
             <b-dropdown-divider></b-dropdown-divider>
-            <b-dropdown-item to="/public-display/display-makro/rkpd">RKPD Kabupaten Kuningan</b-dropdown-item>
+            <b-dropdown-item to="/public-display/display-makro/rkpd"><i class="ti-map-alt mr-2"></i>RKPD Kabupaten Kuningan</b-dropdown-item>
             <b-dropdown-divider></b-dropdown-divider>
-            <b-dropdown-item to="/public-display/display-makro/perjanjian-kinerja">Perjanjian Kinerja Bupati Kabupaten
+            <b-dropdown-item to="/public-display/display-makro/perjanjian-kinerja"><i class="ti-notepad mr-2"></i>Perjanjian Kinerja Bupati Kabupaten
               Kuningan</b-dropdown-item>
             <b-dropdown-divider></b-dropdown-divider>
-            <b-dropdown-item to="/public-display/display-makro/rencana-aksi">Rencana Aksi Bupati Kabupaten
+            <b-dropdown-item to="/public-display/display-makro/rencana-aksi"><i class="ti-write mr-2"></i>Rencana Aksi Bupati Kabupaten
               Kuningan</b-dropdown-item>
             <!-- <b-dropdown-divider></b-dropdown-divider>
             <b-dropdown-item to="/public-display/display-makro/capaian-kinerja-pemda">Capaian Kinerja Pemda</b-dropdown-item>
@@ -42,18 +42,18 @@
             <b-dropdown-divider></b-dropdown-divider>
             <b-dropdown-item to="/public-display/display-makro/capaian-kinerja-aktivitas">Capaian Kinerja Aktivitas</b-dropdown-item> -->
             <b-dropdown-divider></b-dropdown-divider>
-            <b-dropdown-item to="/public-display/display-makro/cascading">Cascading</b-dropdown-item>
+            <b-dropdown-item to="/public-display/display-makro/cascading"><i class="ti-layers mr-2"></i>Cascading</b-dropdown-item>
           </b-nav-item-dropdown>
           <b-nav-item-dropdown class="kinerja-pd" text="Kinerja Perangkat Daerah">
-            <b-dropdown-item to="/public-display/display-mikro/renstra">Renstra</b-dropdown-item>
+            <b-dropdown-item to="/public-display/display-mikro/renstra"><i class="ti-map mr-2"></i>Renstra</b-dropdown-item>
             <b-dropdown-divider></b-dropdown-divider>
-            <b-dropdown-item to="/public-display/display-mikro/rkt">RKT</b-dropdown-item>
+            <b-dropdown-item to="/public-display/display-mikro/rkt"><i class="ti-map-alt mr-2"></i>RKT</b-dropdown-item>
             <b-dropdown-divider></b-dropdown-divider>
-            <b-dropdown-item to="/public-display/display-mikro/perjanjian-kinerja">Perjanjian Kinerja</b-dropdown-item>
+            <b-dropdown-item to="/public-display/display-mikro/perjanjian-kinerja"><i class="ti-notepad mr-2"></i>Perjanjian Kinerja</b-dropdown-item>
             <b-dropdown-divider></b-dropdown-divider>
             <!-- <b-dropdown-item to="/public-display/display-mikro/rencana-aksi">Rencana Aksi Perangkat Daerah</b-dropdown-item>
             <b-dropdown-divider></b-dropdown-divider> -->
-            <b-dropdown-item to="/public-display/display-mikro/rencana-aksi-terintegrasi" disabled>Rencana Aksi
+            <b-dropdown-item to="/public-display/display-mikro/rencana-aksi-terintegrasi" disabled><i class="ti-write mr-2"></i>Rencana Aksi
               Perangkat Daerah Terintegrasi</b-dropdown-item>
             <!-- <b-dropdown-divider></b-dropdown-divider>
             <b-dropdown-item to="/public-display/display-mikro/realisasi-rencana-aksi-terintegrasi">Realisasi Rencana Aksi Perangkat Daerah Terintegrasi</b-dropdown-item>
@@ -74,7 +74,7 @@
             <b-dropdown-divider></b-dropdown-divider>
             <!-- <b-dropdown-item to="/public-display/display-mikro/capaian-kinerja-langkah-aksi">Capaian Kinerja Langkah Aksi</b-dropdown-item>
             <b-dropdown-divider></b-dropdown-divider> -->
-            <b-dropdown-item to="/public-display/display-mikro/cascading">Cascading</b-dropdown-item>
+            <b-dropdown-item to="/public-display/display-mikro/cascading"><i class="ti-layers mr-2"></i>Cascading</b-dropdown-item>
           </b-nav-item-dropdown>
           <!-- <b-nav-item to="/public-display/arsitektur-kinerja" style="font-size: 18px;">Arsitektur Kinerja</b-nav-item> -->
           <!-- <b-nav-item to="/public-display/arsitektur-kinerja-cross-cutting" style="font-size: 18px;">Arsitektur Kinerja Cross-Cutting</b-nav-item> -->
@@ -82,8 +82,8 @@
 
         <!-- Right aligned nav items -->
         <b-navbar-nav class="ml-auto">
-          <b-nav-item to="/login" v-if="!authenticated">Login</b-nav-item>
-          <b-nav-item to="/dashboard" v-else>Dashboard</b-nav-item>
+          <b-nav-item to="/login" v-if="!authenticated"><i class="ti-key mr-2"></i>Login</b-nav-item>
+          <b-nav-item to="/dashboard" v-else><i class="ti-layout-grid2 mr-2"></i>Dashboard</b-nav-item>
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>

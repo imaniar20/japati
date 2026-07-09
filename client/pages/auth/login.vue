@@ -164,7 +164,7 @@ export default {
                             class="w-100"
                         >
                             <b-spinner small v-if="isBusy"></b-spinner>
-                            Login
+                            <i class="ti-key mr-2" v-if="!isBusy"></i>Login
                         </b-button>
                     </div>
                 </div>
