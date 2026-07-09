@@ -9,16 +9,12 @@
 
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav>
-        <b-nav-item-dropdown class="kinerja-gubernur" :text="$helper.getTahunKinerjaPublic().toString()">
-       <b-dropdown-item 
-      v-for="tahun of $const.tahun_kinerja_list" 
-      @click="setTahunKinerjaPublic(tahun.key)" 
-      :key="tahun.key"
-    
-        >
-          {{ tahun.display }}
-        </b-dropdown-item>
-      </b-nav-item-dropdown>
+          <b-nav-item-dropdown class="kinerja-gubernur" :text="$helper.getTahunKinerjaPublic().toString()">
+            <b-dropdown-item v-for="tahun of $const.tahun_kinerja_list" @click="setTahunKinerjaPublic(tahun.key)"
+              :key="tahun.key">
+              {{ tahun.display }}
+            </b-dropdown-item>
+          </b-nav-item-dropdown>
           <b-nav-item-dropdown class="kinerja-gubernur" text="KInerja Bupati">
             <b-dropdown-item to="/public-display/display-makro/dashboard">Dashboard</b-dropdown-item>
             <b-dropdown-divider></b-dropdown-divider>
@@ -26,9 +22,11 @@
             <b-dropdown-divider></b-dropdown-divider>
             <b-dropdown-item to="/public-display/display-makro/rkpd">RKPD Kabupaten Kuningan</b-dropdown-item>
             <b-dropdown-divider></b-dropdown-divider>
-            <b-dropdown-item to="/public-display/display-makro/perjanjian-kinerja">Perjanjian Kinerja Bupati Kabupaten Kuningan</b-dropdown-item>
+            <b-dropdown-item to="/public-display/display-makro/perjanjian-kinerja">Perjanjian Kinerja Bupati Kabupaten
+              Kuningan</b-dropdown-item>
             <b-dropdown-divider></b-dropdown-divider>
-            <b-dropdown-item to="/public-display/display-makro/rencana-aksi">Rencana Aksi Bupati Kabupaten Kuningan</b-dropdown-item>
+            <b-dropdown-item to="/public-display/display-makro/rencana-aksi">Rencana Aksi Bupati Kabupaten
+              Kuningan</b-dropdown-item>
             <!-- <b-dropdown-divider></b-dropdown-divider>
             <b-dropdown-item to="/public-display/display-makro/capaian-kinerja-pemda">Capaian Kinerja Pemda</b-dropdown-item>
             <b-dropdown-divider></b-dropdown-divider>
@@ -55,7 +53,8 @@
             <b-dropdown-divider></b-dropdown-divider>
             <!-- <b-dropdown-item to="/public-display/display-mikro/rencana-aksi">Rencana Aksi Perangkat Daerah</b-dropdown-item>
             <b-dropdown-divider></b-dropdown-divider> -->
-            <b-dropdown-item to="/public-display/display-mikro/rencana-aksi-terintegrasi">Rencana Aksi Perangkat Daerah Terintegrasi</b-dropdown-item>
+            <b-dropdown-item to="/public-display/display-mikro/rencana-aksi-terintegrasi" disabled>Rencana Aksi
+              Perangkat Daerah Terintegrasi</b-dropdown-item>
             <!-- <b-dropdown-divider></b-dropdown-divider>
             <b-dropdown-item to="/public-display/display-mikro/realisasi-rencana-aksi-terintegrasi">Realisasi Rencana Aksi Perangkat Daerah Terintegrasi</b-dropdown-item>
             <b-dropdown-divider></b-dropdown-divider>
@@ -119,32 +118,41 @@ export default {
 }
 </script>
 <style scoped lang="scss">
-  /deep/ .kinerja-gubernur .nav-link, /deep/ .kinerja-pd .nav-link {
-    font-size: 18px;
-  }
-  /deep/ .kinerja-gubernur .dropdown-menu{
-    background: #e1e1e1;
-  }
-  /deep/ .kinerja-pd .dropdown-menu{
-    background: #e1e1e1;
-  }
-  /deep/ .dropdown-menu .router-link-active{
-    background: #1E88E5;
-    color:white;
-  }
-  .bg-blue{
-    // background: linear-gradient(to bottom, #3277f8 0%, #4d73f0 50%, #0c71f6 51%, #176ef0 71%, #0b68e2 100%);
-    background: #1E88E5;
-  }
-  /deep/ .dropdown-divider{
-    margin:0;
-    border-top: 1px solid #b5b5b5;
-  }
-  /deep/ .dropdown-item:hover, /deep/ .dropdown-item:focus {
-    font-weight: bold;
+/deep/ .kinerja-gubernur .nav-link,
+/deep/ .kinerja-pd .nav-link {
+  font-size: 18px;
+}
 
-  }
-  /deep/ .navbar-nav .nav-link {
-    color: white !important;
-  }
+/deep/ .kinerja-gubernur .dropdown-menu {
+  background: #e1e1e1;
+}
+
+/deep/ .kinerja-pd .dropdown-menu {
+  background: #e1e1e1;
+}
+
+/deep/ .dropdown-menu .router-link-active {
+  background: #1E88E5;
+  color: white;
+}
+
+.bg-blue {
+  // background: linear-gradient(to bottom, #3277f8 0%, #4d73f0 50%, #0c71f6 51%, #176ef0 71%, #0b68e2 100%);
+  background: #1E88E5;
+}
+
+/deep/ .dropdown-divider {
+  margin: 0;
+  border-top: 1px solid #b5b5b5;
+}
+
+/deep/ .dropdown-item:hover,
+/deep/ .dropdown-item:focus {
+  font-weight: bold;
+
+}
+
+/deep/ .navbar-nav .nav-link {
+  color: white !important;
+}
 </style>
