@@ -5,11 +5,11 @@
       <div class="sidebar-logo">
         <div class="peers ai-c fxw-nw">
           <div class="peer peer-greed">
-            <nuxt-link to="/" class="sidebar-link td-n">
+            <nuxt-link to="/" class="td-n">
               <div class="peers ai-c fxw-nw">
                 <div class="peer">
                   <div class="logo text-center align-items-center justify-content-center" style="display: flex">
-                    <img src="~/assets/images/japati.png" alt="" style="height: 32px" />
+                    <img src="~/assets/images/japati.png" alt="" style="height: 38px" />
                   </div>
                 </div>
               </div>
@@ -109,7 +109,7 @@
           <li class="nav-item mT-10">
             <nuxt-link class="sidebar-link" to="/lke/penilaian">
               <span class="icon-holder">
-                <i class="ti-list" style="color:black"></i>
+                <i class="ti-pencil-alt" style="color:black"></i>
               </span>
               <span style="font-size: small;" class="font-weight-bold title">Penilaian Awal</span>
             </nuxt-link>
@@ -117,7 +117,7 @@
           <li class="nav-item">
             <nuxt-link class="sidebar-link" to="/lke/penilaian-2">
               <span class="icon-holder">
-                <i class="ti-list" style="color:black"></i>
+                <i class="ti-check-box" style="color:black"></i>
               </span>
               <span style="font-size: small;" class="font-weight-bold title">Penilaian Akhir</span>
             </nuxt-link>
@@ -125,7 +125,7 @@
           <li class="nav-item">
             <nuxt-link class="sidebar-link" to="/lke/penilaian-humanis">
               <span class="icon-holder">
-                <i class="ti-list" style="color:black"></i>
+                <i class="ti-comments" style="color:black"></i>
               </span>
               <span style="font-size: small;" class="font-weight-bold title">Penilaian Pleno</span>
             </nuxt-link>
@@ -141,7 +141,7 @@
           <li class="nav-item">
             <nuxt-link class="sidebar-link" to="/lke/hasil">
               <span class="icon-holder">
-                <i class="ti-list" style="color:black"></i>
+                <i class="ti-bar-chart" style="color:black"></i>
               </span>
               <span style="font-size: small;" class="font-weight-bold title">Hasil Penilaian</span>
             </nuxt-link>
@@ -149,7 +149,7 @@
           <li class="nav-item">
             <nuxt-link class="sidebar-link" to="/lke/status-penilaian">
               <span class="icon-holder">
-                <i class="ti-list" style="color:black"></i>
+                <i class="ti-info-alt" style="color:black"></i>
               </span>
               <span style="font-size: small;" class="font-weight-bold title">Status Penilaian</span>
             </nuxt-link>
@@ -157,7 +157,7 @@
           <li class="nav-item">
             <nuxt-link class="sidebar-link" to="/lke/lhe">
               <span class="icon-holder">
-                <i class="ti-list" style="color:black"></i>
+                <i class="ti-folder" style="color:black"></i>
               </span>
               <span style="font-size: small;" class="font-weight-bold title">LHE</span>
             </nuxt-link>
@@ -173,7 +173,7 @@
           <li class="nav-item">
             <nuxt-link class="sidebar-link" to="/lke/rekap-pd">
               <span class="icon-holder">
-                <i class="ti-list" style="color:black"></i>
+                <i class="ti-view-list-alt" style="color:black"></i>
               </span>
               <span style="font-size: small;" class="font-weight-bold title">Rekapitulasi Penilaian PD</span>
             </nuxt-link>
@@ -181,7 +181,7 @@
           <li class="nav-item">
             <nuxt-link class="sidebar-link" to="/lke/rekomendasi">
               <span class="icon-holder">
-                <i class="ti-list" style="color:black"></i>
+                <i class="ti-thumb-up" style="color:black"></i>
               </span>
               <span style="font-size: small;" class="font-weight-bold title">Rekomendasi dan Tindak Lanjut</span>
             </nuxt-link>
@@ -277,7 +277,7 @@
           <li class="nav-item dropdown">
             <a class="dropdown" href="javascript:void(0);">
               <span class="icon-holder">
-                <i class="ti-list" style="color:black"></i>
+                <i class="ti-dashboard" style="color:black"></i>
               </span>
               <span style="font-size: smaller;" class="font-weight-bold title badge badge-dark">Dashboard</span>
               <span class="arrow">
@@ -295,7 +295,7 @@
           <li class="nav-item dropdown" v-if="$role.isPerangkatDaerah()">
             <a class="dropdown" href="javascript:void(0);">
               <span class="icon-holder">
-                <i class="ti-list" style="color:black"></i>
+                <i class="ti-folder" style="color:black"></i>
               </span>
               <span style="font-size: smaller;" class="font-weight-bold title badge badge-dark">Master Data</span>
               <span class="arrow">
@@ -334,7 +334,7 @@
           <li class="nav-item dropdown">
             <a class="dropdown" href="javascript:void(0);">
               <span class="icon-holder">
-                <i class="ti-list" style="color:black"></i>
+                <i class="ti-calendar" style="color:black"></i>
               </span>
               <span style="font-size: smaller;" class="font-weight-bold title badge badge-dark">Perencanaan</span>
               <span class="arrow">
@@ -503,7 +503,7 @@
           <li class="nav-item dropdown" v-if="!$role.isSuper() && !$role.isSetda()">
             <a class="dropdown-toggle" href="javascript:void(0);">
               <span class="icon-holder">
-                <i class="ti-list" style="color:black"></i>
+                <i class="ti-printer" style="color:black"></i>
               </span>
               <span class="font-weight-bold title badge badge-dark" style="font-size: smaller;">Pelaporan</span>
               <span class="arrow">
@@ -531,7 +531,7 @@
           <li class="nav-item dropdown" v-if="!$role.isSetda()">
             <a class="dropdown-toggle" href="javascript:void(0);">
               <span class="icon-holder">
-                <i class="ti-list" style="color:black"></i>
+                <i class="ti-ruler-pencil" style="color:black"></i>
               </span>
               <span class="font-weight-bold title badge badge-dark" style="font-size: smaller;">Pengukuran</span>
               <span class="arrow">
@@ -593,7 +593,7 @@
           <li class="nav-item dropdown" v-if="!$role.isSetda()">
             <a class="dropdown-toggle" href="javascript:void(0);">
               <span class="icon-holder">
-                <i class="ti-list" style="color:black"></i>
+                <i class="ti-shield" style="color:black"></i>
               </span>
               <span class="font-weight-bold title badge badge-dark" style="font-size:smaller;">Evaluasi Akunt.
                 Internal</span>

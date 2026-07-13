@@ -16,16 +16,21 @@
             </b-dropdown-item>
           </b-nav-item-dropdown>
           <b-nav-item-dropdown class="kinerja-gubernur" text="KInerja Bupati">
-            <b-dropdown-item to="/public-display/display-makro/dashboard"><i class="ti-layout-grid2 mr-2"></i>Dashboard</b-dropdown-item>
+            <b-dropdown-item to="/public-display/display-makro/dashboard"><i
+                class="ti-layout-grid2 mr-2"></i>Dashboard</b-dropdown-item>
             <b-dropdown-divider></b-dropdown-divider>
-            <b-dropdown-item to="/public-display/display-makro/rpjmd"><i class="ti-map mr-2"></i>RPJMD Kabupaten Kuningan</b-dropdown-item>
-            <b-dropdown-divider></b-dropdown-divider>
-            <b-dropdown-item to="/public-display/display-makro/rkpd"><i class="ti-map-alt mr-2"></i>RKPD Kabupaten Kuningan</b-dropdown-item>
-            <b-dropdown-divider></b-dropdown-divider>
-            <b-dropdown-item to="/public-display/display-makro/perjanjian-kinerja"><i class="ti-notepad mr-2"></i>Perjanjian Kinerja Bupati Kabupaten
+            <b-dropdown-item to="/public-display/display-makro/rpjmd"><i class="ti-map mr-2"></i>RPJMD Kabupaten
               Kuningan</b-dropdown-item>
             <b-dropdown-divider></b-dropdown-divider>
-            <b-dropdown-item to="/public-display/display-makro/rencana-aksi"><i class="ti-write mr-2"></i>Rencana Aksi Bupati Kabupaten
+            <b-dropdown-item to="/public-display/display-makro/rkpd"><i class="ti-map-alt mr-2"></i>RKPD Kabupaten
+              Kuningan</b-dropdown-item>
+            <b-dropdown-divider></b-dropdown-divider>
+            <b-dropdown-item to="/public-display/display-makro/perjanjian-kinerja"><i
+                class="ti-notepad mr-2"></i>Perjanjian Kinerja Bupati Kabupaten
+              Kuningan</b-dropdown-item>
+            <b-dropdown-divider></b-dropdown-divider>
+            <b-dropdown-item to="/public-display/display-makro/rencana-aksi"><i class="ti-write mr-2"></i>Rencana Aksi
+              Bupati Kabupaten
               Kuningan</b-dropdown-item>
             <!-- <b-dropdown-divider></b-dropdown-divider>
             <b-dropdown-item to="/public-display/display-makro/capaian-kinerja-pemda">Capaian Kinerja Pemda</b-dropdown-item>
@@ -42,18 +47,22 @@
             <b-dropdown-divider></b-dropdown-divider>
             <b-dropdown-item to="/public-display/display-makro/capaian-kinerja-aktivitas">Capaian Kinerja Aktivitas</b-dropdown-item> -->
             <b-dropdown-divider></b-dropdown-divider>
-            <b-dropdown-item to="/public-display/display-makro/cascading"><i class="ti-layers mr-2"></i>Cascading</b-dropdown-item>
+            <b-dropdown-item to="/public-display/display-makro/cascading"><i
+                class="ti-layers mr-2"></i>Cascading</b-dropdown-item>
           </b-nav-item-dropdown>
           <b-nav-item-dropdown class="kinerja-pd" text="Kinerja Perangkat Daerah">
-            <b-dropdown-item to="/public-display/display-mikro/renstra"><i class="ti-map mr-2"></i>Renstra</b-dropdown-item>
+            <b-dropdown-item to="/public-display/display-mikro/renstra"><i
+                class="ti-map mr-2"></i>Renstra</b-dropdown-item>
             <b-dropdown-divider></b-dropdown-divider>
             <b-dropdown-item to="/public-display/display-mikro/rkt"><i class="ti-map-alt mr-2"></i>RKT</b-dropdown-item>
             <b-dropdown-divider></b-dropdown-divider>
-            <b-dropdown-item to="/public-display/display-mikro/perjanjian-kinerja"><i class="ti-notepad mr-2"></i>Perjanjian Kinerja</b-dropdown-item>
+            <b-dropdown-item to="/public-display/display-mikro/perjanjian-kinerja"><i
+                class="ti-notepad mr-2"></i>Perjanjian Kinerja</b-dropdown-item>
             <b-dropdown-divider></b-dropdown-divider>
             <!-- <b-dropdown-item to="/public-display/display-mikro/rencana-aksi">Rencana Aksi Perangkat Daerah</b-dropdown-item>
             <b-dropdown-divider></b-dropdown-divider> -->
-            <b-dropdown-item to="/public-display/display-mikro/rencana-aksi-terintegrasi" disabled><i class="ti-write mr-2"></i>Rencana Aksi
+            <b-dropdown-item to="/public-display/display-mikro/rencana-aksi-terintegrasi" disabled
+              title="Belum Terintegrasi dengan e-Kinerja"><i class="ti-write mr-2"></i>Rencana Aksi
               Perangkat Daerah Terintegrasi</b-dropdown-item>
             <!-- <b-dropdown-divider></b-dropdown-divider>
             <b-dropdown-item to="/public-display/display-mikro/realisasi-rencana-aksi-terintegrasi">Realisasi Rencana Aksi Perangkat Daerah Terintegrasi</b-dropdown-item>
@@ -74,7 +83,8 @@
             <b-dropdown-divider></b-dropdown-divider>
             <!-- <b-dropdown-item to="/public-display/display-mikro/capaian-kinerja-langkah-aksi">Capaian Kinerja Langkah Aksi</b-dropdown-item>
             <b-dropdown-divider></b-dropdown-divider> -->
-            <b-dropdown-item to="/public-display/display-mikro/cascading"><i class="ti-layers mr-2"></i>Cascading</b-dropdown-item>
+            <b-dropdown-item to="/public-display/display-mikro/cascading"><i
+                class="ti-layers mr-2"></i>Cascading</b-dropdown-item>
           </b-nav-item-dropdown>
           <!-- <b-nav-item to="/public-display/arsitektur-kinerja" style="font-size: 18px;">Arsitektur Kinerja</b-nav-item> -->
           <!-- <b-nav-item to="/public-display/arsitektur-kinerja-cross-cutting" style="font-size: 18px;">Arsitektur Kinerja Cross-Cutting</b-nav-item> -->
@@ -154,5 +164,36 @@ export default {
 
 /deep/ .navbar-nav .nav-link {
   color: white !important;
+  position: relative;
+  padding-bottom: 6px !important;
+
+  &::before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: #ffffff;
+    transition: width 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  &:hover::before,
+  &.router-link-active::before,
+  &.router-link-exact-active::before {
+    width: 100%;
+  }
+}
+
+// Open dropdown on hover (desktop viewport)
+@media (min-width: 992px) {
+  /deep/ .navbar-nav .dropdown:hover .dropdown-menu {
+    display: block !important;
+    margin-top: 0 !important;
+  }
+
+  /deep/ .navbar-nav .dropdown-toggle {
+    pointer-events: none;
+  }
 }
 </style>

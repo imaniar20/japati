@@ -20,6 +20,21 @@ $sidebar-hover-bg: #f1f5f9;   // Light Slate Hover
     .sidebar-logo {
       background-color: #1E88E5 !important;
       border-bottom: 1px solid $sidebar-border-color !important;
+      display: flex !important;
+      align-items: center !important;
+      height: 65px !important;
+      padding: 0 15px !important;
+
+      .logo {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        
+        img {
+          height: 38px !important;
+          object-fit: contain !important;
+        }
+      }
     }
 
     .sidebar-menu {
@@ -97,4 +112,10 @@ $sidebar-hover-bg: #f1f5f9;   // Light Slate Hover
 }
 .bg-lightyellow{
   background: rgb(254,251,241) !important;
+}
+
+// Enable tooltips on disabled dropdown items
+.dropdown-item.disabled, .dropdown-item:disabled {
+  pointer-events: auto !important;
+  cursor: not-allowed !important;
 }
