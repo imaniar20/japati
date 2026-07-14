@@ -91,142 +91,179 @@ export default {
 </script>
 
 <template>
-  <EmblaCarousel :slides-per-view="10" :spacing="0" :slides="data">
-    <template #default="{ data }">
-      <div class="bg-white space-y-2 rounded-xl p-20 flex flex-col" style="width: 140px; height: 100%; justify-content: space-between;">
-        <div class="space-y-4">
-          <div class="size-10 border border-gray-300 rounded-lg flex items-center justify-center">
-            <img :src="data.icon" alt="">
+  <div class="services-container">
+    <div class="services-header text-center">
+      <h3 class="services-section-title">Menu Utama Public Display</h3>
+      <p class="services-section-subtitle">Silakan pilih menu di bawah ini untuk mengakses visualisasi data akuntabilitas kinerja terintegrasi.</p>
+    </div>
+    
+    <div class="grid-services">
+      <div v-for="(item, index) in data" :key="index" class="service-card">
+        <div class="service-top">
+          <div class="service-icon-wrapper">
+            <img :src="item.icon" alt="" />
           </div>
-          <div class="flex flex-col">
-            <h4 class="text-sm text-gray-900 font-bold leading-8 capitalize">{{ data.nama }}
-            </h4>
-            <!-- <p class="text-sm text-gray-700 leading-6">Lihat data {{ data.nama }}</p> -->
+          <div class="service-content">
+            <h4 class="service-title">{{ item.nama }}</h4>
+            <p class="service-desc">Akses data dan infografis perkembangan {{ item.nama.toLowerCase() }} Kabupaten Kuningan secara terintegrasi.</p>
           </div>
         </div>
-        <NuxtLink :to="data.link" class="bg-transparent border-0 flex items-center gap-2 text-sm text-blue-600 font-bold leading-6">
-          Selengkapnya
-          <svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path
-              d="M12.5389 16.2631L17.7783 11.0237C17.8273 10.9676 17.8677 10.9045 17.8981 10.8365L17.943 10.7767C17.9741 10.6851 17.9893 10.5889 17.9879 10.4922C17.9949 10.4301 17.9949 10.3673 17.9879 10.3051L17.9879 10.2078C17.9605 10.1594 17.9279 10.1142 17.8906 10.0731L17.8232 9.96081L12.5838 4.7214C12.5142 4.65125 12.4314 4.59556 12.3402 4.55756C12.249 4.51956 12.1512 4.5 12.0524 4.5C11.9536 4.5 11.8557 4.51956 11.7645 4.55756C11.6733 4.59556 11.5905 4.65125 11.521 4.7214C11.4508 4.79098 11.3951 4.87377 11.3571 4.96498C11.3191 5.05619 11.2996 5.15402 11.2996 5.25283C11.2996 5.35164 11.3191 5.44947 11.3571 5.54068C11.3951 5.63189 11.4508 5.71467 11.521 5.78425L15.458 9.74375L4.14836 9.74375C3.94985 9.74375 3.75947 9.8226 3.6191 9.96297C3.47873 10.1033 3.39987 10.2937 3.39987 10.4922C3.39987 10.6907 3.47873 10.8811 3.6191 11.0215C3.75947 11.1619 3.94985 11.2407 4.14836 11.2407L15.4281 11.2407L11.4461 15.2002C11.376 15.2698 11.3203 15.3526 11.2823 15.4438C11.2443 15.535 11.2247 15.6328 11.2247 15.7316C11.2247 15.8304 11.2443 15.9283 11.2823 16.0195C11.3203 16.1107 11.376 16.1935 11.4461 16.2631C11.5161 16.3378 11.6007 16.3975 11.6947 16.4382C11.7887 16.479 11.8901 16.5 11.9925 16.5C12.0949 16.5 12.1963 16.479 12.2903 16.4382C12.3843 16.3975 12.4689 16.3378 12.5389 16.2631Z"
-              fill="#1E88E5" />
-          </svg>
+        <NuxtLink :to="item.link" class="service-link">
+          <span>Lihat Data</span>
+          <i class="ti-arrow-right ml-1 icon-arrow"></i>
         </NuxtLink>
       </div>
-    </template>
-  </EmblaCarousel>
+    </div>
+  </div>
 </template>
 
-<style scoped>
-/* Main container styles */
-.bg-white {
-  background-color: white;
-}
-
-.w-full {
+<style scoped lang="scss">
+.services-container {
+  padding: 40px 15px;
   width: 100%;
 }
 
-.space-y-2>*+* {
-  margin-top: 0.5rem;
-  /* space-y-2 */
+.services-header {
+  margin-bottom: 35px;
+
+  .services-section-title {
+    font-size: 1.85rem;
+    font-weight: 800;
+    color: #0f172a;
+    margin-bottom: 8px;
+  }
+
+  .services-section-subtitle {
+    font-size: 1rem;
+    color: #64748b;
+    max-width: 600px;
+    margin: 0 auto;
+  }
 }
 
-.rounded-xl {
-  border-radius: 0.75rem;
+.grid-services {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 20px;
+  width: 100%;
 }
 
-.p-5 {
-  padding: 1.25rem;
-}
-
-/* Inner container styles */
-.space-y-4>*+* {
-  margin-top: 1rem;
-  /* space-y-4 */
-}
-
-/* Icon container styles */
-.size-14 {
-  width: 3.5rem;
-  height: 3.5rem;
-}
-
-.border {
-  border-width: 1px;
-}
-
-.border-gray-300 {
-  border-color: #d1d5db;
-}
-
-.rounded-lg {
-  border-radius: 0.5rem;
-}
-
-.flex {
+.service-card {
   display: flex;
-}
-
-.items-center {
-  align-items: center;
-}
-
-.justify-center {
-  justify-content: center;
-}
-
-/* Text container styles */
-.flex-col {
   flex-direction: column;
+  justify-content: space-between;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 24px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  height: 230px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+
+  &:hover {
+    transform: translateY(-5px);
+    border-color: #1E88E5;
+    box-shadow: 0 12px 20px -5px rgba(30, 136, 229, 0.08), 0 8px 8px -5px rgba(30, 136, 229, 0.04);
+
+    .service-icon-wrapper {
+      background-color: rgba(30, 136, 229, 0.08);
+      transform: scale(1.05);
+    }
+
+    .service-title {
+      color: #1E88E5;
+    }
+
+    .service-link .icon-arrow {
+      transform: translateX(4px);
+    }
+  }
 }
 
-/* Heading styles */
-.text-xl {
-  font-size: 1.25rem;
-  line-height: 1.75rem;
+.service-top {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
 }
 
-.text-gray-900 {
-  color: #111827;
+.service-icon-wrapper {
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  background-color: #f8fafc;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.25s ease;
+  border: 1px solid #f1f5f9;
+
+  img {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+  }
 }
 
-.font-bold {
+.service-content {
+  flex-grow: 1;
+
+  .service-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin: 0 0 6px 0;
+    transition: color 0.25s ease;
+    line-height: 1.3;
+  }
+
+  .service-desc {
+    font-size: 0.82rem;
+    color: #64748b;
+    line-height: 1.4;
+    margin: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+}
+
+.service-link {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.88rem;
   font-weight: 700;
-}
-
-.leading-8 {
-  line-height: 2rem;
-}
-
-.capitalize {
-  text-transform: capitalize;
-}
-
-.whitespace-nowrap {
-  white-space: nowrap;
-}
-
-/* Paragraph styles */
-.text-sm {
-  font-size: 0.875rem;
-  line-height: 1.25rem;
-}
-
-.text-gray-700 {
-  color: #374151;
-}
-
-.leading-6 {
-  line-height: 1.5rem;
-}
-
-/* Button styles */
-.gap-2 {
-  gap: 0.5rem;
-}
-
-.text-blue-600 {
   color: #1E88E5;
+  text-decoration: none !important;
+  margin-top: 15px;
+  padding-top: 12px;
+  border-top: 1px solid #f1f5f9;
+  width: 100%;
+
+  .icon-arrow {
+    transition: transform 0.2s ease;
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 767px) {
+  .services-container {
+    padding: 20px 5px;
+  }
+
+  .services-header {
+    margin-bottom: 25px;
+
+    .services-section-title {
+      font-size: 1.5rem;
+    }
+  }
+
+  .service-card {
+    height: auto;
+    min-height: 180px;
+    padding: 20px;
+  }
 }
 </style>

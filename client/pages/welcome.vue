@@ -43,9 +43,9 @@ export default {
 }
 
 .welcome-card-section {
-  max-width: 1500px;
-  margin: -64px auto 0;
-  padding: 0 1rem;
+  max-width: 1250px;
+  margin: 30px auto 0;
+  padding: 0 1.5rem;
   position: relative;
   z-index: 2;
 }
@@ -159,36 +159,45 @@ export default {
 
 .hero-copy {
   color: #ffffff;
-  font-family: "Segoe UI", Arial, sans-serif;
-  gap: 0.35rem;
-  text-shadow: 0 2px 12px rgba(15, 64, 110, 0.28);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
 }
 
 .hero-title {
   margin: 0;
-  font-size: 2.35rem;
-  font-weight: 800;
-  line-height: 1.12;
-  letter-spacing: 0;
+  font-size: 3.5rem;
+  font-weight: 900;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.45));
 }
 
 .hero-subtitle {
-  max-width: 760px;
-  margin: 0;
-  color: rgba(255, 255, 255, 0.94);
-  font-size: 1.45rem;
-  font-weight: 600;
-  line-height: 1.35;
-  letter-spacing: 0;
+  max-width: 800px;
+  margin: 0 0 1.5rem 0;
+  color: rgba(255, 255, 255, 0.92);
+  font-size: 1.25rem;
+  font-weight: 500;
+  line-height: 1.4;
+  letter-spacing: -0.01em;
+  text-align: center;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5), 0 1px 3px rgba(0, 0, 0, 0.3);
 }
 
 @media (max-width: 767px) {
   .hero-title {
-    font-size: 1.9rem;
+    font-size: 2.5rem;
   }
 
   .hero-subtitle {
     font-size: 1.05rem;
+    margin-bottom: 1rem;
   }
 }
 

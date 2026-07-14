@@ -166,30 +166,47 @@ export default {
   color: white !important;
   position: relative;
   padding-bottom: 6px !important;
+  transition: opacity 0.2s ease;
 
   &::before {
     content: "";
     position: absolute;
     bottom: 0;
-    left: 0;
+    left: 50%;
     width: 0;
     height: 2px;
     background-color: #ffffff;
-    transition: width 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  &:hover::before,
-  &.router-link-active::before,
-  &.router-link-exact-active::before {
-    width: 100%;
+    transform: translateX(-50%);
+    transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 }
 
-// Open dropdown on hover (desktop viewport)
+/* Aktifkan garis bawah saat hover link, hover container dropdown, atau menu aktif */
+/deep/ .navbar-nav .nav-link:hover::before,
+/deep/ .navbar-nav .dropdown:hover .nav-link::before,
+/deep/ .navbar-nav .show > .nav-link::before,
+/deep/ .navbar-nav .nav-link.router-link-active::before,
+/deep/ .navbar-nav .nav-link.router-link-exact-active::before {
+  width: 100%;
+}
+
+// Open dropdown on hover (desktop viewport) with fluid slide & fade transition
 @media (min-width: 992px) {
-  /deep/ .navbar-nav .dropdown:hover .dropdown-menu {
+  /deep/ .navbar-nav .dropdown .dropdown-menu {
     display: block !important;
     margin-top: 0 !important;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1), transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.25s;
+    pointer-events: none;
+  }
+
+  /deep/ .navbar-nav .dropdown:hover .dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    pointer-events: auto;
   }
 
   /deep/ .navbar-nav .dropdown-toggle {

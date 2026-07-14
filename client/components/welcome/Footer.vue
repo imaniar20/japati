@@ -9,7 +9,7 @@ export default {
     <div class="footer">
       <img src="~/assets/images/japati.png" alt="Logo Japati" style="height:40px">
       <b-row>
-        <b-col md="6">
+        <b-col md="4">
           <div class="flex align-items-start gap-1.5">
             <img src="/icons/location.svg" alt="">
             <div class="d-flex flex-column -mt-1">
@@ -24,8 +24,19 @@ export default {
             </div>
           </div>
         </b-col>
-        <b-col md="2">
+        <b-col md="4">
           <div class="flex align-items-start gap-1.5">
+            <img src="/icons/location.svg" alt="">
+            <div class="d-flex flex-column">
+              <p class="text-sm text-white font-bold leading-6 mb-2">Lokasi Kantor</p>
+              <iframe src="https://maps.google.com/maps?q=-6.959292,108.475237&z=15&output=embed" width="100%"
+                height="150" style="border:0; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);"
+                allowfullscreen="" loading="lazy"></iframe>
+            </div>
+          </div>
+        </b-col>
+        <b-col md="2">
+          <div class="flex align-items-start gap-1.5 mb-4">
             <img src="/icons/sms.svg" alt="">
             <div class="d-flex flex-column -mt-1">
               <p class="text-sm text-white font-bold leading-6 mb-2">Surel</p>
@@ -33,17 +44,6 @@ export default {
                 class="text-sm text-white font-lato leading-6 m-0">info@kuningankab.go.id</a>
             </div>
           </div>
-        </b-col>
-        <b-col md="2">
-          <div class="flex align-items-start gap-1.5">
-            <img src="/icons/call-calling.svg" alt="">
-            <div class="d-flex flex-column -mt-1">
-              <p class="text-sm text-white font-bold leading-6 mb-2">Telepon</p>
-              <a href="tel:0232-871142" class="text-sm text-white font-lato leading-6 m-0">(0232)-871142</a>
-            </div>
-          </div>
-        </b-col>
-        <b-col md="2">
           <div class="flex align-items-start gap-1.5">
             <img src="/icons/global.svg" alt="">
             <div class="d-flex flex-column -mt-1">
@@ -60,11 +60,21 @@ export default {
                 <a href="https://web.facebook.com/KuninganPemkab" target="_blank">
                   <div class="box-sosmed ml-2">
                     <svg xmlns="http://www.w3.org/2000/svg" width="448" height="512" viewBox="0 0 448 512">
-                      <path fill="white" d="M279.14 288l14.22-92.66h-88.91v-60.13c0-25.35 12.42-50.06 52.24-50.06H297V6.26S260.43 0 225.36 0c-73.22 0-121.08 44.38-121.08 124.72v70.62H22.89V288h81.39v224h100.17V288z" />
+                      <path fill="white"
+                        d="M279.14 288l14.22-92.66h-88.91v-60.13c0-25.35 12.42-50.06 52.24-50.06H297V6.26S260.43 0 225.36 0c-73.22 0-121.08 44.38-121.08 124.72v70.62H22.89V288h81.39v224h100.17V288z" />
                     </svg>
                   </div>
                 </a>
               </div>
+            </div>
+          </div>
+        </b-col>
+        <b-col md="2">
+          <div class="flex align-items-start gap-1.5">
+            <img src="/icons/call-calling.svg" alt="">
+            <div class="d-flex flex-column -mt-1">
+              <p class="text-sm text-white font-bold leading-6 mb-2">Telepon</p>
+              <a href="tel:0232-871142" class="text-sm text-white font-lato leading-6 m-0">(0232)-871142</a>
             </div>
           </div>
         </b-col>

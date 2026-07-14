@@ -9,7 +9,12 @@ class InfografisController extends Controller
 {
     public function index(Request $request)
     {
-        $tahunKinerja = $request->integer('tahun_kinerja') ?: getTahunKinerja();
+        $tahunKinerja = $request->input('tahun_kinerja');
+        if ($tahunKinerja) {
+            $tahunKinerja = (int) substr((string) $tahunKinerja, 0, 4);
+        } else {
+            $tahunKinerja = getTahunKinerja();
+        }
 
         $data = Infografis::query()
             ->where('tahun_kinerja', $tahunKinerja)

@@ -27,7 +27,7 @@ export default {
     },
   },
   methods: {
-   showModal(item) {
+    showModal(item) {
       this.selected = item.gambar_url;
       this.$bvModal.show("bv-modal-infografis");
     },
@@ -47,6 +47,11 @@ export default {
       }
     },
   },
+  watch: {
+    tahunKinerja() {
+      this.getData();
+    }
+  },
   mounted() {
     this.getData();
   },
@@ -57,16 +62,12 @@ export default {
     <h4 class="report-title">Laporan Kinerja Tahun {{ tahunKinerjaLabel }}</h4>
     <EmblaCarousel v-if="data.length" :slides-per-view="4" :spacing="24" :slides="data">
       <template #default="{ data: slideData }">
-        <div
-          class="banner-slide"
-          role="button"
-          @click="showModal(slideData)"
-        >
+        <div class="banner-slide" role="button" @click="showModal(slideData)">
           <img :src="slideData.gambar_url" :alt="slideData.judul || ''" />
         </div>
       </template>
     </EmblaCarousel>
-     <b-modal id="bv-modal-infografis" size="xl" hide-header hide-footer>
+    <b-modal id="bv-modal-infografis" size="xl" hide-header hide-footer>
       <div>
         <img :src="selected" class="w-full h-full" alt="" />
       </div>
@@ -84,15 +85,16 @@ section {
 }
 
 .report-title {
-  margin: 0 0 1rem;
-  color: rgba(255, 255, 255, 0.96);
-  font-family: "Segoe UI", Arial, sans-serif;
-  font-size: 1.45rem;
-  font-weight: 700;
-  line-height: 1.25;
-  letter-spacing: 0;
+  margin: 0 0 1.2rem;
+  color: rgba(255, 255, 255, 0.95);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 1.25rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  line-height: 1.2;
   text-align: center;
-  text-shadow: 0 2px 10px rgba(15, 64, 110, 0.25);
+  text-shadow: 0 2px 12px rgba(15, 64, 110, 0.2);
 }
 
 /* Heading styles */
@@ -140,6 +142,15 @@ h2 {
   background: #ffffff;
   box-shadow: 0 12px 24px rgba(20, 80, 120, 0.12);
   cursor: pointer;
+  overflow: hidden;
+  border: 2px solid transparent;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.banner-slide:hover {
+  border-color: #1E88E5;
+  box-shadow: 0 16px 32px rgba(30, 136, 229, 0.18);
+  transform: translateY(-3px);
 }
 
 /* Image styles */
@@ -157,6 +168,11 @@ img {
 
 .banner-slide img {
   border-radius: 4px;
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.banner-slide:hover img {
+  transform: scale(1.04);
 }
 
 @media (max-width: 1023px) {
