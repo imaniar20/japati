@@ -9,7 +9,7 @@
               <div class="peers ai-c fxw-nw">
                 <div class="peer">
                   <div class="logo text-center align-items-center justify-content-center" style="display: flex">
-                    <img src="~/assets/images/japati.png" alt="" style="height: 38px" />
+                    <img src="~/assets/logo/sakti_logo.png" alt="SAKTI" style="height: 38px; width: auto; max-width: 100%; object-fit: contain;" />
                   </div>
                 </div>
               </div>
@@ -250,23 +250,28 @@
             </a>
             <ul class="dropdown-menu">
               <li>
-                <nuxt-link class="sidebar-link" to="/rapor-kinerja/1/diagram"><i class="ti-bar-chart mr-2"></i>Diagram Rapor Kinerja</nuxt-link>
+                <nuxt-link class="sidebar-link" to="/rapor-kinerja/1/diagram"><i class="ti-bar-chart mr-2"></i>Diagram
+                  Rapor Kinerja</nuxt-link>
               </li>
               <li>
-                <nuxt-link class="sidebar-link" to="/rapor-kinerja/1/data"><i class="ti-view-list-alt mr-2"></i>Data Rapor Kinerja</nuxt-link>
+                <nuxt-link class="sidebar-link" to="/rapor-kinerja/1/data"><i class="ti-view-list-alt mr-2"></i>Data
+                  Rapor Kinerja</nuxt-link>
               </li>
               <li>
-                <nuxt-link class="sidebar-link" to="/rapor-kinerja/1/rank"><i class="ti-stats-up mr-2"></i>Ranking Raport Kinerja</nuxt-link>
+                <nuxt-link class="sidebar-link" to="/rapor-kinerja/1/rank"><i class="ti-stats-up mr-2"></i>Ranking
+                  Raport Kinerja</nuxt-link>
               </li>
               <li v-if="
                 ($role.isPemerintahDaerah() || $role.isPerangkatDaerah()) &&
                 $helper.getTahunKinerja() == 2023
               ">
-                <nuxt-link class="sidebar-link" to="/rapor-kinerja/penambahan-jumlah-output"><i class="ti-plus mr-2"></i>Penambahan Jumlah
+                <nuxt-link class="sidebar-link" to="/rapor-kinerja/penambahan-jumlah-output"><i
+                    class="ti-plus mr-2"></i>Penambahan Jumlah
                   Output</nuxt-link>
               </li>
               <li>
-                <nuxt-link class="sidebar-link" to="/rapor-kinerja/1/langkah-aksi-perbaikan"><i class="ti-check-box mr-2"></i>Langkah Aksi
+                <nuxt-link class="sidebar-link" to="/rapor-kinerja/1/langkah-aksi-perbaikan"><i
+                    class="ti-check-box mr-2"></i>Langkah Aksi
                   Perbaikan</nuxt-link>
               </li>
             </ul>
@@ -286,7 +291,8 @@
             </a>
             <ul class="dropdown-menu">
               <li>
-                <nuxt-link class="sidebar-link" to="/dashboard"><i class="ti-layout-grid2 mr-2"></i>Dashboard Pemda</nuxt-link>
+                <nuxt-link class="sidebar-link" to="/dashboard"><i class="ti-layout-grid2 mr-2"></i>Dashboard
+                  Pemda</nuxt-link>
               </li>
 
             </ul>
@@ -343,36 +349,45 @@
             </a>
             <ul class="dropdown-menu">
               <li>
-                <nuxt-link class="sidebar-link" to="/visi-misi-rpjmd"><i class="ti-bookmark mr-2"></i>Visi, Misi & Tujuan RPJMD</nuxt-link>
+                <nuxt-link class="sidebar-link" to="/visi-misi-rpjmd"><i class="ti-bookmark mr-2"></i>Visi, Misi &
+                  Tujuan RPJMD</nuxt-link>
               </li>
               <li>
-                <nuxt-link class="sidebar-link" to="/sasaran-strategis-rpjmd"><i class="ti-bookmark-alt mr-2"></i>Sasaran Strategis RPJMD & <br />
+                <nuxt-link class="sidebar-link" to="/sasaran-strategis-rpjmd"><i
+                    class="ti-bookmark-alt mr-2"></i>Sasaran Strategis RPJMD & <br />
                   IKU Bupati</nuxt-link>
               </li>
               <li>
-                <nuxt-link class="sidebar-link" to="/sasaran-strategis-pd"><i class="ti-bookmark-alt mr-2"></i>Sasaran Strategis <br />
+                <nuxt-link class="sidebar-link" to="/sasaran-strategis-pd"><i class="ti-bookmark-alt mr-2"></i>Sasaran
+                  Strategis <br />
                   Perangkat Daerah</nuxt-link>
               </li>
               <li>
-                <nuxt-link class="sidebar-link" to="/kinerja-program"><i class="ti-bar-chart mr-2"></i>Kinerja Program</nuxt-link>
+                <nuxt-link class="sidebar-link" to="/kinerja-program"><i class="ti-bar-chart mr-2"></i>Kinerja
+                  Program</nuxt-link>
               </li>
               <li>
-                <nuxt-link class="sidebar-link" to="/kinerja-kegiatan"><i class="ti-bar-chart-alt mr-2"></i>Kinerja Kegiatan</nuxt-link>
+                <nuxt-link class="sidebar-link" to="/kinerja-kegiatan"><i class="ti-bar-chart-alt mr-2"></i>Kinerja
+                  Kegiatan</nuxt-link>
               </li>
               <li>
-                <nuxt-link class="sidebar-link" to="/kinerja-sub-kegiatan"><i class="ti-file mr-2"></i>Kinerja Sub Kegiatan</nuxt-link>
+                <nuxt-link class="sidebar-link" to="/kinerja-sub-kegiatan"><i class="ti-file mr-2"></i>Kinerja Sub
+                  Kegiatan</nuxt-link>
               </li>
               <!-- <li>
                 <nuxt-link class="sidebar-link" to="/kinerja-kab-kota">Kinerja Kabupaten Kota</nuxt-link>
               </li> -->
               <li>
-                <nuxt-link class="sidebar-link" to="/kinerja-langkah-aksi"><i class="ti-write mr-2"></i>Kinerja Langkah Aksi</nuxt-link>
+                <nuxt-link class="sidebar-link" to="/kinerja-langkah-aksi"><i class="ti-write mr-2"></i>Kinerja Langkah
+                  Aksi</nuxt-link>
               </li>
               <li>
-                <nuxt-link class="sidebar-link" to="/kamus-indikator"><i class="ti-book mr-2"></i>Kamus Indikator</nuxt-link>
+                <nuxt-link class="sidebar-link" to="/kamus-indikator"><i class="ti-book mr-2"></i>Kamus
+                  Indikator</nuxt-link>
               </li>
               <li>
-                <nuxt-link class="sidebar-link" to="/kamus-indikator-fungsional"><i class="ti-book mr-2"></i>Kamus Indikator Fungsional</nuxt-link>
+                <nuxt-link class="sidebar-link" to="/kamus-indikator-fungsional"><i class="ti-book mr-2"></i>Kamus
+                  Indikator Fungsional</nuxt-link>
               </li>
               <li class="nav-item">
                 <nuxt-link class="sidebar-link" to="/perjanjian-kinerja">
@@ -391,48 +406,60 @@
                 </a>
                 <ul class="dropdown-menu">
                   <li>
-                    <nuxt-link class="sidebar-link ml-2" to="/display-makro/cascading"><i class="ti-layers mr-2"></i>Cascading</nuxt-link>
+                    <nuxt-link class="sidebar-link ml-2" to="/display-makro/cascading"><i
+                        class="ti-layers mr-2"></i>Cascading</nuxt-link>
                   </li>
                   <li>
-                    <nuxt-link class="sidebar-link ml-2" to="/display-makro/rpjmd"><i class="ti-map mr-2"></i>RPJMD Kabupaten Kuningan</nuxt-link>
+                    <nuxt-link class="sidebar-link ml-2" to="/display-makro/rpjmd"><i class="ti-map mr-2"></i>RPJMD
+                      Kabupaten Kuningan</nuxt-link>
                   </li>
                   <li>
-                    <nuxt-link class="sidebar-link ml-2" to="/display-makro/rkpd"><i class="ti-map-alt mr-2"></i>RKPD Kabupaten Kuningan</nuxt-link>
+                    <nuxt-link class="sidebar-link ml-2" to="/display-makro/rkpd"><i class="ti-map-alt mr-2"></i>RKPD
+                      Kabupaten Kuningan</nuxt-link>
                   </li>
                   <li>
-                    <nuxt-link class="sidebar-link ml-2" to="/display-makro/perjanjian-kinerja"><i class="ti-notepad mr-2"></i>Perjanjian Kinerja
+                    <nuxt-link class="sidebar-link ml-2" to="/display-makro/perjanjian-kinerja"><i
+                        class="ti-notepad mr-2"></i>Perjanjian Kinerja
                       Bupati Kabupaten Kuningan</nuxt-link>
                   </li>
                   <li>
-                    <nuxt-link class="sidebar-link ml-2" to="/display-makro/rencana-aksi"><i class="ti-write mr-2"></i>Rencana Aksi Bupati Kabupaten
+                    <nuxt-link class="sidebar-link ml-2" to="/display-makro/rencana-aksi"><i
+                        class="ti-write mr-2"></i>Rencana Aksi Bupati Kabupaten
                       Kuningan</nuxt-link>
                   </li>
                   <li>
-                    <nuxt-link class="sidebar-link ml-2" to="/display-makro/capaian-kinerja-pemda"><i class="ti-stats-up mr-2"></i>Capaian Kinerja
+                    <nuxt-link class="sidebar-link ml-2" to="/display-makro/capaian-kinerja-pemda"><i
+                        class="ti-stats-up mr-2"></i>Capaian Kinerja
                       Pemda</nuxt-link>
                   </li>
                   <li>
-                    <nuxt-link class="sidebar-link ml-2" to="/display-makro/capaian-kinerja-efisiensi-anggaran"><i class="ti-bar-chart mr-2"></i>Capaian
+                    <nuxt-link class="sidebar-link ml-2" to="/display-makro/capaian-kinerja-efisiensi-anggaran"><i
+                        class="ti-bar-chart mr-2"></i>Capaian
                       Kinerja dan Efisiensi Anggaran</nuxt-link>
                   </li>
                   <li>
-                    <nuxt-link class="sidebar-link ml-2" to="/display-makro/capaian-kinerja-keuangan"><i class="ti-money mr-2"></i>Capaian Kinerja
+                    <nuxt-link class="sidebar-link ml-2" to="/display-makro/capaian-kinerja-keuangan"><i
+                        class="ti-money mr-2"></i>Capaian Kinerja
                       dan Keuangan</nuxt-link>
                   </li>
                   <li>
-                    <nuxt-link class="sidebar-link ml-2" to="/display-makro/program-inovatif"><i class="ti-light-bulb mr-2"></i>Program
+                    <nuxt-link class="sidebar-link ml-2" to="/display-makro/program-inovatif"><i
+                        class="ti-light-bulb mr-2"></i>Program
                       Inovatif</nuxt-link>
                   </li>
                   <li>
-                    <nuxt-link class="sidebar-link ml-2" to="/display-makro/capaian-kinerja-kegiatan"><i class="ti-bar-chart-alt mr-2"></i>Capaian Kinerja
+                    <nuxt-link class="sidebar-link ml-2" to="/display-makro/capaian-kinerja-kegiatan"><i
+                        class="ti-bar-chart-alt mr-2"></i>Capaian Kinerja
                       Kegiatan</nuxt-link>
                   </li>
                   <li>
-                    <nuxt-link class="sidebar-link ml-2" to="/display-makro/capaian-kinerja-sub-kegiatan"><i class="ti-file mr-2"></i>Capaian
+                    <nuxt-link class="sidebar-link ml-2" to="/display-makro/capaian-kinerja-sub-kegiatan"><i
+                        class="ti-file mr-2"></i>Capaian
                       Kinerja Sub Kegiatan</nuxt-link>
                   </li>
                   <li>
-                    <nuxt-link class="sidebar-link ml-2" to="/display-makro/capaian-kinerja-aktivitas"><i class="ti-pulse mr-2"></i>Capaian Kinerja
+                    <nuxt-link class="sidebar-link ml-2" to="/display-makro/capaian-kinerja-aktivitas"><i
+                        class="ti-pulse mr-2"></i>Capaian Kinerja
                       Aktivitas</nuxt-link>
                   </li>
 
@@ -450,48 +477,60 @@
                 </a>
                 <ul class="dropdown-menu">
                   <li>
-                    <nuxt-link class="sidebar-link ml-2" to="/display-mikro/cascading"><i class="ti-layers mr-2"></i>Cascading</nuxt-link>
+                    <nuxt-link class="sidebar-link ml-2" to="/display-mikro/cascading"><i
+                        class="ti-layers mr-2"></i>Cascading</nuxt-link>
                   </li>
                   <li>
-                    <nuxt-link class="sidebar-link ml-2" to="/display-mikro/renstra"><i class="ti-map mr-2"></i>Renstra</nuxt-link>
+                    <nuxt-link class="sidebar-link ml-2" to="/display-mikro/renstra"><i
+                        class="ti-map mr-2"></i>Renstra</nuxt-link>
                   </li>
                   <li>
-                    <nuxt-link class="sidebar-link ml-2" to="/display-mikro/rkt"><i class="ti-map-alt mr-2"></i>RKT</nuxt-link>
+                    <nuxt-link class="sidebar-link ml-2" to="/display-mikro/rkt"><i
+                        class="ti-map-alt mr-2"></i>RKT</nuxt-link>
                   </li>
                   <li>
-                    <nuxt-link class="sidebar-link ml-2" to="/display-mikro/perjanjian-kinerja"><i class="ti-notepad mr-2"></i>Perjanjian
+                    <nuxt-link class="sidebar-link ml-2" to="/display-mikro/perjanjian-kinerja"><i
+                        class="ti-notepad mr-2"></i>Perjanjian
                       Kinerja</nuxt-link>
                   </li>
                   <li>
-                    <nuxt-link class="sidebar-link ml-2" to="/display-mikro/rencana-aksi"><i class="ti-write mr-2"></i>Rencana Aksi Perangkat
+                    <nuxt-link class="sidebar-link ml-2" to="/display-mikro/rencana-aksi"><i
+                        class="ti-write mr-2"></i>Rencana Aksi Perangkat
                       Daerah</nuxt-link>
                   </li>
                   <li>
-                    <nuxt-link class="sidebar-link ml-2" to="/display-mikro/capaian-kinerja-pd"><i class="ti-stats-up mr-2"></i>Capaian Kinerja
+                    <nuxt-link class="sidebar-link ml-2" to="/display-mikro/capaian-kinerja-pd"><i
+                        class="ti-stats-up mr-2"></i>Capaian Kinerja
                       Perangkat Daerah</nuxt-link>
                   </li>
                   <li>
-                    <nuxt-link class="sidebar-link ml-2" to="/display-mikro/capaian-kinerja-efisiensi-anggaran"><i class="ti-bar-chart mr-2"></i>Capaian
+                    <nuxt-link class="sidebar-link ml-2" to="/display-mikro/capaian-kinerja-efisiensi-anggaran"><i
+                        class="ti-bar-chart mr-2"></i>Capaian
                       Kinerja dan Efisiensi Anggaran</nuxt-link>
                   </li>
                   <li>
-                    <nuxt-link class="sidebar-link ml-2" to="/display-mikro/capaian-kinerja-keuangan"><i class="ti-money mr-2"></i>Capaian Kinerja
+                    <nuxt-link class="sidebar-link ml-2" to="/display-mikro/capaian-kinerja-keuangan"><i
+                        class="ti-money mr-2"></i>Capaian Kinerja
                       dan Keuangan Perangkat Daerah</nuxt-link>
                   </li>
                   <li>
-                    <nuxt-link class="sidebar-link ml-2" to="/display-mikro/program-inovatif"><i class="ti-light-bulb mr-2"></i>Program
+                    <nuxt-link class="sidebar-link ml-2" to="/display-mikro/program-inovatif"><i
+                        class="ti-light-bulb mr-2"></i>Program
                       Inovatif</nuxt-link>
                   </li>
                   <li>
-                    <nuxt-link class="sidebar-link ml-2" to="/display-mikro/capaian-kinerja-kegiatan"><i class="ti-bar-chart-alt mr-2"></i>Capaian Kinerja
+                    <nuxt-link class="sidebar-link ml-2" to="/display-mikro/capaian-kinerja-kegiatan"><i
+                        class="ti-bar-chart-alt mr-2"></i>Capaian Kinerja
                       Kegiatan</nuxt-link>
                   </li>
                   <li>
-                    <nuxt-link class="sidebar-link ml-2" to="/display-mikro/capaian-kinerja-sub-kegiatan"><i class="ti-file mr-2"></i>Capaian
+                    <nuxt-link class="sidebar-link ml-2" to="/display-mikro/capaian-kinerja-sub-kegiatan"><i
+                        class="ti-file mr-2"></i>Capaian
                       Kinerja Sub Kegiatan</nuxt-link>
                   </li>
                   <li>
-                    <nuxt-link class="sidebar-link ml-2" to="/display-mikro/capaian-kinerja-langkah-aksi"><i class="ti-pulse mr-2"></i>Capaian
+                    <nuxt-link class="sidebar-link ml-2" to="/display-mikro/capaian-kinerja-langkah-aksi"><i
+                        class="ti-pulse mr-2"></i>Capaian
                       Kinerja Langkah Aksi</nuxt-link>
                   </li>
 
@@ -521,10 +560,12 @@
                 <nuxt-link class="sidebar-link" to="/lkip/bab-3"><i class="ti-file mr-2"></i>LKIP BAB III</nuxt-link>
               </li>
               <li>
-                <nuxt-link class="sidebar-link" to="/lkip/narasi-pemda"><i class="ti-comment-alt mr-2"></i>LKIP Narasi Pemda</nuxt-link>
+                <nuxt-link class="sidebar-link" to="/lkip/narasi-pemda"><i class="ti-comment-alt mr-2"></i>LKIP Narasi
+                  Pemda</nuxt-link>
               </li>
               <li>
-                <nuxt-link class="sidebar-link" to="/lkip/narasi-pd"><i class="ti-comment-alt mr-2"></i>LKIP Narasi PD</nuxt-link>
+                <nuxt-link class="sidebar-link" to="/lkip/narasi-pd"><i class="ti-comment-alt mr-2"></i>LKIP Narasi
+                  PD</nuxt-link>
               </li>
             </ul>
           </li>
@@ -540,36 +581,44 @@
             </a>
             <ul class="dropdown-menu">
               <li>
-                <nuxt-link class="sidebar-link" to="/rapor-kinerja/1/diagram"><i class="ti-bar-chart mr-2"></i>Diagram Rapor Kinerja</nuxt-link>
+                <nuxt-link class="sidebar-link" to="/rapor-kinerja/1/diagram"><i class="ti-bar-chart mr-2"></i>Diagram
+                  Rapor Kinerja</nuxt-link>
               </li>
               <li>
-                <nuxt-link class="sidebar-link" to="/rapor-kinerja/1/diagram-external"><i class="ti-bar-chart-alt mr-2"></i>Diagram Rapor Kinerja
+                <nuxt-link class="sidebar-link" to="/rapor-kinerja/1/diagram-external"><i
+                    class="ti-bar-chart-alt mr-2"></i>Diagram Rapor Kinerja
                   Eksternal</nuxt-link>
               </li>
               <li>
-                <nuxt-link class="sidebar-link" to="/rapor-kinerja-sasaran-strategis-pd/1/diagram"><i class="ti-stats-up mr-2"></i>Diagram Rapor Kinerja
+                <nuxt-link class="sidebar-link" to="/rapor-kinerja-sasaran-strategis-pd/1/diagram"><i
+                    class="ti-stats-up mr-2"></i>Diagram Rapor Kinerja
                   Sasaran Strategis</nuxt-link>
               </li>
               <li>
-                <nuxt-link class="sidebar-link" to="/rapor-kinerja/1/data"><i class="ti-view-list-alt mr-2"></i>Data Rapor Kinerja</nuxt-link>
+                <nuxt-link class="sidebar-link" to="/rapor-kinerja/1/data"><i class="ti-view-list-alt mr-2"></i>Data
+                  Rapor Kinerja</nuxt-link>
               </li>
               <li>
-                <nuxt-link class="sidebar-link" to="/rapor-kinerja/1/data-external"><i class="ti-list mr-2"></i>Data Rapor Kinerja
+                <nuxt-link class="sidebar-link" to="/rapor-kinerja/1/data-external"><i class="ti-list mr-2"></i>Data
+                  Rapor Kinerja
                   Eksternal</nuxt-link>
               </li>
               <li>
-                <nuxt-link class="sidebar-link" to="/rapor-kinerja/1/rank"><i class="ti-stats-up mr-2"></i>Ranking Raport Kinerja</nuxt-link>
+                <nuxt-link class="sidebar-link" to="/rapor-kinerja/1/rank"><i class="ti-stats-up mr-2"></i>Ranking
+                  Raport Kinerja</nuxt-link>
               </li>
               <li v-if="
                 ($role.isPemerintahDaerah() ||
                   $role.isPerangkatDaerah()) &&
                 $helper.getTahunKinerja() == 2023
               ">
-                <nuxt-link class="sidebar-link" to="/rapor-kinerja/penambahan-jumlah-output"><i class="ti-plus mr-2"></i>Penambahan Jumlah
+                <nuxt-link class="sidebar-link" to="/rapor-kinerja/penambahan-jumlah-output"><i
+                    class="ti-plus mr-2"></i>Penambahan Jumlah
                   Output</nuxt-link>
               </li>
               <li>
-                <nuxt-link class="sidebar-link" to="/rapor-kinerja/1/langkah-aksi-perbaikan"><i class="ti-check-box mr-2"></i>Langkah Aksi
+                <nuxt-link class="sidebar-link" to="/rapor-kinerja/1/langkah-aksi-perbaikan"><i
+                    class="ti-check-box mr-2"></i>Langkah Aksi
                   Perbaikan</nuxt-link>
               </li>
               <li>
@@ -614,22 +663,27 @@
                 </a>
                 <ul class="dropdown-menu">
                   <li>
-                    <nuxt-link class="sidebar-link ml-2" to="/lke/eviden"><i class="ti-write mr-2"></i>Input Evidence Self Assessment
+                    <nuxt-link class="sidebar-link ml-2" to="/lke/eviden"><i class="ti-write mr-2"></i>Input Evidence
+                      Self Assessment
                     </nuxt-link>
                   </li>
                   <li>
-                    <nuxt-link class="sidebar-link ml-2" to="/lke/eviden-2"><i class="ti-pencil mr-2"></i>Input Eviden Perbaikan</nuxt-link>
+                    <nuxt-link class="sidebar-link ml-2" to="/lke/eviden-2"><i class="ti-pencil mr-2"></i>Input Eviden
+                      Perbaikan</nuxt-link>
                   </li>
                   <li>
-                    <nuxt-link class="sidebar-link ml-2" to="/lke/hasil-self-assessment"><i class="ti-comment-alt mr-2"></i>Hasil Self Assessment dan
+                    <nuxt-link class="sidebar-link ml-2" to="/lke/hasil-self-assessment"><i
+                        class="ti-comment-alt mr-2"></i>Hasil Self Assessment dan
                       Perbaikan</nuxt-link>
                   </li>
 
                   <li>
-                    <nuxt-link class="sidebar-link ml-2" to="/lke/hasil-akhir"><i class="ti-check-box mr-2"></i>Hasil Evaluasi Akhir</nuxt-link>
+                    <nuxt-link class="sidebar-link ml-2" to="/lke/hasil-akhir"><i class="ti-check-box mr-2"></i>Hasil
+                      Evaluasi Akhir</nuxt-link>
                   </li>
                   <li>
-                    <nuxt-link class="sidebar-link ml-2" to="/lke/hasil"><i class="ti-stats-up mr-2"></i>Hasil Penilaian</nuxt-link>
+                    <nuxt-link class="sidebar-link ml-2" to="/lke/hasil"><i class="ti-stats-up mr-2"></i>Hasil
+                      Penilaian</nuxt-link>
                   </li>
                 </ul>
               </li>
@@ -638,7 +692,8 @@
                   <i class="ti-folder mr-2"></i>LHE</nuxt-link>
               </li>
               <li>
-                <nuxt-link class="sidebar-link" to="/lke/rekomendasi"><i class="ti-check mr-2"></i>Tindak Lanjut Rekomendasi LHE PD dan Monev
+                <nuxt-link class="sidebar-link" to="/lke/rekomendasi"><i class="ti-check mr-2"></i>Tindak Lanjut
+                  Rekomendasi LHE PD dan Monev
                   Inspektorat</nuxt-link>
               </li>
             </ul>

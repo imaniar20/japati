@@ -7,7 +7,7 @@ export default {
 <template>
   <footer>
     <div class="footer">
-      <img src="~/assets/images/japati.png" alt="Logo Japati" style="height:40px">
+      <img src="~/assets/logo/sakti_logo.png" alt="Logo SAKTI" style="height:35px; width:auto; object-fit:contain;">
       <b-row>
         <b-col md="4">
           <div class="flex align-items-start gap-1.5">

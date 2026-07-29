@@ -2,7 +2,7 @@
   <div>
     <b-navbar toggleable="lg" type="dark" variant="blue" class="shadow">
       <b-navbar-brand to="/">
-        <img src="~/assets/images/japati.png" alt="japati" title="JAPATI" style="height:40px">
+        <img src="~/assets/logo/sakti_logo.png" alt="SAKTI" title="SAKTI" style="height:32px; width:auto; object-fit:contain; margin-top:-3px;">
       </b-navbar-brand>
 
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>

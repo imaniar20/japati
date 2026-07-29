@@ -13,12 +13,12 @@ module.exports = {
   },
 
   head: {
-    title: process.env.APP_NAME,
-    titleTemplate: '%s - ' + process.env.APP_NAME,
+    title: process.env.APP_NAME || 'SAKTI',
+    titleTemplate: (chunk) => chunk && chunk !== 'SAKTI' && chunk !== process.env.APP_NAME && chunk !== 'e-SAKIP' && chunk !== 'e-Sakip' ? `${chunk} - SAKTI` : 'SAKTI',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: 'E-Sakip - Pemerintah Kabupaten Kuningan' },
+      { hid: 'description', name: 'description', content: 'SAKTI - Pemerintah Kabupaten Kuningan' },
       { name: 'google', content: 'notranslate' },
     ],
     script: [
@@ -27,7 +27,8 @@ module.exports = {
       // { src: 'https://storage.googleapis.com/hotline-jabar-assets/hotline-adpem-widget.js'},
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: `${process.env.BASE_ROUTE || '/'}favicon.ico` },
+      { rel: 'icon', type: 'image/png', href: `${process.env.BASE_ROUTE || '/'}logo_sakti.png` },
+      { rel: 'shortcut icon', type: 'image/png', href: `${process.env.BASE_ROUTE || '/'}logo_sakti.png` },
       // Nonaktif sementara widget Hotline Layanan Administrasi Pemerintahan.
       // Aktifkan lagi jika dibutuhkan:
       // { rel: 'stylesheet', href: 'https://storage.googleapis.com/hotline-jabar-assets/hotline-adpem-widget.js' },

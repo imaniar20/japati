@@ -1,13 +1,13 @@
 // Core Light Theme Variables
-$sidebar-bg: #ffffff;        // Clean White
+$sidebar-bg: #ffffff; // Clean White
 $sidebar-border-color: #e2e8f0; // Soft Grey Border
-$sidebar-text: #475569;      // Slate Grey
+$sidebar-text: #475569; // Slate Grey
 $sidebar-text-hover: #1e293b; // Dark Slate Text on Hover
 $sidebar-icon: #64748b;
 $sidebar-icon-hover: #1e293b;
 $sidebar-active-bg: rgba(30, 136, 229, 0.08); // Semi-transparent #1E88E5
-$sidebar-active-indicator: #1E88E5;          // Brand Blue Accent
-$sidebar-hover-bg: #f1f5f9;   // Light Slate Hover
+$sidebar-active-indicator: #1E88E5; // Brand Blue Accent
+$sidebar-hover-bg: #f1f5f9; // Light Slate Hover
 
 // Sidebar Main Container Override
 .sidebar {
@@ -29,9 +29,13 @@ $sidebar-hover-bg: #f1f5f9;   // Light Slate Hover
         display: flex !important;
         align-items: center !important;
         justify-content: center !important;
-        
+        width: 100% !important;
+
         img {
           height: 38px !important;
+          max-height: 38px !important;
+          width: auto !important;
+          max-width: 100% !important;
           object-fit: contain !important;
         }
       }
@@ -100,22 +104,25 @@ $sidebar-hover-bg: #f1f5f9;   // Light Slate Hover
 .sidebar .sidebar-menu .dropdown-menu {
   background-color: #f8fafc !important;
   border: none !important;
-  
+
   .sidebar-link {
     padding-left: 25px !important;
   }
 }
+
 .page-item.active .page-link {
   background-color: #ffffff;
   border-color: #1E88E5;
   color: #007bff;
 }
-.bg-lightyellow{
-  background: rgb(254,251,241) !important;
+
+.bg-lightyellow {
+  background: rgb(254, 251, 241) !important;
 }
 
 // Enable tooltips on disabled dropdown items
-.dropdown-item.disabled, .dropdown-item:disabled {
+.dropdown-item.disabled,
+.dropdown-item:disabled {
   pointer-events: auto !important;
   cursor: not-allowed !important;
 }
