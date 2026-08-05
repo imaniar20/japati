@@ -18,7 +18,11 @@ export default {
             },
             remember: false,
             tahunKinerja: 2025,
-            tahunKinerjaList: [{ key: 2025, display: "2025" }],
+            tahunKinerjaList: [
+                { key: 2024, display: "2024" },
+                { key: 2025, display: "2025" },
+                { key: 2026, display: "2026" }
+            ],
             isBusy: false,
             error: null,
         };

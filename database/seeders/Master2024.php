@@ -81,7 +81,7 @@ class Master2024 extends Seeder
             'Laju Pertumbuhan Ekonomi',
             'Gini Ratio',
             'Indeks Williamson',
-            'Indeks Demokrasi Indonesia (IDI) Jawa Barat',
+            'Indeks Demokrasi Indonesia (IDI) Kabupaten Kuningan',
             'Indeks Reformasi Birokrasi',
         ];
 
@@ -157,7 +157,7 @@ class Master2024 extends Seeder
             'Tingkat Penurunan Emisi Gas Rumah Kaca',
             'Indeks Risiko Bencana',
             'Indeks Desa Membangun',
-            'Indeks Demokrasi Indonesia (IDI) Jawa Barat',
+            'Indeks Demokrasi Indonesia (IDI) Kabupaten Kuningan',
             'Indeks Reformasi Birokrasi',
             'Indeks Inovasi Daerah',
         ];

@@ -77,14 +77,19 @@ class KamusIndikatorFungsionalController extends Controller
             ...$kinerjaSubKegiatan,
         ];
 
-        $jabatanList = Jabatan::query()
-            ->selectRaw("jabatan_id, CONCAT(jf_nama, ' - ', unit_kerja_nama) jf_nama")
-            ->join('m_spg_referensi_jf', 'm_spg_referensi_jf.jf_id', 'm_spg_jabatan.jf_id')
-            ->join('m_spg_unit_kerja', 'm_spg_unit_kerja.unit_kerja_id', 'm_spg_jabatan.unit_kerja_id')
-            ->whereNotNull('m_spg_jabatan.jf_id')
-            ->where('m_spg_jabatan.satuan_kerja_id', $satkerId)
-            ->orderBy('jf_nama')
-            ->get();
+        $jabatanList = [];
+        $jabatanModel = new Jabatan();
+        $conn = $jabatanModel->getConnectionName();
+        if (\Schema::connection($conn)->hasTable('m_spg_jabatan')) {
+            $jabatanList = Jabatan::query()
+                ->selectRaw("jabatan_id, CONCAT(jf_nama, ' - ', unit_kerja_nama) jf_nama")
+                ->join('m_spg_referensi_jf', 'm_spg_referensi_jf.jf_id', 'm_spg_jabatan.jf_id')
+                ->join('m_spg_unit_kerja', 'm_spg_unit_kerja.unit_kerja_id', 'm_spg_jabatan.unit_kerja_id')
+                ->whereNotNull('m_spg_jabatan.jf_id')
+                ->where('m_spg_jabatan.satuan_kerja_id', $satkerId)
+                ->orderBy('jf_nama')
+                ->get();
+        }
 
         return response()->json([
             'data' => $data,

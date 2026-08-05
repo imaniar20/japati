@@ -25,14 +25,14 @@ export default ({ app }, inject) => {
       2020,
       2025,
     ],
-     tahun_kinerja_list: [
+    tahun_kinerja_list: [
       { key: 2020, display: '2020' },
       { key: 2021, display: '2021' },
       { key: 2022, display: '2022' },
       { key: 2023, display: '2023' },
       { key: 2024, display: '2024' },
       { key: 2025, display: '2025' },
-      { key: 20252, display: '2025  RPJMD Baru' }
+      { key: 2026, display: '2026' }
     ],
     base_tahun_mulai,
     base_tahun_mulai_2,
@@ -52,6 +52,10 @@ export default ({ app }, inject) => {
       [ 'dec', 'Desember' ],
     ],
     SATKER_SETDA: 1001,
+    SATKER_SETWAN: 1002,
+    SATKER_DINKES: 1004,
+    SATKER_DISDUKCAPIL: 1023,
     SATKER_DPMPTSP: 1046,
-  })
+    SATKER_BANHUB: 1043,
+  });
 }

@@ -13,7 +13,7 @@ use App\Models\LinkPerjanjianKinerja;
 use App\Models\Role;
 use App\Models\SasaranStrategisPd;
 use App\Models\Simpeg\VPegawaiData;
-use App\Models\Simpeg\VStrukturOrganisasi;
+use App\Models\VStrukturOrganisasi;
 use App\Models\VisiMisiRpjmd;
 use App\Traits\SetdaResourceAccess;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -50,13 +50,38 @@ class PerjanjianKinerjaController extends Controller
         $org = VStrukturOrganisasi::whereIn('id', $skp->pluck('v_struktur_organisasi_id'))->pluck('jabatan_id');
         $tim = TimKerja::whereIn('id', $skp->pluck('tim_kerja_id'))->pluck('nip_ketua');
         $user = Auth::user();
-        $data = VPegawaiData::where(function ($q2) use ($org, $tim) {
-            $q2->where('peg_status', true)->where(function ($q) use ($org, $tim) {
-                $q->whereIn('jabatan_id', $org)->orWhereIn('peg_nip', $tim);
+        $dataModel = new VPegawaiData;
+        $conn = $dataModel->getConnectionName();
+        $hasJabatanId = \Schema::connection($conn)->hasColumn('v_pegawai_data', 'jabatan_id');
+        $hasUnitKerjaId = \Schema::connection($conn)->hasColumn('v_pegawai_data', 'unit_kerja_id');
+        $hasSatuanKerjaId = \Schema::connection($conn)->hasColumn('v_pegawai_data', 'satuan_kerja_id');
+        $hasJabatanJenis = \Schema::connection($conn)->hasColumn('v_pegawai_data', 'jabatan_jenis');
+        $hasEselonId = \Schema::connection($conn)->hasColumn('v_pegawai_data', 'eselon_id');
+
+        $data = VPegawaiData::where(function ($q2) use ($org, $tim, $hasJabatanId) {
+            $q2->where('peg_status', true)->where(function ($q) use ($org, $tim, $hasJabatanId) {
+                if ($hasJabatanId) {
+                    $q->whereIn('jabatan_id', $org)->orWhereIn('peg_nip', $tim);
+                } else {
+                    $q->whereIn('peg_nip', $tim);
+                }
             });
-        })->orwhere(function ($q3) use ($user) {
-            $q3->where('peg_status', true)->whereNull('unit_kerja_id')->where('satuan_kerja_id', $user->satuan_kerja_id)->where('jabatan_jenis', 2);
-        })->orderBy('eselon_id');
+        })->orWhere(function ($q3) use ($user, $hasUnitKerjaId, $hasSatuanKerjaId, $hasJabatanJenis) {
+            $q3->where('peg_status', true);
+            if ($hasUnitKerjaId) {
+                $q3->whereNull('unit_kerja_id');
+            }
+            if ($hasSatuanKerjaId) {
+                $q3->where('satuan_kerja_id', $user->satuan_kerja_id);
+            }
+            if ($hasJabatanJenis) {
+                $q3->where('jabatan_jenis', 2);
+            }
+        });
+
+        if ($hasEselonId) {
+            $data->orderBy('eselon_id');
+        }
 
         if (! $isExport) {
             $data = $data->paginate(20);
@@ -64,9 +89,11 @@ class PerjanjianKinerjaController extends Controller
             $data = $data->get();
         }
         foreach ($data as &$d) {
-            if (! $d->unit_kerja_id && $d->jabatan_jenis == 2) {
-                $d->nip_atasan = '197004151996031001';
-                $d->nama_atasan = 'BEY TRIADI MACHMUDIN';
+            $isJabatanJenis2 = isset($d->jabatan_jenis) ? ($d->jabatan_jenis == 2) : false;
+            $hasNoUnitKerja = isset($d->unit_kerja_id) ? (! $d->unit_kerja_id) : true;
+            if ($hasNoUnitKerja && $isJabatanJenis2) {
+                $d->nip_atasan = '19680120 199303 1 005';
+                $d->nama_atasan = 'Dr. H. Dian Rachmat Yanuar, M.Si.';
             }
         }
         // $tidakTercapai = $tidakTercapai->get();
@@ -141,16 +168,32 @@ class PerjanjianKinerjaController extends Controller
     public function export(Request $request)
     {
         $req = $request->all();
-        $nip = $req['nip'];
+        $nip = $req['nip'] ?? null;
         $tahun = getTahunKinerja();
-        $tanggal = $req['tanggal'];
+        $tanggal = $req['tanggal'] ?? date('Y-m-d');
+        
         $pegawai = VPegawaiData::where('peg_nip', $nip)->first();
+        if (!$pegawai && Auth::user() && Auth::user()->nip) {
+            $pegawai = VPegawaiData::where('peg_nip', Auth::user()->nip)->first();
+        }
+        if (!$pegawai) {
+            $pegawai = new VPegawaiData;
+            $pegawai->peg_nip = $nip ?? (Auth::user()->nip ?? '');
+            $pegawai->peg_nama = Auth::user()->name ?? 'Pegawai';
+            $pegawai->jabatan_nama = 'Pegawai';
+            $pegawai->unit_kerja_id = null;
+            $pegawai->jabatan_jenis = 2;
+        }
+
         $tim = TimKerja::where('nip_ketua', $nip)->pluck('id');
-        if (! $pegawai->unit_kerja_id && $pegawai->jabatan_jenis == 2) {
+        $isJabatanJenis2 = isset($pegawai->jabatan_jenis) ? ($pegawai->jabatan_jenis == 2) : false;
+        $hasNoUnitKerja = isset($pegawai->unit_kerja_id) ? (! $pegawai->unit_kerja_id) : true;
+
+        if ($hasNoUnitKerja && $isJabatanJenis2) {
             $atasan = new VPegawaiData;
-            $atasan->peg_nama = 'BEY TRIADI MACHMUDIN';
-            $atasan->peg_nip = '197004151996031001';
-            $atasan->jabatan_nama = 'PJ GUBERNUR JAWA BARAT';
+            $atasan->peg_nama = 'Dr. H. Dian Rachmat Yanuar, M.Si.';
+            $atasan->peg_nip = '19680120 199303 1 005';
+            $atasan->jabatan_nama = 'BUPATI KUNINGAN';
             $atasan->nm_pkt_akhir = 'PEMBINA UTAMA';
             $atasan->nm_gol_akhir = 'IV/e';
             $program = \DB::table('program')
@@ -167,9 +210,19 @@ class PerjanjianKinerjaController extends Controller
                 ->get();
 
         } else {
-            $atasan = VPegawaiData::where('peg_nip', $pegawai->nip_atasan)->first();
-            if ($atasan->satuan_kerja_id != $pegawai->satuan_kerja_id) {
-                $atasan->jabatan_nama = 'PLT. '.$atasan->tugas_tambahan_jabatan_nama;
+            $atasan = !empty($pegawai->nip_atasan) ? VPegawaiData::where('peg_nip', $pegawai->nip_atasan)->first() : null;
+            if ($atasan && isset($atasan->satuan_kerja_id, $pegawai->satuan_kerja_id)) {
+                if ($atasan->satuan_kerja_id != $pegawai->satuan_kerja_id) {
+                    $atasan->jabatan_nama = 'PLT. '.($atasan->tugas_tambahan_jabatan_nama ?? $atasan->jabatan_nama);
+                }
+            }
+            if (!$atasan) {
+                $atasan = new VPegawaiData;
+                $atasan->peg_nama = 'Dr. H. Dian Rachmat Yanuar, M.Si.';
+                $atasan->peg_nip = '19680120 199303 1 005';
+                $atasan->jabatan_nama = 'BUPATI KUNINGAN';
+                $atasan->nm_pkt_akhir = 'PEMBINA UTAMA';
+                $atasan->nm_gol_akhir = 'IV/e';
             }
             $program = \DB::table('program')
                 ->select('id', 'nama');
@@ -345,16 +398,31 @@ class PerjanjianKinerjaController extends Controller
     public function exportPdf(Request $request)
     {
         $req = $request->all();
-        $nip = $req['nip'];
+        $nip = $req['nip'] ?? null;
         $tahun = getTahunKinerja();
-        $tanggal = $req['tanggal'];
-        $pegawai = VPegawaiData::where('peg_nip', $nip)->first();
-        $tim = TimKerja::where('nip_ketua', $nip)->pluck('id');
+        $tanggal = $req['tanggal'] ?? date('Y-m-d');
 
-        if (! $pegawai->unit_kerja_id && $pegawai->jabatan_jenis == 2) {
+        $pegawai = VPegawaiData::where('peg_nip', $nip)->first();
+        if (!$pegawai && Auth::user() && Auth::user()->nip) {
+            $pegawai = VPegawaiData::where('peg_nip', Auth::user()->nip)->first();
+        }
+        if (!$pegawai) {
+            $pegawai = new VPegawaiData;
+            $pegawai->peg_nip = $nip ?? (Auth::user()->nip ?? '');
+            $pegawai->peg_nama = Auth::user()->name ?? 'Pegawai';
+            $pegawai->jabatan_nama = 'Pegawai';
+            $pegawai->unit_kerja_id = null;
+            $pegawai->jabatan_jenis = 2;
+        }
+
+        $tim = TimKerja::where('nip_ketua', $nip)->pluck('id');
+        $isJabatanJenis2 = isset($pegawai->jabatan_jenis) ? ($pegawai->jabatan_jenis == 2) : false;
+        $hasNoUnitKerja = isset($pegawai->unit_kerja_id) ? (! $pegawai->unit_kerja_id) : true;
+
+        if ($hasNoUnitKerja && $isJabatanJenis2) {
             $atasan = new VPegawaiData;
             $atasan->peg_nama = 'Dr. H. Dian Rachmat Yanuar, M.Si.';
-            $atasan->peg_nip = '197004151996031001';
+            $atasan->peg_nip = '19680120 199303 1 005';
             $atasan->jabatan_nama = 'BUPATI KUNINGAN';
             $atasan->nm_pkt_akhir = 'PEMBINA UTAMA';
             $atasan->nm_gol_akhir = 'IV/e';
@@ -372,9 +440,19 @@ class PerjanjianKinerjaController extends Controller
                 ->get();
 
         } else {
-            $atasan = VPegawaiData::where('peg_nip', $pegawai->nip_atasan)->first();
-            if ($atasan->satuan_kerja_id != $pegawai->satuan_kerja_id) {
-                $atasan->jabatan_nama = 'PLT. '.$atasan->tugas_tambahan_jabatan_nama;
+            $atasan = !empty($pegawai->nip_atasan) ? VPegawaiData::where('peg_nip', $pegawai->nip_atasan)->first() : null;
+            if ($atasan && isset($atasan->satuan_kerja_id, $pegawai->satuan_kerja_id)) {
+                if ($atasan->satuan_kerja_id != $pegawai->satuan_kerja_id) {
+                    $atasan->jabatan_nama = 'PLT. '.($atasan->tugas_tambahan_jabatan_nama ?? $atasan->jabatan_nama);
+                }
+            }
+            if (!$atasan) {
+                $atasan = new VPegawaiData;
+                $atasan->peg_nama = 'Dr. H. Dian Rachmat Yanuar, M.Si.';
+                $atasan->peg_nip = '19680120 199303 1 005';
+                $atasan->jabatan_nama = 'BUPATI KUNINGAN';
+                $atasan->nm_pkt_akhir = 'PEMBINA UTAMA';
+                $atasan->nm_gol_akhir = 'IV/e';
             }
             $program = \DB::table('program')
                 ->select('id', 'nama');

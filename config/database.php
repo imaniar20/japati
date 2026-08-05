@@ -181,19 +181,18 @@ return [
             'driver' => 'pgsql',
             'read' => [
                 'host' => [
-                    env('DB_HOST_SIMPEG', 'localhost'),
+                    env('DB_HOST_SIMPEG', '127.0.0.1'),
                 ],
             ],
             'write' => [
                 'host' => [
-                    env('DB_HOST_SIMPEG', 'localhost'),
-                    // 'read-only', // read only, disable write
+                    env('DB_HOST_SIMPEG', '127.0.0.1'),
                 ],
             ],
             'port' => env('DB_PORT_SIMPEG', '5432'),
-            'database' => env('DB_DATABASE_SIMPEG', 'forge'),
-            'username' => env('DB_USERNAME_SIMPEG', 'forge'),
-            'password' => env('DB_PASSWORD_SIMPEG', ''),
+            'database' => env('DB_DATABASE_SIMPEG', 'erk_ekinerja_2025'),
+            'username' => env('DB_USERNAME_SIMPEG', 'postgres'),
+            'password' => env('DB_PASSWORD_SIMPEG', 'postgres'),
             'charset' => 'utf8',
             'prefix' => '',
             'search_path' => 'public',

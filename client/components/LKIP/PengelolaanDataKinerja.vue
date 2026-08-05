@@ -49,8 +49,8 @@ export default {
           <b-th colspan="6">PENINGKATAN DARI TAHUN LALU</b-th>
           <b-th colspan="3">CAPAIAN TAHUN {{ $helper.getTahunKinerja() }} TERHADAP TARGET AKHIR RPJMD/Renstra</b-th>
           <b-th colspan="2">PERBANDINGAN DENGAN NASIONAL</b-th>
-          <b-th rowspan="2">PERINGKAT JAWA BARAT DI LEVEL PULAU JAWA</b-th>
-          <b-th rowspan="2">PERINGKAT JAWA BARAT DI LEVEL NASIONAL</b-th>
+          <b-th rowspan="2">PERINGKAT KABUPATEN KUNINGAN DI LEVEL PROVINSI</b-th>
+          <b-th rowspan="2">PERINGKAT KABUPATEN KUNINGAN DI LEVEL NASIONAL</b-th>
           <b-th rowspan="2">IKU PD YANG TERKAIT</b-th>
           <b-th rowspan="2">TARGET TAHUN {{ $helper.getTahunKinerja() }}</b-th>
           <b-th rowspan="2">REALIASI TAHUN {{ $helper.getTahunKinerja() }}</b-th>

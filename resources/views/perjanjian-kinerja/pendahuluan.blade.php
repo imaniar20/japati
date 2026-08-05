@@ -4,7 +4,7 @@
         <tbody>
             <tr>
                 <td colspan="2">
-                    <center><img src="./logo-jabar.png" alt="" width="75" ></center>
+                    <center><img src="./logo-kuningan.png" alt="" width="75" ></center>
                 </td>
             </tr>
             <tr>
@@ -98,7 +98,7 @@
                                 <td style="width: 25%; padding: 10px; vertical-align: top;"> 
                                     <!-- Image Cell -->
                                     <div style="display: flex; align-items: center; justify-content: center;">
-                                        <img src="{{ public_path('logo-jabar-spesimen.png') }}" alt="" width="75">
+                                        <img src="{{ public_path('logo-kuningan-spesimen.png') }}" alt="" width="75">
                                     </div>
                                 </td>
                                 <td style="width: 75%; padding: 10px; word-wrap: break-word; vertical-align: top;">
@@ -128,7 +128,7 @@
                                 <td style="width: 25%; padding: 10px; vertical-align: top;">
                                     <!-- Image Cell -->
                                     <div style="display: flex; align-items: center; justify-content: center;">
-                                        <img src="{{ public_path('logo-jabar-spesimen.png') }}" alt="" width="75">
+                                        <img src="{{ public_path('logo-kuningan-spesimen.png') }}" alt="" width="75">
                                     </div>
                                 </td>
                                 <td style="width: 75%; padding: 10px; word-wrap: break-word; vertical-align: top;">

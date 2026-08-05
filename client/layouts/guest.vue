@@ -2,20 +2,29 @@
   <div>
     <b-navbar toggleable="lg" type="dark" variant="blue" class="shadow">
       <b-navbar-brand to="/">
-        <img src="~/assets/logo/sakti_logo.png" alt="SAKTI" title="SAKTI" style="height:32px; width:auto; object-fit:contain; margin-top:-3px;">
+        <img src="~/assets/logo/sakti_logo.png" alt="SAKTI" title="SAKTI"
+          style="height:32px; width:auto; object-fit:contain; margin-top:-3px;">
       </b-navbar-brand>
-
+      <span class="text-white"
+        style="font-size: 30px; color: aliceblue; padding-left: 10px; padding-right: 10px;">|</span>
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav>
-          <b-nav-item-dropdown class="kinerja-gubernur" :text="$helper.getTahunKinerjaPublic().toString()">
+          <b-nav-item-dropdown class="kinerja-tahun">
+            <template #button-content>
+              <i class="ti-calendar mr-1"></i> Kinerja Bupati {{ $helper.getTahunKinerjaPublic() }}
+            </template>
             <b-dropdown-item v-for="tahun of $const.tahun_kinerja_list" @click="setTahunKinerjaPublic(tahun.key)"
               :key="tahun.key">
               {{ tahun.display }}
             </b-dropdown-item>
           </b-nav-item-dropdown>
-          <b-nav-item-dropdown class="kinerja-gubernur" text="KInerja Bupati">
+          <!-- <b-nav-item-dropdown class="kinerja-gubernur"> -->
+          <b-nav-item-dropdown class="kinerja-tahun">
+            <template #button-content>
+              <i class="ti-crown mr-1"></i> Kinerja Bupati
+            </template>
             <b-dropdown-item to="/public-display/display-makro/dashboard"><i
                 class="ti-layout-grid2 mr-2"></i>Dashboard</b-dropdown-item>
             <b-dropdown-divider></b-dropdown-divider>
@@ -26,7 +35,8 @@
               Kuningan</b-dropdown-item>
             <b-dropdown-divider></b-dropdown-divider>
             <b-dropdown-item to="/public-display/display-makro/perjanjian-kinerja"><i
-                class="ti-notepad mr-2"></i>Perjanjian Kinerja Bupati Kabupaten
+                class="ti-notepad mr-2"></i>Perjanjian
+              Kinerja Bupati Kabupaten
               Kuningan</b-dropdown-item>
             <b-dropdown-divider></b-dropdown-divider>
             <b-dropdown-item to="/public-display/display-makro/rencana-aksi"><i class="ti-write mr-2"></i>Rencana Aksi
@@ -50,14 +60,18 @@
             <b-dropdown-item to="/public-display/display-makro/cascading"><i
                 class="ti-layers mr-2"></i>Cascading</b-dropdown-item>
           </b-nav-item-dropdown>
-          <b-nav-item-dropdown class="kinerja-pd" text="Kinerja Perangkat Daerah">
+          <b-nav-item-dropdown class="kinerja-tahun">
+            <template #button-content>
+              <i class="ti-briefcase mr-1"></i> Kinerja Perangkat Daerah
+            </template>
             <b-dropdown-item to="/public-display/display-mikro/renstra"><i
                 class="ti-map mr-2"></i>Renstra</b-dropdown-item>
             <b-dropdown-divider></b-dropdown-divider>
             <b-dropdown-item to="/public-display/display-mikro/rkt"><i class="ti-map-alt mr-2"></i>RKT</b-dropdown-item>
             <b-dropdown-divider></b-dropdown-divider>
             <b-dropdown-item to="/public-display/display-mikro/perjanjian-kinerja"><i
-                class="ti-notepad mr-2"></i>Perjanjian Kinerja</b-dropdown-item>
+                class="ti-notepad mr-2"></i>Perjanjian
+              Kinerja</b-dropdown-item>
             <b-dropdown-divider></b-dropdown-divider>
             <!-- <b-dropdown-item to="/public-display/display-mikro/rencana-aksi">Rencana Aksi Perangkat Daerah</b-dropdown-item>
             <b-dropdown-divider></b-dropdown-divider> -->
@@ -184,7 +198,7 @@ export default {
 /* Aktifkan garis bawah saat hover link, hover container dropdown, atau menu aktif */
 /deep/ .navbar-nav .nav-link:hover::before,
 /deep/ .navbar-nav .dropdown:hover .nav-link::before,
-/deep/ .navbar-nav .show > .nav-link::before,
+/deep/ .navbar-nav .show>.nav-link::before,
 /deep/ .navbar-nav .nav-link.router-link-active::before,
 /deep/ .navbar-nav .nav-link.router-link-exact-active::before {
   width: 100%;

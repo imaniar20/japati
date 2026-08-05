@@ -19,9 +19,9 @@ export default {
     <section class="bg-hero">
       <div class="w-full h-full flex flex-col justify-center lg:px-0 mx-auto">
         <div class="hero-copy">
-          <h2 class="hero-title">SAKTI</h2>
+          <h2 class="" style="font-family: 'Times New Roman', Times, serif; font-size: 45px;"><b>SAKTI</b></h2>
           <h3 class="hero-subtitle">Sistem Akuntabilitas Kinerja Terintegrasi Kabupaten Kuningan</h3>
-          <WelcomeInfografis  style="width: 100%; max-width: 1200px;" />
+          <WelcomeInfografis style="width: 100%; max-width: 1200px;" />
         </div>
       </div>
     </section>
