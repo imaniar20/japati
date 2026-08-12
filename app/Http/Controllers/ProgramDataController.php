@@ -144,4 +144,73 @@ class ProgramDataController extends Controller
 
         $this->authorizeBySatuanKerja((int) $program->satuan_kerja_id, [Role::PERANGKAT_DAERAH]);
     }
+
+    public function import(Request $request)
+    {
+        $this->authorizeByRoles([Role::SUPER, Role::PERANGKAT_DAERAH]);
+
+        $validated = $request->validate([
+            'satuan_kerja_id' => ['nullable', 'integer'],
+            'tahun_kinerja' => ['required', 'integer', 'min:1900', 'max:2100'],
+            'items' => ['required', 'array', 'min:1'],
+            'items.*.kode' => ['required', 'string'],
+            'items.*.nama' => ['required', 'string'],
+            'items.*.anggaran' => ['nullable', 'numeric'],
+        ]);
+
+        $satkerId = Role::isSuper()
+            ? ($validated['satuan_kerja_id'] ?? Auth::user()->satuan_kerja_id)
+            : Auth::user()->satuan_kerja_id;
+
+        if (!$satkerId) {
+            return response()->json(['message' => 'Satuan Kerja / OPD harus dipilih'], 422);
+        }
+
+        $tahunKinerja = (int) $validated['tahun_kinerja'];
+        $created = 0;
+        $updated = 0;
+        $skipped = 0;
+
+        foreach ($validated['items'] as $item) {
+            $kode = trim($item['kode']);
+            $nama = trim($item['nama']);
+            $anggaran = isset($item['anggaran']) ? (float) $item['anggaran'] : 0;
+
+            if (empty($kode) || empty($nama)) {
+                $skipped++;
+                continue;
+            }
+
+            $program = Program::query()
+                ->where('satuan_kerja_id', $satkerId)
+                ->where('tahun_kinerja', $tahunKinerja)
+                ->where('kode', $kode)
+                ->first();
+
+            if ($program) {
+                $program->update([
+                    'nama' => $nama,
+                    'anggaran' => $anggaran,
+                ]);
+                $updated++;
+            } else {
+                Program::create([
+                    'kode' => $kode,
+                    'nama' => $nama,
+                    'anggaran' => $anggaran,
+                    'satuan_kerja_id' => $satkerId,
+                    'tahun_kinerja' => $tahunKinerja,
+                ]);
+                $created++;
+            }
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => "Berhasil memproses import: {$created} data baru dibuat, {$updated} data diperbarui, {$skipped} dilewati.",
+            'created_count' => $created,
+            'updated_count' => $updated,
+            'skipped_count' => $skipped,
+        ]);
+    }
 }

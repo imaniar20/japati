@@ -221,4 +221,101 @@ class SubKegiatanDataController extends Controller
 
         $this->authorizeBySatuanKerja((int) $subKegiatan->satuan_kerja_id, [Role::PERANGKAT_DAERAH]);
     }
+
+    public function import(Request $request)
+    {
+        $this->authorizeByRoles([Role::SUPER, Role::PERANGKAT_DAERAH]);
+
+        $validated = $request->validate([
+            'satuan_kerja_id' => ['nullable', 'integer'],
+            'tahun_kinerja' => ['required', 'integer', 'min:1900', 'max:2100'],
+            'items' => ['required', 'array', 'min:1'],
+            'items.*.kode_kegiatan' => ['required', 'string'],
+            'items.*.kode' => ['required', 'string'],
+            'items.*.nama' => ['required', 'string'],
+            'items.*.anggaran' => ['nullable', 'numeric'],
+        ]);
+
+        $satkerId = Role::isSuper()
+            ? ($validated['satuan_kerja_id'] ?? Auth::user()->satuan_kerja_id)
+            : Auth::user()->satuan_kerja_id;
+
+        if (!$satkerId) {
+            return response()->json(['message' => 'Satuan Kerja / OPD harus dipilih'], 422);
+        }
+
+        $tahunKinerja = (int) $validated['tahun_kinerja'];
+
+        // Load all kegiatan for this satker & year indexed by kode
+        $kegiatanMap = Kegiatan::query()
+            ->where('satuan_kerja_id', $satkerId)
+            ->where('tahun_kinerja', $tahunKinerja)
+            ->get()
+            ->keyBy(fn ($k) => trim($k->kode));
+
+        $created = 0;
+        $updated = 0;
+        $skipped = 0;
+        $errors = [];
+
+        foreach ($validated['items'] as $index => $item) {
+            $kodeKegiatan = trim($item['kode_kegiatan']);
+            $kodeSubKegiatan = trim($item['kode']);
+            $namaSubKegiatan = trim($item['nama']);
+            $anggaran = isset($item['anggaran']) ? (float) $item['anggaran'] : 0;
+
+            if (empty($kodeKegiatan) || empty($kodeSubKegiatan) || empty($namaSubKegiatan)) {
+                $skipped++;
+                continue;
+            }
+
+            if (!isset($kegiatanMap[$kodeKegiatan])) {
+                $skipped++;
+                if (count($errors) < 5) {
+                    $errors[] = "Baris " . ($index + 1) . ": Kode Kegiatan '{$kodeKegiatan}' tidak ditemukan di Master Kegiatan.";
+                }
+                continue;
+            }
+
+            $kegiatanId = $kegiatanMap[$kodeKegiatan]->id;
+
+            $subKegiatan = SubKegiatan::query()
+                ->where('satuan_kerja_id', $satkerId)
+                ->where('tahun_kinerja', $tahunKinerja)
+                ->where('kode', $kodeSubKegiatan)
+                ->first();
+
+            if ($subKegiatan) {
+                $subKegiatan->update([
+                    'kegiatan_id' => $kegiatanId,
+                    'nama' => $namaSubKegiatan,
+                    'anggaran' => $anggaran,
+                ]);
+                $updated++;
+            } else {
+                SubKegiatan::create([
+                    'kode' => $kodeSubKegiatan,
+                    'nama' => $namaSubKegiatan,
+                    'kegiatan_id' => $kegiatanId,
+                    'satuan_kerja_id' => $satkerId,
+                    'tahun_kinerja' => $tahunKinerja,
+                    'anggaran' => $anggaran,
+                ]);
+                $created++;
+            }
+        }
+
+        $msg = "Berhasil memproses import sub kegiatan: {$created} data baru dibuat, {$updated} data diperbarui, {$skipped} dilewati.";
+        if (!empty($errors)) {
+            $msg .= " Catatan: " . implode(" ", $errors);
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => $msg,
+            'created_count' => $created,
+            'updated_count' => $updated,
+            'skipped_count' => $skipped,
+        ]);
+    }
 }

@@ -17,6 +17,13 @@ export default {
       isBusy: {
         getData: false,
       },
+      importModal: {
+        show: false,
+        file: null,
+        items: [],
+        isBusy: false,
+        error: null,
+      },
       fields: [
         { key: 'kode', label: 'Kode' },
         { key: 'nama', label: 'Nama Program' },
@@ -91,6 +98,113 @@ export default {
         },
       })
     },
+
+    showImportModal() {
+      this.importModal.file = null
+      this.importModal.items = []
+      this.importModal.error = null
+      this.importModal.show = true
+    },
+
+    downloadTemplateCsv() {
+      const templateContent = '\uFEFFKode;Nama Program;Anggaran\r\n1.01.02;PROGRAM PENGELOLAAN PENDIDIKAN;1500000000\r\n1.01.03;PROGRAM PENGEMBANGAN KURIKULUM;750000000'
+      const blob = new Blob([templateContent], { type: 'text/csv;charset=utf-8;' })
+      const link = document.createElement('a')
+      const url = URL.createObjectURL(blob)
+      link.setAttribute('href', url)
+      link.setAttribute('download', 'Template_Import_Master_Program.csv')
+      link.style.visibility = 'hidden'
+      document.body.appendChild(link)
+      link.click()
+      document.body.removeChild(link)
+    },
+
+    onFileChange(file) {
+      if (!file) {
+        this.importModal.items = []
+        return
+      }
+
+      const reader = new FileReader()
+      reader.onload = (e) => {
+        const text = e.target.result
+        this.parseCsvText(text)
+      }
+      reader.readAsText(file)
+    },
+
+    parseCsvText(text) {
+      this.importModal.error = null
+      const lines = text.split(/\r\n|\n/)
+      const items = []
+
+      for (let i = 0; i < lines.length; i++) {
+        let line = lines[i].trim()
+        if (!line) continue
+
+        // Skip header if line 1 contains 'kode' or 'nama'
+        if (i === 0 && (line.toLowerCase().includes('kode') || line.toLowerCase().includes('nama'))) {
+          continue
+        }
+
+        // Detect delimiter ; or ,
+        const delimiter = line.includes(';') ? ';' : ','
+        const parts = line.split(delimiter).map(p => p.trim().replace(/^"|"$/g, ''))
+
+        if (parts.length >= 2) {
+          const kode = parts[0]
+          const nama = parts[1]
+          let rawAnggaran = parts[2] || '0'
+          
+          // Clean currency formatting
+          rawAnggaran = rawAnggaran.replace(/rp/gi, '').replace(/\./g, '').replace(/,/g, '.').trim()
+          const anggaran = parseFloat(rawAnggaran) || 0
+
+          if (kode && nama) {
+            items.push({ kode, nama, anggaran })
+          }
+        }
+      }
+
+      if (items.length === 0) {
+        this.importModal.error = 'Tidak ada baris data valid yang ditemukan pada file CSV.'
+      }
+
+      this.importModal.items = items
+    },
+
+    async submitImport() {
+      if (this.importModal.items.length === 0) {
+        Swal.fire({ type: 'warning', title: 'File belum dipilih atau data tidak valid!' })
+        return
+      }
+
+      try {
+        this.importModal.isBusy = true
+        this.importModal.error = null
+
+        const payload = {
+          satuan_kerja_id: this.$role.isSuper() ? this.filter.satuan_kerja_id : null,
+          tahun_kinerja: this.filter.tahun_kinerja,
+          items: this.importModal.items,
+        }
+
+        const { data } = await axios.post('program-data/import', payload)
+
+        Swal.fire({
+          type: 'success',
+          title: 'Berhasil Import Data!',
+          text: data.message || 'Data Master Program berhasil diproses.',
+        })
+
+        this.importModal.show = false
+        this.getData()
+      } catch (error) {
+        this.importModal.error = error.response?.data?.message || 'Gagal memproses import data!'
+      } finally {
+        this.importModal.isBusy = false
+      }
+    },
   },
 
   watch: {
@@ -108,30 +222,33 @@ export default {
   <b-card>
     <div class="d-flex flex-wrap align-items-center justify-content-between mb-3">
       <h5 class="mb-2 mb-md-0">Master Program</h5>
-      <nuxt-link to="/admin/program/create" class="btn btn-primary">
-        <i class="fa fa-plus" aria-hidden="true"></i>
-        Tambah Program
-      </nuxt-link>
+      <div>
+        <b-button variant="info" class="mr-2 mb-2 mb-md-0" @click="showImportModal">
+          <i class="fa fa-upload mr-1" aria-hidden="true"></i>
+          Import CSV
+        </b-button>
+        <nuxt-link to="/admin/program/create" class="btn btn-primary mb-2 mb-md-0">
+          <i class="fa fa-plus" aria-hidden="true"></i>
+          Tambah Program
+        </nuxt-link>
+      </div>
     </div>
 
     <b-row class="align-items-end mb-3">
       <b-col v-if="$role.isSuper()" cols="12" md="4">
-        <OptionSatuanKerja
-          id="filter-program-satuan-kerja"
-          v-model="filter.satuan_kerja_id"
-          label-title="Filter OPD"
-          :required="false"
-          :group-props="{ 'label-cols': 12, 'label-cols-md': 12, class: 'mb-md-0' }"
-        />
+        <OptionSatuanKerja id="filter-program-satuan-kerja" v-model="filter.satuan_kerja_id" label-title="Filter OPD"
+          :required="false" :group-props="{ 'label-cols': 12, 'label-cols-md': 12, class: 'mb-md-0' }" />
       </b-col>
       <b-col cols="12" md="2">
         <b-form-group label="Tahun" label-class="font-weight-bold" label-for="filter-tahun" class="mb-md-0">
-          <b-form-input id="filter-tahun" v-model.number="filter.tahun_kinerja" type="number" min="1900" max="2100"></b-form-input>
+          <b-form-input id="filter-tahun" v-model.number="filter.tahun_kinerja" type="number" min="1900"
+            max="2100"></b-form-input>
         </b-form-group>
       </b-col>
       <b-col cols="12" :md="$role.isSuper() ? 4 : 7">
         <b-form-group label="Cari" label-class="font-weight-bold" label-for="keyword" class="mb-md-0">
-          <b-form-input id="keyword" v-model="filter.keyword" placeholder="Cari kode, nama program, atau OPD"></b-form-input>
+          <b-form-input id="keyword" v-model="filter.keyword"
+            placeholder="Cari kode, nama program, atau OPD"></b-form-input>
         </b-form-group>
       </b-col>
       <b-col cols="12" :md="$role.isSuper() ? 2 : 3" class="text-md-right">
@@ -139,7 +256,8 @@ export default {
       </b-col>
     </b-row>
 
-    <b-table responsive hover striped :busy="isBusy.getData" :items="filteredData" :fields="fields" show-empty class="table-bordered" head-variant="info">
+    <b-table responsive hover striped :busy="isBusy.getData" :items="filteredData" :fields="fields" show-empty
+      class="table-bordered" head-variant="info">
       <template #cell(kode)="row">
         <span class="text-nowrap">{{ row.item.kode }}</span>
       </template>
@@ -171,14 +289,66 @@ export default {
 
       <template #cell(action)="row">
         <div class="text-nowrap">
-          <nuxt-link :to="`/admin/program/${row.item.id}/edit`" class="btn btn-outline-warning btn-sm m-1 rounded-circle" title="Edit">
+          <nuxt-link :to="`/admin/program/${row.item.id}/edit`"
+            class="btn btn-outline-warning btn-sm m-1 rounded-circle" title="Edit">
             <i class="fa fa-pencil" aria-hidden="true"></i>
           </nuxt-link>
-          <b-button @click="destroy(row.item.id)" variant="outline-danger" size="sm" class="m-1 rounded-circle" title="Hapus">
+          <b-button @click="destroy(row.item.id)" variant="outline-danger" size="sm" class="m-1 rounded-circle"
+            title="Hapus">
             <i class="fa fa-trash" aria-hidden="true"></i>
           </b-button>
         </div>
       </template>
     </b-table>
+
+    <!-- Modal Import CSV -->
+    <b-modal id="modal-import-program" v-model="importModal.show" title="Import Master Program CSV" size="lg" hide-footer>
+      <div class="alert alert-info">
+        <h6><i class="fa fa-info-circle mr-1"></i> Format File CSV:</h6>
+        <p class="mb-1">File CSV hanya membutuhkan 3 kolom: <strong>Kode Program</strong>, <strong>Nama Program</strong>, dan <strong>Anggaran</strong>.</p>
+        <p class="mb-2 text-muted small">Data akan diimport ke Tahun Kinerja: <strong>{{ filter.tahun_kinerja }}</strong>.</p>
+        <b-button variant="outline-primary" size="sm" @click="downloadTemplateCsv">
+          <i class="fa fa-download mr-1"></i> Unduh Template CSV
+        </b-button>
+      </div>
+
+      <b-form-group label="Pilih File CSV" label-class="font-weight-bold">
+        <b-form-file v-model="importModal.file" accept=".csv,.txt" placeholder="Pilih atau drop file CSV di sini..." drop-placeholder="Drop file di sini..." @input="onFileChange"></b-form-file>
+      </b-form-group>
+
+      <b-alert v-if="importModal.error" variant="danger" show>{{ importModal.error }}</b-alert>
+
+      <div v-if="importModal.items.length > 0" class="mt-3">
+        <h6>Preview Data Ditemukan ({{ importModal.items.length }} data):</h6>
+        <div class="table-responsive" style="max-height: 250px; overflow-y: auto;">
+          <table class="table table-sm table-bordered table-striped">
+            <thead class="thead-light">
+              <tr>
+                <th>No</th>
+                <th>Kode Program</th>
+                <th>Nama Program</th>
+                <th class="text-right">Anggaran</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="(item, idx) in importModal.items" :key="idx">
+                <td>{{ idx + 1 }}</td>
+                <td><code>{{ item.kode }}</code></td>
+                <td>{{ item.nama }}</td>
+                <td class="text-right">Rp {{ formatAnggaran(item.anggaran) }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="d-flex justify-content-end mt-4">
+        <b-button variant="secondary" class="mr-2" @click="importModal.show = false">Batal</b-button>
+        <b-button variant="primary" :disabled="importModal.items.length === 0 || importModal.isBusy" @click="submitImport">
+          <b-spinner v-if="importModal.isBusy" small class="mr-1"></b-spinner>
+          <i v-else class="fa fa-check mr-1"></i> Proses Import
+        </b-button>
+      </div>
+    </b-modal>
   </b-card>
 </template>

@@ -99,6 +99,7 @@ Route::prefix('pegawai-data')->middleware('auth:api')->group(function () {
 Route::prefix('program-data')->middleware('auth:api')->group(function () {
     Route::get('/', [ProgramDataController::class, 'index']);
     Route::post('/', [ProgramDataController::class, 'store']);
+    Route::post('import', [ProgramDataController::class, 'import']);
     Route::get('{program}', [ProgramDataController::class, 'show'])->whereNumber('program');
     Route::patch('{program}', [ProgramDataController::class, 'update'])->whereNumber('program');
     Route::delete('{program}', [ProgramDataController::class, 'destroy'])->whereNumber('program');
@@ -107,6 +108,7 @@ Route::prefix('program-data')->middleware('auth:api')->group(function () {
 Route::prefix('kegiatan-data')->middleware('auth:api')->group(function () {
     Route::get('/', [KegiatanDataController::class, 'index']);
     Route::post('/', [KegiatanDataController::class, 'store']);
+    Route::post('import', [KegiatanDataController::class, 'import']);
     Route::get('{kegiatan}', [KegiatanDataController::class, 'show'])->whereNumber('kegiatan');
     Route::patch('{kegiatan}', [KegiatanDataController::class, 'update'])->whereNumber('kegiatan');
     Route::delete('{kegiatan}', [KegiatanDataController::class, 'destroy'])->whereNumber('kegiatan');
@@ -115,6 +117,7 @@ Route::prefix('kegiatan-data')->middleware('auth:api')->group(function () {
 Route::prefix('sub-kegiatan-data')->middleware('auth:api')->group(function () {
     Route::get('/', [SubKegiatanDataController::class, 'index']);
     Route::post('/', [SubKegiatanDataController::class, 'store']);
+    Route::post('import', [SubKegiatanDataController::class, 'import']);
     Route::get('{subKegiatan}', [SubKegiatanDataController::class, 'show'])->whereNumber('subKegiatan');
     Route::patch('{subKegiatan}', [SubKegiatanDataController::class, 'update'])->whereNumber('subKegiatan');
     Route::delete('{subKegiatan}', [SubKegiatanDataController::class, 'destroy'])->whereNumber('subKegiatan');

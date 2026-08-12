@@ -169,4 +169,101 @@ class KegiatanDataController extends Controller
 
         $this->authorizeBySatuanKerja((int) $kegiatan->satuan_kerja_id, [Role::PERANGKAT_DAERAH]);
     }
+
+    public function import(Request $request)
+    {
+        $this->authorizeByRoles([Role::SUPER, Role::PERANGKAT_DAERAH]);
+
+        $validated = $request->validate([
+            'satuan_kerja_id' => ['nullable', 'integer'],
+            'tahun_kinerja' => ['required', 'integer', 'min:1900', 'max:2100'],
+            'items' => ['required', 'array', 'min:1'],
+            'items.*.kode_program' => ['required', 'string'],
+            'items.*.kode' => ['required', 'string'],
+            'items.*.nama' => ['required', 'string'],
+            'items.*.anggaran' => ['nullable', 'numeric'],
+        ]);
+
+        $satkerId = Role::isSuper()
+            ? ($validated['satuan_kerja_id'] ?? Auth::user()->satuan_kerja_id)
+            : Auth::user()->satuan_kerja_id;
+
+        if (!$satkerId) {
+            return response()->json(['message' => 'Satuan Kerja / OPD harus dipilih'], 422);
+        }
+
+        $tahunKinerja = (int) $validated['tahun_kinerja'];
+
+        // Load all programs for this satker & year indexed by kode
+        $programs = Program::query()
+            ->where('satuan_kerja_id', $satkerId)
+            ->where('tahun_kinerja', $tahunKinerja)
+            ->get()
+            ->keyBy(fn ($p) => trim($p->kode));
+
+        $created = 0;
+        $updated = 0;
+        $skipped = 0;
+        $errors = [];
+
+        foreach ($validated['items'] as $index => $item) {
+            $kodeProgram = trim($item['kode_program']);
+            $kodeKegiatan = trim($item['kode']);
+            $namaKegiatan = trim($item['nama']);
+            $anggaran = isset($item['anggaran']) ? (float) $item['anggaran'] : 0;
+
+            if (empty($kodeProgram) || empty($kodeKegiatan) || empty($namaKegiatan)) {
+                $skipped++;
+                continue;
+            }
+
+            if (!isset($programs[$kodeProgram])) {
+                $skipped++;
+                if (count($errors) < 5) {
+                    $errors[] = "Baris " . ($index + 1) . ": Kode Program '{$kodeProgram}' tidak ditemukan di Master Program.";
+                }
+                continue;
+            }
+
+            $programId = $programs[$kodeProgram]->id;
+
+            $kegiatan = Kegiatan::query()
+                ->where('satuan_kerja_id', $satkerId)
+                ->where('tahun_kinerja', $tahunKinerja)
+                ->where('kode', $kodeKegiatan)
+                ->first();
+
+            if ($kegiatan) {
+                $kegiatan->update([
+                    'program_id' => $programId,
+                    'nama' => $namaKegiatan,
+                    'anggaran' => $anggaran,
+                ]);
+                $updated++;
+            } else {
+                Kegiatan::create([
+                    'kode' => $kodeKegiatan,
+                    'nama' => $namaKegiatan,
+                    'program_id' => $programId,
+                    'satuan_kerja_id' => $satkerId,
+                    'tahun_kinerja' => $tahunKinerja,
+                    'anggaran' => $anggaran,
+                ]);
+                $created++;
+            }
+        }
+
+        $msg = "Berhasil memproses import kegiatan: {$created} data baru dibuat, {$updated} data diperbarui, {$skipped} dilewati.";
+        if (!empty($errors)) {
+            $msg .= " Catatan: " . implode(" ", $errors);
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => $msg,
+            'created_count' => $created,
+            'updated_count' => $updated,
+            'skipped_count' => $skipped,
+        ]);
+    }
 }
