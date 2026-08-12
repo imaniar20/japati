@@ -204,9 +204,11 @@ class KegiatanDataController extends Controller
         $created = 0;
         $updated = 0;
         $skipped = 0;
-        $errors = [];
+        $updatedItems = [];
+        $skippedItems = [];
 
         foreach ($validated['items'] as $index => $item) {
+            $rowNum = $index + 1;
             $kodeProgram = trim($item['kode_program']);
             $kodeKegiatan = trim($item['kode']);
             $namaKegiatan = trim($item['nama']);
@@ -214,14 +216,13 @@ class KegiatanDataController extends Controller
 
             if (empty($kodeProgram) || empty($kodeKegiatan) || empty($namaKegiatan)) {
                 $skipped++;
+                $skippedItems[] = "Baris {$rowNum}: Data tidak lengkap (Kode Program, Kode Kegiatan, atau Nama Kegiatan kosong)";
                 continue;
             }
 
             if (!isset($programs[$kodeProgram])) {
                 $skipped++;
-                if (count($errors) < 5) {
-                    $errors[] = "Baris " . ($index + 1) . ": Kode Program '{$kodeProgram}' tidak ditemukan di Master Program.";
-                }
+                $skippedItems[] = "Baris {$rowNum}: Kode Program '{$kodeProgram}' tidak ditemukan di Master Program (Kegiatan: {$kodeKegiatan} - {$namaKegiatan})";
                 continue;
             }
 
@@ -240,6 +241,7 @@ class KegiatanDataController extends Controller
                     'anggaran' => $anggaran,
                 ]);
                 $updated++;
+                $updatedItems[] = "Kode {$kodeKegiatan} - {$namaKegiatan}";
             } else {
                 Kegiatan::create([
                     'kode' => $kodeKegiatan,
@@ -254,9 +256,6 @@ class KegiatanDataController extends Controller
         }
 
         $msg = "Berhasil memproses import kegiatan: {$created} data baru dibuat, {$updated} data diperbarui, {$skipped} dilewati.";
-        if (!empty($errors)) {
-            $msg .= " Catatan: " . implode(" ", $errors);
-        }
 
         return response()->json([
             'success' => true,
@@ -264,6 +263,97 @@ class KegiatanDataController extends Controller
             'created_count' => $created,
             'updated_count' => $updated,
             'skipped_count' => $skipped,
+            'updated_items' => $updatedItems,
+            'skipped_items' => $skippedItems,
+        ]);
+    }
+
+    public function destroyBatch(Request $request)
+    {
+        $this->authorizeByRoles([Role::PERANGKAT_DAERAH]);
+
+        $validated = $request->validate([
+            'ids' => ['required', 'array', 'min:1'],
+            'ids.*' => ['required', 'integer'],
+        ]);
+
+        $satkerId = Auth::user()->satuan_kerja_id;
+
+        $kegiatans = Kegiatan::query()
+            ->whereIn('id', $validated['ids'])
+            ->where('satuan_kerja_id', $satkerId)
+            ->get();
+
+        $deleted = 0;
+        $failed = 0;
+
+        foreach ($kegiatans as $kegiatan) {
+            $usage = [
+                'sub_kegiatan' => $kegiatan->subKegiatan()->count(),
+                'kinerja_kegiatan' => $kegiatan->kinerjaKegiatan()->count(),
+            ];
+            if (array_sum($usage) > 0) {
+                $failed++;
+            } else {
+                $kegiatan->delete();
+                $deleted++;
+            }
+        }
+
+        $msg = "Berhasil menghapus {$deleted} data kegiatan.";
+        if ($failed > 0) {
+            $msg .= " ({$failed} data tidak terhapus karena masih dipakai pada sub kegiatan/kinerja).";
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => $msg,
+            'deleted_count' => $deleted,
+            'failed_count' => $failed,
+        ]);
+    }
+
+    public function destroyAll(Request $request)
+    {
+        $this->authorizeByRoles([Role::PERANGKAT_DAERAH]);
+
+        $validated = $request->validate([
+            'tahun_kinerja' => ['required', 'integer'],
+        ]);
+
+        $satkerId = Auth::user()->satuan_kerja_id;
+
+        $kegiatans = Kegiatan::query()
+            ->where('satuan_kerja_id', $satkerId)
+            ->where('tahun_kinerja', $validated['tahun_kinerja'])
+            ->get();
+
+        $deleted = 0;
+        $failed = 0;
+
+        foreach ($kegiatans as $kegiatan) {
+            $usage = [
+                'sub_kegiatan' => $kegiatan->subKegiatan()->count(),
+                'kinerja_kegiatan' => $kegiatan->kinerjaKegiatan()->count(),
+            ];
+            if (array_sum($usage) > 0) {
+                $failed++;
+            } else {
+                $kegiatan->delete();
+                $deleted++;
+            }
+        }
+
+        $msg = "Berhasil menghapus {$deleted} data kegiatan untuk tahun {$validated['tahun_kinerja']}.";
+        if ($failed > 0) {
+            $msg .= " ({$failed} data tidak terhapus karena masih dipakai pada sub kegiatan/kinerja).";
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => $msg,
+            'deleted_count' => $deleted,
+            'failed_count' => $failed,
         ]);
     }
 }

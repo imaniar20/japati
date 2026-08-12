@@ -9,6 +9,8 @@ export default {
   data() {
     return {
       data: [],
+      selectedIds: [],
+      selectAll: false,
       filter: {
         keyword: '',
         satuan_kerja_id: null,
@@ -39,6 +41,16 @@ export default {
   },
 
   computed: {
+    computedFields() {
+      if (this.$role.isPerangkatDaerah()) {
+        return [
+          { key: 'select', label: '', class: 'text-center', thStyle: { width: '40px' } },
+          ...this.fields,
+        ]
+      }
+      return this.fields
+    },
+
     filteredData() {
       const keyword = this.filter.keyword.trim().toLowerCase()
 
@@ -74,6 +86,8 @@ export default {
         })
 
         this.data = data
+        this.selectedIds = []
+        this.selectAll = false
       } catch (error) {
         Swal.fire({
           type: 'error',
@@ -92,14 +106,99 @@ export default {
       return Number(item.kinerja_sub_kegiatan_count || 0) + Number(item.kinerja_sub_kegiatan_kab_kota_count || 0)
     },
 
+    toggleSelectAll(checked) {
+      if (checked) {
+        this.selectedIds = this.filteredData.map(item => item.id)
+      } else {
+        this.selectedIds = []
+      }
+    },
+
     destroy(id) {
       doDestroy({
         preConfirm: async () => {
-          await axios.delete(`sub-kegiatan-data/${id}`)
-          this.getData()
-          return true
+          try {
+            await axios.delete(`sub-kegiatan-data/${id}`)
+            this.getData()
+            return true
+          } catch (error) {
+            Swal.showValidationMessage(
+              error.response?.data?.message || 'Gagal menghapus data!'
+            )
+            return false
+          }
         },
       })
+    },
+
+    async destroySelected() {
+      if (this.selectedIds.length === 0) return
+
+      const result = await Swal.fire({
+        title: 'Apakah Anda yakin?',
+        text: `Akan menghapus ${this.selectedIds.length} data sub kegiatan terpilih`,
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#bd2130',
+        confirmButtonText: 'Ya, Hapus Terpilih',
+        cancelButtonText: 'Batal',
+      })
+
+      if (result.value) {
+        try {
+          const { data } = await axios.post('sub-kegiatan-data/destroy-batch', {
+            ids: this.selectedIds,
+          })
+          Swal.fire({
+            type: data.failed_count > 0 ? 'warning' : 'success',
+            title: 'Proses Hapus Terpilih',
+            text: data.message,
+          })
+          this.getData()
+        } catch (error) {
+          Swal.fire({
+            type: 'error',
+            title: 'Gagal Hapus Data!',
+            text: error.response?.data?.message || 'Terjadi kesalahan server',
+          })
+        }
+      }
+    },
+
+    async destroyAllData() {
+      if (this.filteredData.length === 0) return
+
+      const result = await Swal.fire({
+        title: 'PERINGATAN HAPUS SEMUA DATA!',
+        text: `Apakah Anda yakin ingin menghapus SELURUH (${this.filteredData.length}) data sub kegiatan untuk tahun ${this.filter.tahun_kinerja}?`,
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#bd2130',
+        confirmButtonText: 'Ya, Hapus Semua Data',
+        cancelButtonText: 'Batal',
+      })
+
+      if (result.value) {
+        try {
+          const { data } = await axios.delete('sub-kegiatan-data/destroy-all', {
+            data: {
+              tahun_kinerja: this.filter.tahun_kinerja,
+            },
+          })
+          Swal.fire({
+            type: data.failed_count > 0 ? 'warning' : 'success',
+            title: 'Proses Hapus Semua Data',
+            text: data.message,
+          })
+          this.getData()
+        } catch (error) {
+          Swal.fire({
+            type: 'error',
+            title: 'Gagal Hapus Semua Data!',
+            text: error.response?.data?.message || 'Terjadi kesalahan server',
+          })
+        }
+      }
     },
 
     showImportModal() {
@@ -145,12 +244,10 @@ export default {
         let line = lines[i].trim()
         if (!line) continue
 
-        // Skip header if line 1 contains 'kode' or 'nama'
         if (i === 0 && (line.toLowerCase().includes('kode') || line.toLowerCase().includes('nama'))) {
           continue
         }
 
-        // Detect delimiter ; or ,
         const delimiter = line.includes(';') ? ';' : ','
         const parts = line.split(delimiter).map(p => p.trim().replace(/^"|"$/g, ''))
 
@@ -160,7 +257,6 @@ export default {
           const nama = parts[2]
           let rawAnggaran = parts[3] || '0'
 
-          // Clean currency formatting
           rawAnggaran = rawAnggaran.replace(/rp/gi, '').replace(/\./g, '').replace(/,/g, '.').trim()
           const anggaran = parseFloat(rawAnggaran) || 0
 
@@ -195,10 +291,35 @@ export default {
 
         const { data } = await axios.post('sub-kegiatan-data/import', payload)
 
+        let htmlContent = `<div style="text-align: left; font-size: 14px;">`
+        htmlContent += `<p class="mb-2"><strong>Hasil Proses Import:</strong></p>`
+        htmlContent += `<ul class="mb-3">`
+        htmlContent += `<li><strong class="text-success">${data.created_count || 0}</strong> Data Baru Dibuat</li>`
+        htmlContent += `<li><strong class="text-info">${data.updated_count || 0}</strong> Data Diperbarui</li>`
+        htmlContent += `<li><strong class="text-danger">${data.skipped_count || 0}</strong> Data Dilewati</li>`
+        htmlContent += `</ul>`
+
+        if (data.updated_items && data.updated_items.length > 0) {
+          htmlContent += `<div class="mb-1"><strong class="text-info"><i class="fa fa-refresh mr-1"></i> Rincian Data Diperbarui (${data.updated_items.length}):</strong></div>`
+          htmlContent += `<div style="max-height: 120px; overflow-y: auto; background: #eef7fc; padding: 8px; border-radius: 4px; border: 1px solid #b8dcee; font-size: 12px; margin-bottom: 12px;">`
+          htmlContent += data.updated_items.map(item => `<div>• ${item}</div>`).join('')
+          htmlContent += `</div>`
+        }
+
+        if (data.skipped_items && data.skipped_items.length > 0) {
+          htmlContent += `<div class="mb-1"><strong class="text-danger"><i class="fa fa-exclamation-triangle mr-1"></i> Rincian Data Dilewati (${data.skipped_items.length}):</strong></div>`
+          htmlContent += `<div style="max-height: 150px; overflow-y: auto; background: #fdf2f2; padding: 8px; border-radius: 4px; border: 1px solid #f8b4b4; font-size: 12px; margin-bottom: 12px; color: #721c24;">`
+          htmlContent += data.skipped_items.map(item => `<div>• ${item}</div>`).join('')
+          htmlContent += `</div>`
+        }
+
+        htmlContent += `</div>`
+
         Swal.fire({
-          type: 'success',
-          title: 'Berhasil Import Data!',
-          text: data.message || 'Data Master Sub Kegiatan berhasil diproses.',
+          type: (data.skipped_count > 0 && data.created_count === 0 && data.updated_count === 0) ? 'warning' : 'success',
+          title: 'Import Selesai',
+          html: htmlContent,
+          confirmButtonText: 'Tutup',
         })
 
         this.importModal.show = false
@@ -218,6 +339,13 @@ export default {
     'filter.tahun_kinerja': function () {
       this.getData()
     },
+    selectedIds: function (newVal) {
+      if (newVal.length === this.filteredData.length && this.filteredData.length > 0) {
+        this.selectAll = true
+      } else {
+        this.selectAll = false
+      }
+    },
   },
 }
 </script>
@@ -227,6 +355,14 @@ export default {
     <div class="d-flex flex-wrap align-items-center justify-content-between mb-3">
       <h5 class="mb-2 mb-md-0">Master Sub Kegiatan</h5>
       <div>
+        <b-button v-if="$role.isPerangkatDaerah() && selectedIds.length > 0" variant="danger" class="mr-2 mb-2 mb-md-0" @click="destroySelected">
+          <i class="fa fa-trash mr-1" aria-hidden="true"></i>
+          Hapus Terpilih ({{ selectedIds.length }})
+        </b-button>
+        <b-button v-if="$role.isPerangkatDaerah() && data.length > 0" variant="outline-danger" class="mr-2 mb-2 mb-md-0" @click="destroyAllData">
+          <i class="fa fa-trash-o mr-1" aria-hidden="true"></i>
+          Hapus Semua
+        </b-button>
         <b-button variant="info" class="mr-2 mb-2 mb-md-0" @click="showImportModal">
           <i class="fa fa-upload mr-1" aria-hidden="true"></i>
           Import CSV
@@ -263,7 +399,15 @@ export default {
       </b-col>
     </b-row>
 
-    <b-table responsive hover striped :busy="isBusy.getData" :items="filteredData" :fields="fields" show-empty class="table-bordered" head-variant="info">
+    <b-table responsive hover striped :busy="isBusy.getData" :items="filteredData" :fields="computedFields" show-empty class="table-bordered" head-variant="info">
+      <template #head(select)>
+        <b-form-checkbox v-model="selectAll" @change="toggleSelectAll"></b-form-checkbox>
+      </template>
+
+      <template #cell(select)="row">
+        <b-form-checkbox v-model="selectedIds" :value="row.item.id"></b-form-checkbox>
+      </template>
+
       <template #cell(kode)="row">
         <span class="text-nowrap">{{ row.item.kode }}</span>
       </template>

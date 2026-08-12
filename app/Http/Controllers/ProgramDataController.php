@@ -170,14 +170,18 @@ class ProgramDataController extends Controller
         $created = 0;
         $updated = 0;
         $skipped = 0;
+        $updatedItems = [];
+        $skippedItems = [];
 
-        foreach ($validated['items'] as $item) {
+        foreach ($validated['items'] as $index => $item) {
+            $rowNum = $index + 1;
             $kode = trim($item['kode']);
             $nama = trim($item['nama']);
             $anggaran = isset($item['anggaran']) ? (float) $item['anggaran'] : 0;
 
             if (empty($kode) || empty($nama)) {
                 $skipped++;
+                $skippedItems[] = "Baris {$rowNum}: Kode atau Nama Program kosong";
                 continue;
             }
 
@@ -193,6 +197,7 @@ class ProgramDataController extends Controller
                     'anggaran' => $anggaran,
                 ]);
                 $updated++;
+                $updatedItems[] = "Kode {$kode} - {$nama}";
             } else {
                 Program::create([
                     'kode' => $kode,
@@ -211,6 +216,99 @@ class ProgramDataController extends Controller
             'created_count' => $created,
             'updated_count' => $updated,
             'skipped_count' => $skipped,
+            'updated_items' => $updatedItems,
+            'skipped_items' => $skippedItems,
+        ]);
+    }
+
+    public function destroyBatch(Request $request)
+    {
+        $this->authorizeByRoles([Role::PERANGKAT_DAERAH]);
+
+        $validated = $request->validate([
+            'ids' => ['required', 'array', 'min:1'],
+            'ids.*' => ['required', 'integer'],
+        ]);
+
+        $satkerId = Auth::user()->satuan_kerja_id;
+
+        $programs = Program::query()
+            ->whereIn('id', $validated['ids'])
+            ->where('satuan_kerja_id', $satkerId)
+            ->get();
+
+        $deleted = 0;
+        $failed = 0;
+
+        foreach ($programs as $program) {
+            $usage = [
+                'kegiatan' => $program->kegiatan()->count(),
+                'kinerja_program' => $program->kinerjaProgram()->count(),
+                'kinerja_kegiatan' => $program->kinerjaKegiatan()->count(),
+            ];
+            if (array_sum($usage) > 0) {
+                $failed++;
+            } else {
+                $program->delete();
+                $deleted++;
+            }
+        }
+
+        $msg = "Berhasil menghapus {$deleted} data program.";
+        if ($failed > 0) {
+            $msg .= " ({$failed} data tidak terhapus karena masih dipakai pada data kegiatan/kinerja).";
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => $msg,
+            'deleted_count' => $deleted,
+            'failed_count' => $failed,
+        ]);
+    }
+
+    public function destroyAll(Request $request)
+    {
+        $this->authorizeByRoles([Role::PERANGKAT_DAERAH]);
+
+        $validated = $request->validate([
+            'tahun_kinerja' => ['required', 'integer'],
+        ]);
+
+        $satkerId = Auth::user()->satuan_kerja_id;
+
+        $programs = Program::query()
+            ->where('satuan_kerja_id', $satkerId)
+            ->where('tahun_kinerja', $validated['tahun_kinerja'])
+            ->get();
+
+        $deleted = 0;
+        $failed = 0;
+
+        foreach ($programs as $program) {
+            $usage = [
+                'kegiatan' => $program->kegiatan()->count(),
+                'kinerja_program' => $program->kinerjaProgram()->count(),
+                'kinerja_kegiatan' => $program->kinerjaKegiatan()->count(),
+            ];
+            if (array_sum($usage) > 0) {
+                $failed++;
+            } else {
+                $program->delete();
+                $deleted++;
+            }
+        }
+
+        $msg = "Berhasil menghapus {$deleted} data program untuk tahun {$validated['tahun_kinerja']}.";
+        if ($failed > 0) {
+            $msg .= " ({$failed} data tidak terhapus karena masih dipakai pada data kegiatan/kinerja).";
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => $msg,
+            'deleted_count' => $deleted,
+            'failed_count' => $failed,
         ]);
     }
 }

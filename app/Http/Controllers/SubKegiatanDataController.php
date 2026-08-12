@@ -256,9 +256,11 @@ class SubKegiatanDataController extends Controller
         $created = 0;
         $updated = 0;
         $skipped = 0;
-        $errors = [];
+        $updatedItems = [];
+        $skippedItems = [];
 
         foreach ($validated['items'] as $index => $item) {
+            $rowNum = $index + 1;
             $kodeKegiatan = trim($item['kode_kegiatan']);
             $kodeSubKegiatan = trim($item['kode']);
             $namaSubKegiatan = trim($item['nama']);
@@ -266,14 +268,13 @@ class SubKegiatanDataController extends Controller
 
             if (empty($kodeKegiatan) || empty($kodeSubKegiatan) || empty($namaSubKegiatan)) {
                 $skipped++;
+                $skippedItems[] = "Baris {$rowNum}: Data tidak lengkap (Kode Kegiatan, Kode Sub Kegiatan, atau Nama Sub Kegiatan kosong)";
                 continue;
             }
 
             if (!isset($kegiatanMap[$kodeKegiatan])) {
                 $skipped++;
-                if (count($errors) < 5) {
-                    $errors[] = "Baris " . ($index + 1) . ": Kode Kegiatan '{$kodeKegiatan}' tidak ditemukan di Master Kegiatan.";
-                }
+                $skippedItems[] = "Baris {$rowNum}: Kode Kegiatan '{$kodeKegiatan}' tidak ditemukan di Master Kegiatan (Sub Kegiatan: {$kodeSubKegiatan} - {$namaSubKegiatan})";
                 continue;
             }
 
@@ -292,6 +293,7 @@ class SubKegiatanDataController extends Controller
                     'anggaran' => $anggaran,
                 ]);
                 $updated++;
+                $updatedItems[] = "Kode {$kodeSubKegiatan} - {$namaSubKegiatan}";
             } else {
                 SubKegiatan::create([
                     'kode' => $kodeSubKegiatan,
@@ -306,9 +308,6 @@ class SubKegiatanDataController extends Controller
         }
 
         $msg = "Berhasil memproses import sub kegiatan: {$created} data baru dibuat, {$updated} data diperbarui, {$skipped} dilewati.";
-        if (!empty($errors)) {
-            $msg .= " Catatan: " . implode(" ", $errors);
-        }
 
         return response()->json([
             'success' => true,
@@ -316,6 +315,103 @@ class SubKegiatanDataController extends Controller
             'created_count' => $created,
             'updated_count' => $updated,
             'skipped_count' => $skipped,
+            'updated_items' => $updatedItems,
+            'skipped_items' => $skippedItems,
+        ]);
+    }
+
+    public function destroyBatch(Request $request)
+    {
+        $this->authorizeByRoles([Role::PERANGKAT_DAERAH]);
+
+        $validated = $request->validate([
+            'ids' => ['required', 'array', 'min:1'],
+            'ids.*' => ['required', 'integer'],
+        ]);
+
+        $satkerId = Auth::user()->satuan_kerja_id;
+
+        $subKegiatans = SubKegiatan::query()
+            ->whereIn('id', $validated['ids'])
+            ->where('satuan_kerja_id', $satkerId)
+            ->get();
+
+        $deleted = 0;
+        $failed = 0;
+
+        foreach ($subKegiatans as $subKegiatan) {
+            $usage = [
+                'kinerja_sub_kegiatan' => $subKegiatan->kinerjaSubKegiatan()->count(),
+                'kinerja_sub_kegiatan_kab_kota' => $subKegiatan->kinerjaSubKegiatanKabKota()->count(),
+            ];
+            if (array_sum($usage) > 0) {
+                $failed++;
+            } else {
+                DB::transaction(function () use ($subKegiatan) {
+                    $subKegiatan->indikator()->delete();
+                    $subKegiatan->delete();
+                });
+                $deleted++;
+            }
+        }
+
+        $msg = "Berhasil menghapus {$deleted} data sub kegiatan.";
+        if ($failed > 0) {
+            $msg .= " ({$failed} data tidak terhapus karena masih dipakai pada data kinerja).";
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => $msg,
+            'deleted_count' => $deleted,
+            'failed_count' => $failed,
+        ]);
+    }
+
+    public function destroyAll(Request $request)
+    {
+        $this->authorizeByRoles([Role::PERANGKAT_DAERAH]);
+
+        $validated = $request->validate([
+            'tahun_kinerja' => ['required', 'integer'],
+        ]);
+
+        $satkerId = Auth::user()->satuan_kerja_id;
+
+        $subKegiatans = SubKegiatan::query()
+            ->where('satuan_kerja_id', $satkerId)
+            ->where('tahun_kinerja', $validated['tahun_kinerja'])
+            ->get();
+
+        $deleted = 0;
+        $failed = 0;
+
+        foreach ($subKegiatans as $subKegiatan) {
+            $usage = [
+                'kinerja_sub_kegiatan' => $subKegiatan->kinerjaSubKegiatan()->count(),
+                'kinerja_sub_kegiatan_kab_kota' => $subKegiatan->kinerjaSubKegiatanKabKota()->count(),
+            ];
+            if (array_sum($usage) > 0) {
+                $failed++;
+            } else {
+                DB::transaction(function () use ($subKegiatan) {
+                    $subKegiatan->indikator()->delete();
+                    $subKegiatan->delete();
+                });
+                $deleted++;
+            }
+        }
+
+        $msg = "Berhasil menghapus {$deleted} data sub kegiatan untuk tahun {$validated['tahun_kinerja']}.";
+        if ($failed > 0) {
+            $msg .= " ({$failed} data tidak terhapus karena masih dipakai pada data kinerja).";
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => $msg,
+            'deleted_count' => $deleted,
+            'failed_count' => $failed,
         ]);
     }
 }
